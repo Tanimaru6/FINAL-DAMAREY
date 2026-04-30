@@ -1952,7 +1952,8 @@ function toggleProcStep(el){
 }
 
 /* ── DOCUMENTS ────────────────────────────────────────────────── */
-var _docUrls={pdf:null,xls:null};
+// Clés localStorage
+var DOC_KEYS={pdf:{data:'doc_pdf_data',name:'doc_pdf_name',size:'doc_pdf_size'},xls:{data:'doc_xls_data',name:'doc_xls_name',size:'doc_xls_size'}};
 
 function handleDragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over')}
 function handleDragLeave(e){e.currentTarget.classList.remove('drag-over')}
@@ -1966,29 +1967,44 @@ function handleFileSelect(e,type){
   if(file)loadDocFile(file,type);
 }
 function loadDocFile(file,type){
-  if(_docUrls[type])URL.revokeObjectURL(_docUrls[type]);
-  var url=URL.createObjectURL(file);
-  _docUrls[type]=url;
-  var sizeMB=(file.size/1048576).toFixed(2);
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    var b64=ev.target.result; // data:...;base64,...
+    var sizeMB=(file.size/1048576).toFixed(2);
+    try{
+      localStorage.setItem(DOC_KEYS[type].data,b64);
+      localStorage.setItem(DOC_KEYS[type].name,file.name);
+      localStorage.setItem(DOC_KEYS[type].size,sizeMB);
+    }catch(e){
+      alert('Fichier trop volumineux pour être conservé localement (limite ~5 Mo). Il sera visible jusqu\'au rechargement.');
+    }
+    renderDocCard(type,b64,file.name,sizeMB);
+  };
+  reader.readAsDataURL(file);
+}
+function renderDocCard(type,b64,name,sizeMB){
   if(type==='pdf'){
-    document.getElementById('pdfFileName').textContent=file.name;
+    document.getElementById('pdfFileName').textContent=name;
     document.getElementById('pdfFileMeta').textContent=sizeMB+' Mo · PDF';
-    document.getElementById('pdfOpenBtn').href=url;
+    document.getElementById('pdfOpenBtn').href=b64;
+    document.getElementById('pdfOpenBtn').download=name;
     document.getElementById('pdfFileCard').style.display='block';
     document.getElementById('pdfDropZone').style.display='none';
-    document.getElementById('pdfEmpty').style.display='none';
+    if(document.getElementById('pdfEmpty'))document.getElementById('pdfEmpty').style.display='none';
   } else {
-    document.getElementById('xlsFileName').textContent=file.name;
-    document.getElementById('xlsFileMeta').textContent=sizeMB+' Mo · '+file.name.split('.').pop().toUpperCase();
+    document.getElementById('xlsFileName').textContent=name;
+    document.getElementById('xlsFileMeta').textContent=sizeMB+' Mo · '+name.split('.').pop().toUpperCase();
     var dlBtn=document.getElementById('xlsDownloadBtn');
-    dlBtn.href=url;dlBtn.download=file.name;
+    dlBtn.href=b64;dlBtn.download=name;
     document.getElementById('xlsFileCard').style.display='block';
     document.getElementById('xlsDropZone').style.display='none';
-    document.getElementById('xlsEmpty').style.display='none';
+    if(document.getElementById('xlsEmpty'))document.getElementById('xlsEmpty').style.display='none';
   }
 }
 function removeFile(type){
-  if(_docUrls[type]){URL.revokeObjectURL(_docUrls[type]);_docUrls[type]=null;}
+  localStorage.removeItem(DOC_KEYS[type].data);
+  localStorage.removeItem(DOC_KEYS[type].name);
+  localStorage.removeItem(DOC_KEYS[type].size);
   if(type==='pdf'){
     document.getElementById('pdfFileCard').style.display='none';
     document.getElementById('pdfDropZone').style.display='block';
@@ -1999,6 +2015,15 @@ function removeFile(type){
     document.getElementById('xlsInput').value='';
   }
 }
+// Restauration au chargement de la page
+(function restoreDocs(){
+  ['pdf','xls'].forEach(function(type){
+    var b64=localStorage.getItem(DOC_KEYS[type].data);
+    var name=localStorage.getItem(DOC_KEYS[type].name);
+    var size=localStorage.getItem(DOC_KEYS[type].size);
+    if(b64&&name&&size)renderDocCard(type,b64,name,size);
+  });
+})();
 
 </script>
 </body>
