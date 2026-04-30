@@ -852,30 +852,104 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
     <h2>Le déféré</h2>
     <p class="subtitle">Mécanisme d'amorçage de la procédure financière répressive, organisation des affaires et effets juridiques.</p>
   </div></div>
-  <div class="content-area prose">
-    <p>La procédure financière étant une procédure de nature répressive, elle est amorcée par le Procureur financier près la Cour des comptes qui détient l'initiative des poursuites.</p>
-    <h2>Naissance et organisation d'une affaire contentieuse</h2>
-    <p>La majorité des affaires contentieuses naissent par un déféré adressé au Procureur général près la Cour des comptes. S'il est recevable, il reçoit un <strong>numéro d'affaire permanent</strong> qui figurera sur tous les actes jusqu'à l'arrêt final.</p>
-    <h2>Le monopole et les pouvoirs du Procureur général</h2>
-    <p>Le Procureur général est le « gardien de l'ordre financier ». Saisi d'un déféré, il a l'obligation juridique de décider dans un <strong>délai de deux mois</strong> (réforme de 2023) entre l'émission d'un réquisitoire pour saisir la chambre du contentieux, ou le classement de l'affaire.</p>
-    <div class="callout">Depuis un arrêt de 2024, <strong>chaque déféré doit donner lieu à son propre réquisitoire introductif</strong>. Il est désormais interdit d'ajouter un nouveau déféré à une instruction en cours par un simple réquisitoire supplétif.</div>
-    <h2>Autorités habilitées à déférer</h2>
-    <p>Seules les autorités fixées par le Code des juridictions financières peuvent formuler un déféré : le Premier ministre, le ministre du Budget, les présidents de l'Assemblée nationale et du Sénat, la Cour des comptes, les chambres régionales et territoriales, les procureurs de la République, les préfets, et depuis 2023, l'<strong>Agence Française Anticorruption (AFA)</strong>.</p>
-    <div class="footnotes"><p><sup>1</sup> Groper, N. ; Michaut, C., <em>Responsabilité des gestionnaires publics devant le juge financier 2025/2026</em>, Dalloz, Paris, 2025, p. 682.</p></div>
+
+  <!-- SOUS-ONGLETS -->
+  <div style="padding:0 52px;border-bottom:1px solid var(--border);display:flex;gap:0" id="deferes-tabs">
+    <button class="deferes-tab-btn active" onclick="switchDeferesTab('deferes-text',this)" style="padding:12px 20px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.18s">Note de synthèse</button>
+    <button class="deferes-tab-btn" onclick="switchDeferesTab('deferes-pdf',this)" style="padding:12px 20px;border:none;background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.18s">Article (PDF)</button>
   </div>
+  <style>
+    .deferes-tab-btn.active{color:var(--navy-mid)!important;border-bottom-color:var(--gold)!important;font-weight:600!important}
+    [data-theme="dark"] .deferes-tab-btn.active{color:#fff!important}
+    .deferes-tab-btn:hover:not(.active){color:var(--text)!important}
+    .deferes-sub-panel{display:none}
+    .deferes-sub-panel.active{display:block}
+  </style>
+
+  <!-- Panneau 1 : texte existant -->
+  <div id="deferes-text" class="deferes-sub-panel active">
+    <div class="content-area prose">
+      <p>La procédure financière étant une procédure de nature répressive, elle est amorcée par le Procureur financier près la Cour des comptes qui détient l'initiative des poursuites.</p>
+      <h2>Naissance et organisation d'une affaire contentieuse</h2>
+      <p>La majorité des affaires contentieuses naissent par un déféré adressé au Procureur général près la Cour des comptes. S'il est recevable, il reçoit un <strong>numéro d'affaire permanent</strong> qui figurera sur tous les actes jusqu'à l'arrêt final.</p>
+      <h2>Le monopole et les pouvoirs du Procureur général</h2>
+      <p>Le Procureur général est le « gardien de l'ordre financier ». Saisi d'un déféré, il a l'obligation juridique de décider dans un <strong>délai de deux mois</strong> (réforme de 2023) entre l'émission d'un réquisitoire pour saisir la chambre du contentieux, ou le classement de l'affaire.</p>
+      <div class="callout">Depuis un arrêt de 2024, <strong>chaque déféré doit donner lieu à son propre réquisitoire introductif</strong>. Il est désormais interdit d'ajouter un nouveau déféré à une instruction en cours par un simple réquisitoire supplétif.</div>
+      <h2>Autorités habilitées à déférer</h2>
+      <p>Seules les autorités fixées par le Code des juridictions financières peuvent formuler un déféré : le Premier ministre, le ministre du Budget, les présidents de l'Assemblée nationale et du Sénat, la Cour des comptes, les chambres régionales et territoriales, les procureurs de la République, les préfets, et depuis 2023, l'<strong>Agence Française Anticorruption (AFA)</strong>.</p>
+      <div class="footnotes"><p><sup>1</sup> Groper, N. ; Michaut, C., <em>Responsabilité des gestionnaires publics devant le juge financier 2025/2026</em>, Dalloz, Paris, 2025, p. 682.</p></div>
+    </div>
+  </div>
+
+  <!-- Panneau 2 : PDF -->
+  <div id="deferes-pdf" class="deferes-sub-panel">
+    <div class="doc-wrapper" style="max-width:700px">
+      <div class="doc-section-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Article sur les déférés
+      </div>
+
+      <div class="drop-zone" id="deferesPdfDropZone" ondrop="handleDeferesDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+        <input type="file" accept=".pdf" onchange="handleDeferesPdfSelect(event)" id="deferesPdfInput"/>
+        <div class="drop-zone-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b89a3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <div class="drop-zone-title">Glissez votre article ici</div>
+        <div class="drop-zone-sub">ou cliquez pour sélectionner un fichier PDF<br><span style="font-size:0.7rem;color:var(--text-subtle);margin-top:4px;display:block">Le fichier sera accessible pour ouverture directe dans le navigateur</span></div>
+      </div>
+
+      <div id="deferesPdfCard" style="display:none">
+        <div class="doc-file-card">
+          <div class="doc-file-icon pdf">📄</div>
+          <div style="flex:1;min-width:0">
+            <div class="doc-file-name" id="deferesPdfName">—</div>
+            <div class="doc-file-meta" id="deferesPdfMeta">—</div>
+          </div>
+          <div class="doc-file-actions">
+            <a class="doc-action-btn open" id="deferesPdfOpenBtn" href="#" download target="_blank">Ouvrir</a>
+            <button class="doc-action-btn dl" onclick="removeDeferesPdf()" style="cursor:pointer">Supprimer</button>
+          </div>
+        </div>
+        <!-- Visionneuse intégrée -->
+        <div style="margin-top:14px;border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm)">
+          <iframe id="deferesPdfViewer" src="" style="width:100%;height:680px;border:none;display:block"></iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <!-- RESPONSABILITÉ -->
 <div id="responsibilityTab" class="tab-panel">
   <div class="page-header"><div class="page-header-inner">
-    <div class="eyebrow">Réforme de 2022–2023</div>
+    <div class="eyebrow">Réforme de 2022</div>
     <h2>Régime de responsabilité des gestionnaires publics</h2>
-    <p class="subtitle">Le rôle central des juridictions financières régionales dans le nouveau contentieux financier.</p>
+    <p class="subtitle">Le nouveau régime issu de l'ordonnance n° 2022-408 du 23 mars 2022 et des décrets du 22 décembre 2022.</p>
   </div></div>
   <div class="content-area prose">
-    <div class="callout">Les juridictions financières régionales et territoriales constituent « les premières et en volume d'affaires les principales autorités de déféré au parquet général » — Louis Gautier, colloque de Bordeaux.</div>
-    <p>Les CRTC se sont vu doter, dans le cadre du régime de responsabilité financière de 2023, de véritables outils d'action. <strong>Près de 60 % des affaires</strong> proviennent des CRTC — ce que confirme votre fichier Excel avec 31 déférés CRTC sur 68 reçus en 2023.</p>
-    <p>Depuis le 1er janvier 2023, les procureurs financiers disposent d'une compétence nationale en matière contentieuse, conformément à l'article L.112-2 alinéa 5 du Code des juridictions financières.</p>
+
+    <h2>Fondements textuels</h2>
+    <p>C'est l'ordonnance n° 2022-408 du 23 mars 2022 relative au régime de responsabilité financière des gestionnaires publics, complétée par le décret n° 2022-1604 du 22 décembre 2022 ainsi que par le décret n° 2022-1605 du même jour, qui vient instaurer un nouveau régime de responsabilité financière des gestionnaires publics.</p>
+
+    <h2>Changement fondamental</h2>
+    <p>Le changement fondamental tient à ce que la fonction juridictionnelle de la Cour des comptes n'est plus limitée aux seuls comptables publics. Plus significativement encore, ce régime emporte la création d'une <strong>chambre du contentieux</strong> qui associe à la fois des magistrats des chambres régionales et territoriales des comptes (CRTC) — permettant un contrôle au plus proche des collectivités territoriales — et des magistrats de la Cour des comptes <span class="callout" style="display:inline;padding:0;border:none;background:none;font-size:inherit">(art. L. 131-21 CJF)</span>.</p>
+
+    <h2>Les justiciables</h2>
+    <p>Les justiciables de cette réforme sont qualifiés de « gestionnaires publics », mais la qualification retenue par la loi demeure imprécise : elle n'englobe pas la totalité des gestionnaires publics et, inversement, la juridiction s'étend à des justiciables qui n'appartiennent pas strictement à la sphère publique.</p>
+    <p>L'article L. 131-1 et suivants du Code des juridictions financières (CJF), dans sa rédaction issue de l'ordonnance du 23 mars 2022, distingue trois catégories de justiciables :</p>
+    <ul>
+      <li>Les membres des cabinets ministériels et les élus des collectivités territoriales, des collectivités à statut particulier et de leurs groupements ;</li>
+      <li>Les fonctionnaires ou agents civils ou militaires de l'État, des collectivités territoriales, de leurs établissements publics ainsi que des groupements de collectivités territoriales ;</li>
+      <li>Les représentants, administrateurs ou agents des autres organismes soumis au contrôle des juridictions financières.</li>
+    </ul>
+    <p>Le dernier alinéa de cet article dispose que sont également justiciables tous ceux qui exercent, en fait, les fonctions relevant des trois catégories précédentes.</p>
+
+    <h2>Les infractions</h2>
+    <p>Les infractions susceptibles d'être prononcées par le juge financier sont au nombre de dix, sous deux réserves. Premièrement, certains acteurs publics — tels que les ministres et les élus locaux — ne relèvent que partiellement de la compétence de la nouvelle juridiction financière. Deuxièmement, la responsabilité du gestionnaire peut être écartée en cas d'action conduite sous contrainte hiérarchique ou sur ordre écrit délibérant.</p>
+    <div class="callout">L'infraction la plus caractérisée est <strong>« la faute grave ayant occasionné un préjudice financier significatif »</strong>, présentée comme l'infraction générique, prévue à l'article L. 131-9 du CJF. Les autres infractions sont prévues aux articles L. 131-10 à L. 131-15 du CJF.</div>
+
   </div>
 </div>
 
@@ -1034,22 +1108,41 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
   <div class="page-header"><div class="page-header-inner">
     <div class="eyebrow">Mission Responsabilité, Doctrine et Contrôle Interne Comptables · novembre 2025</div>
     <h2>Procédure juridictionnelle RGP</h2>
-    <p class="subtitle">Déroulement complet d'une procédure devant la Cour des comptes dans le cadre du régime de responsabilité financière des gestionnaires publics (ordonnance du 23 mars 2022).</p>
+    <p class="subtitle">Procédure applicable devant la Cour des comptes dans le cadre du régime de responsabilité des gestionnaires publics, issu de l'ordonnance n° 2022-408 du 23 mars 2022 et de la loi n° 2022-1721 du 22 décembre 2022.</p>
   </div></div>
   <div class="proc-wrapper">
 
-    <div class="proc-source-badge">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Source : Fiche procédure RGP — Cour des comptes · novembre 2025
-    </div>
-
     <div class="proc-actors">
-      <div class="proc-actor-card"><div class="proc-actor-icon">⚖️</div><div class="proc-actor-name">Procédure inquisitoriale</div><div class="proc-actor-desc">Écrite et contradictoire. Séparation stricte poursuite / instruction / jugement <span class="proc-ref">art. L. 142-1-10 CJF</span></div></div>
-      <div class="proc-actor-card"><div class="proc-actor-icon">👨‍⚖️</div><div class="proc-actor-name">Procureur général</div><div class="proc-actor-desc">Monopole des poursuites. Exerce le ministère public près la Cour des comptes et la CAF <span class="proc-ref">art. L. 112-2 CJF</span></div></div>
-      <div class="proc-actor-card"><div class="proc-actor-icon">🔍</div><div class="proc-actor-name">Magistrat instructeur</div><div class="proc-actor-desc">Instruit à charge et à décharge, de façon indépendante. Désigné par le président de la chambre du contentieux.</div></div>
-      <div class="proc-actor-card"><div class="proc-actor-icon">🏛️</div><div class="proc-actor-name">Chambre du contentieux</div><div class="proc-actor-desc">Formation de jugement. Délibéré secret, décisions à la majorité <span class="proc-ref">art. L. 142-1-9 CJF</span></div></div>
-      <div class="proc-actor-card"><div class="proc-actor-icon">📣</div><div class="proc-actor-name">Cour d'appel financière</div><div class="proc-actor-desc">Juridiction d'appel suspensif de l'exécution de l'arrêt <span class="proc-ref">art. L. 311-6 CJF</span></div></div>
-      <div class="proc-actor-card"><div class="proc-actor-icon">🛡️</div><div class="proc-actor-name">Droits de la défense</div><div class="proc-actor-desc">Accès au dossier, avocat, droit au silence (Conv. EDH art. 6 — Cour EDH 3 mai 2001, n° 31827/96).</div></div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="proc-actor-name">Procédure inquisitoriale</div>
+        <div class="proc-actor-desc">Écrite et contradictoire. Séparation stricte des fonctions de poursuite, d'instruction et de jugement <span class="proc-ref">art. L. 142-1-10 CJF</span></div>
+      </div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="proc-actor-name">Procureur général</div>
+        <div class="proc-actor-desc">Titulaire du monopole des poursuites. Exerce le ministère public près la Cour des comptes et la Cour d'appel financière <span class="proc-ref">art. L. 112-2 CJF</span></div>
+      </div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="proc-actor-name">Magistrat instructeur</div>
+        <div class="proc-actor-desc">Instruit à charge et à décharge, de manière indépendante. Désigné par le président de la chambre du contentieux.</div>
+      </div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+        <div class="proc-actor-name">Chambre du contentieux</div>
+        <div class="proc-actor-desc">Formation de jugement de la Cour des comptes. Délibéré secret, décisions prises à la majorité <span class="proc-ref">art. L. 142-1-9 CJF</span></div>
+      </div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="proc-actor-name">Cour d'appel financière</div>
+        <div class="proc-actor-desc">Juridiction d'appel dont le recours est suspensif de l'exécution de l'arrêt de première instance <span class="proc-ref">art. L. 311-6 CJF</span></div>
+      </div>
+      <div class="proc-actor-card">
+        <div class="proc-actor-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="proc-actor-name">Droits de la défense</div>
+        <div class="proc-actor-desc">Accès au dossier, assistance d'un avocat, droit au silence. Conv. EDH art. 6 — Cour EDH 3 mai 2001, n° 31827/96.</div>
+      </div>
     </div>
 
     <div class="proc-stepper">
@@ -1063,18 +1156,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
             <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="proc-step-content"><div class="proc-step-inner">
-            <p class="proc-para">Le procureur général déclenche l'action publique par <strong>réquisitoire</strong>, soit de sa propre initiative, soit à la suite d'un <strong>déféré</strong> par l'une des autorités habilitées <span class="proc-ref">art. L. 142-1-1 CJF</span>. Titulaire du <strong>monopole des poursuites</strong>, il n'est pas lié par le déféré et apprécie librement les suites à donner <span class="proc-ref">art. L. 142-1-2 CJF</span>. Il informe l'auteur du déféré des suites données <span class="proc-ref">art. R. 142-1-1 CJF</span>.</p>
+            <p class="proc-para">Le procureur général déclenche l'action publique par <strong>réquisitoire</strong>, soit de sa propre initiative, soit à la suite d'un <strong>déféré</strong> émanant de l'une des autorités habilitées <span class="proc-ref">art. L. 142-1-1 CJF</span>. Titulaire du <strong>monopole des poursuites</strong>, il n'est pas lié par le déféré et apprécie souverainement les suites à donner <span class="proc-ref">art. L. 142-1-2 CJF</span>. Il informe l'auteur du déféré des suites données <span class="proc-ref">art. R. 142-1-1 CJF</span>.</p>
             <p class="proc-para">Dans un <strong>délai de deux mois</strong> suivant la réception du déféré, le parquet peut :</p>
             <ul class="proc-ul">
               <li><strong>Classer l'affaire</strong> — avec rappel éventuel des obligations légales à l'auteur des faits ;</li>
-              <li><strong>Engager les poursuites</strong> — par réquisitoire, éventuellement pris à l'encontre de X.</li>
+              <li><strong>Engager les poursuites</strong> — par réquisitoire, susceptible d'être pris à l'encontre d'un agent non nommément désigné.</li>
             </ul>
             <div class="proc-presc-row">
               <div class="proc-presc-card"><div class="proc-presc-num">5 ans</div><div class="proc-presc-lbl">Prescription générale</div><div class="proc-presc-note">À compter du fait constitutif d'infraction <span class="proc-ref">art. L. 142-1-3 CJF</span></div></div>
-              <div class="proc-presc-card"><div class="proc-presc-num">10 ans</div><div class="proc-presc-lbl">Gestion de fait</div><div class="proc-presc-note">Délai porté à 10 années révolues pour la gestion de fait.</div></div>
+              <div class="proc-presc-card"><div class="proc-presc-num">10 ans</div><div class="proc-presc-lbl">Gestion de fait</div><div class="proc-presc-note">Délai porté à dix années révolues pour la gestion de fait.</div></div>
             </div>
-            <div class="proc-callout"><div class="proc-callout-title">⚠ Prescription</div>L'enregistrement du déféré au ministère public <strong>interrompt le délai de prescription</strong>. En l'absence de déféré, c'est le réquisitoire qui l'interrompt.</div>
-            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-top:8px;margin-bottom:0"><strong>Autorités habilitées à déférer :</strong> présidents des assemblées, Premier ministre, ministre du budget, membres du gouvernement, Cour des comptes, CRTC, procureurs de la République, représentants de l'État, directeurs des finances publiques, exécutifs locaux, créanciers (art. L. 131-14), chefs de service des IGS (IGA, IGAS, IGF), commissaires aux comptes, Agence française anticorruption.</p>
+            <div class="proc-callout"><div class="proc-callout-title">Prescription</div>L'enregistrement du déféré au ministère public <strong>interrompt le délai de prescription</strong>. En l'absence de déféré, c'est le réquisitoire introductif qui produit cet effet.</div>
+            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-top:8px;margin-bottom:0"><strong>Autorités habilitées à déférer :</strong> présidents des assemblées, Premier ministre, ministre chargé du budget, membres du gouvernement, Cour des comptes, CRTC, procureurs de la République, représentants de l'État, directeurs régionaux et départementaux des finances publiques, exécutifs locaux, créanciers <span class="proc-ref">art. L. 131-14 CJF</span>, chefs des services d'inspection (IGA, IGAS, IGF), commissaires aux comptes, Agence française anticorruption.</p>
           </div></div>
         </div>
       </div>
@@ -1088,19 +1181,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
             <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="proc-step-content"><div class="proc-step-inner">
-            <p class="proc-para">Le réquisitoire ouvre la phase d'instruction, limitée aux seuls faits qu'il mentionne <span class="proc-ref">art. R. 142-2-2 CJF</span>. Le président de la chambre du contentieux désigne un ou plusieurs magistrats pour instruire <strong>à charge et à décharge</strong> de façon indépendante. Le magistrat identifie les personnes concernées par son <strong>ordonnance de mise en cause</strong>, notifiée au parquet et aux intéressés — ce qui ouvre la <strong>phase contradictoire</strong>.</p>
-            <div class="proc-callout"><div class="proc-callout-title">📋 Droits des personnes mises en cause</div>
+            <p class="proc-para">Le réquisitoire ouvre la phase d'instruction, strictement limitée aux faits qu'il mentionne <span class="proc-ref">art. R. 142-2-2 CJF</span>. Le président de la chambre du contentieux désigne un ou plusieurs magistrats chargés d'instruire <strong>à charge et à décharge</strong>, de manière indépendante. Le magistrat identifie les personnes concernées par son <strong>ordonnance de mise en cause</strong>, notifiée au parquet et aux intéressés, ce qui ouvre la <strong>phase contradictoire</strong>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">Droits des personnes mises en cause</div>
               <ul class="proc-ul" style="margin:0">
-                <li>Accès au dossier dans son entièreté <span class="proc-ref">art. R. 142-2-5 CJF</span></li>
-                <li>Assistance d'un avocat</li>
-                <li>Production de documents et observations écrites</li>
+                <li>Accès au dossier dans son intégralité <span class="proc-ref">art. R. 142-2-5 CJF</span></li>
+                <li>Assistance d'un conseil</li>
+                <li>Production de documents et d'observations écrites en défense</li>
                 <li>Demande d'expertise <span class="proc-ref">art. R. 142-2-9 CJF</span></li>
                 <li>Demande de récusation du magistrat instructeur <span class="proc-ref">art. R. 142-2-10 CJF</span></li>
               </ul>
             </div>
-            <p class="proc-para">Concrètement, le magistrat envoie un <strong>questionnaire préalable</strong> avec délai de réponse. Des questionnaires complémentaires et auditions peuvent suivre <span class="proc-ref">art. R. 142-2-4 CJF</span>. En cas de difficulté, une demande motivée de prolongation est toujours possible.</p>
-            <div class="proc-callout"><div class="proc-callout-title">⚠ Droit au silence</div>Le principe selon lequel <strong>nul n'est tenu de s'accuser</strong> s'applique pleinement. Le droit au silence couvre toute procédure portant sur une « accusation en matière pénale » au sens de l'article 6 Conv. EDH — y compris en droit administratif (<em>Cour EDH 3 mai 2001, n° 31827/96 ; Conseil const. n° 2016-594-QPC</em>).</div>
-            <p class="proc-para" style="margin-bottom:0">Au terme de ses investigations (délai raisonnable, <span class="proc-ref">art. R. 142-2-11 CJF</span>), le magistrat prend une <strong>ordonnance de règlement</strong> clôturant l'instruction, avec ses propositions de classement ou de renvoi <span class="proc-ref">art. R. 142-2-12 CJF</span>. Le parquet dispose ensuite de <strong>3 mois</strong> pour classer, demander un complément ou renvoyer devant la chambre du contentieux <span class="proc-ref">art. R. 142-2-13 CJF</span>.</p>
+            <p class="proc-para">Le magistrat adresse un <strong>questionnaire préalable</strong> assorti d'un délai de réponse. Des questionnaires complémentaires et des auditions peuvent être diligentés <span class="proc-ref">art. R. 142-2-4 CJF</span>. En cas de difficulté, une demande motivée de prolongation du délai est recevable.</p>
+            <div class="proc-callout"><div class="proc-callout-title">Droit au silence</div>Le principe selon lequel <strong>nul n'est tenu de s'accuser</strong> s'applique pleinement à la présente procédure. Le droit de ne pas contribuer à sa propre incrimination s'étend à toute procédure portant sur une « accusation en matière pénale » au sens de l'article 6 de la Convention EDH, y compris en droit public financier (<em>Cour EDH 3 mai 2001, n° 31827/96 ; Conseil const. n° 2016-594-QPC</em>).</div>
+            <p class="proc-para" style="margin-bottom:0">Au terme de ses investigations (délai raisonnable, <span class="proc-ref">art. R. 142-2-11 CJF</span>), le magistrat instructeur prend une <strong>ordonnance de règlement</strong> clôturant l'instruction, assortie de propositions de classement ou de renvoi <span class="proc-ref">art. R. 142-2-12 CJF</span>. Le parquet dispose ensuite de <strong>trois mois</strong> pour classer l'affaire, demander un complément d'instruction ou renvoyer la cause devant la chambre du contentieux <span class="proc-ref">art. R. 142-2-13 CJF</span>.</p>
           </div></div>
         </div>
       </div>
@@ -1114,14 +1207,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
             <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="proc-step-content"><div class="proc-step-inner">
-            <p class="proc-para">L'audience est <strong>publique</strong>, sauf exception légale (huis clos) <span class="proc-ref">art. L. 142-1-6 CJF</span>. La personne renvoyée est avertie au moins <strong>7 jours</strong> avant l'audience <span class="proc-ref">art. R. 142-3-7 CJF</span>. Elle peut présenter des observations orales. À l'issue des débats, le ministère public présente ses réquisitions, puis la défense conclut — <strong>la personne renvoyée a la parole en dernier</strong> <span class="proc-ref">art. R. 142-3-9 CJF</span>.</p>
-            <div class="proc-callout"><div class="proc-callout-title">⚠ Amende pour non-comparution</div>La formation de jugement peut infliger jusqu'à <strong>10 000 €</strong> aux personnes ou témoins ne répondant pas aux convocations <span class="proc-ref">art. R. 142-3-4 CJF</span>.</div>
-            <p class="proc-para">Le délibéré a lieu <strong>hors la présence</strong> du magistrat instructeur et du parquet <span class="proc-ref">art. R. 142-3-12 CJF</span>. Il est secret, décisions à la majorité. L'arrêt est motivé et revêtu de la formule exécutoire <span class="proc-ref">art. L. 142-1-11 CJF</span>.</p>
+            <p class="proc-para">L'audience est <strong>publique</strong>, sauf exception légale permettant le huis clos <span class="proc-ref">art. L. 142-1-6 CJF</span>. La personne renvoyée est avertie au moins <strong>sept jours</strong> avant l'audience <span class="proc-ref">art. R. 142-3-7 CJF</span>. Elle peut présenter des observations orales. À l'issue des débats, le ministère public présente ses réquisitions, puis la défense conclut — <strong>la personne renvoyée a la parole en dernier</strong> <span class="proc-ref">art. R. 142-3-9 CJF</span>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">Amende pour non-comparution</div>La formation de jugement peut infliger une amende pouvant atteindre <strong>10 000 €</strong> aux personnes ou témoins ne répondant pas aux convocations <span class="proc-ref">art. R. 142-3-4 CJF</span>.</div>
+            <p class="proc-para">Le délibéré a lieu <strong>hors la présence</strong> du magistrat instructeur et des représentants du parquet <span class="proc-ref">art. R. 142-3-12 CJF</span>. Il est secret ; les décisions sont adoptées à la majorité. L'arrêt est motivé et revêtu de la formule exécutoire <span class="proc-ref">art. L. 142-1-11 CJF</span>.</p>
             <div class="proc-presc-row">
-              <div class="proc-presc-card"><div class="proc-presc-num">Relaxe</div><div class="proc-presc-lbl">Responsabilité non avérée</div><div class="proc-presc-note">L'arrêt prononce la relaxe si la responsabilité n'est pas établie.</div></div>
-              <div class="proc-presc-card"><div class="proc-presc-num">Amende</div><div class="proc-presc-lbl">Responsabilité reconnue</div><div class="proc-presc-note">Proportionnée à la gravité, la réitération et l'importance du préjudice <span class="proc-ref">art. L. 131-16 CJF</span>. Dispense possible si le dommage est réparé <span class="proc-ref">art. L. 131-19 al. 2 CJF</span>.</div></div>
+              <div class="proc-presc-card"><div class="proc-presc-num">Relaxe</div><div class="proc-presc-lbl">Responsabilité non avérée</div><div class="proc-presc-note">L'arrêt prononce la relaxe si la responsabilité du mis en cause n'est pas établie.</div></div>
+              <div class="proc-presc-card"><div class="proc-presc-num">Amende</div><div class="proc-presc-lbl">Responsabilité reconnue</div><div class="proc-presc-note">Proportionnée à la gravité des faits, à leur réitération et à l'importance du préjudice <span class="proc-ref">art. L. 131-16 CJF</span>. Dispense possible en cas de réparation du dommage <span class="proc-ref">art. L. 131-19 al. 2 CJF</span>.</div></div>
             </div>
-            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-bottom:0">Recouvrement par la DCST. Exigible dès l'arrêt définitif (absence d'appel ou confirmation). Des facilités de paiement peuvent être sollicitées auprès de la DCST. L'arrêt est notifié aux parties et communiqué à l'auteur du déféré <span class="proc-ref">art. R. 142-3-14 CJF</span>.</p>
+            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-bottom:0">Le recouvrement est assuré par la DCST. L'amende est exigible à compter de l'arrêt définitif (absence d'appel ou confirmation en appel). Des facilités de paiement peuvent être sollicitées auprès de la DCST. L'arrêt est notifié aux parties et communiqué à l'auteur du déféré <span class="proc-ref">art. R. 142-3-14 CJF</span>.</p>
           </div></div>
         </div>
       </div>
@@ -1135,8 +1228,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
             <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
           <div class="proc-step-content"><div class="proc-step-inner">
-            <p class="proc-para">L'appel <strong>suspend l'exécution</strong> de l'arrêt <span class="proc-ref">art. L. 311-6 CJF</span>. Il peut être formé par le ministère public ou la personne renvoyée dans un délai de <strong>2 mois</strong> à compter de la notification <span class="proc-ref">art. R. 142-4-1 CJF</span>. Ce délai est majoré d'1 mois pour les DOM-COM et de 2 mois pour les personnes domiciliées à l'étranger. La requête d'appel doit contenir, <strong>à peine de nullité</strong>, l'exposé des faits et moyens, les conclusions et une copie de l'arrêt attaqué <span class="proc-ref">art. R. 142-4-3 CJF</span>.</p>
-            <div class="proc-callout"><div class="proc-callout-title">📅 Calendrier des mémoires</div>
+            <p class="proc-para">L'appel <strong>suspend l'exécution</strong> de l'arrêt <span class="proc-ref">art. L. 311-6 CJF</span>. Il peut être formé par le ministère public ou la personne renvoyée dans un délai de <strong>deux mois</strong> à compter de la notification <span class="proc-ref">art. R. 142-4-1 CJF</span>. Ce délai est majoré d'un mois pour les DOM-COM et de deux mois pour les personnes domiciliées à l'étranger. La requête d'appel doit contenir, <strong>à peine de nullité</strong>, l'exposé des faits et des moyens, les conclusions et une copie de l'arrêt attaqué <span class="proc-ref">art. R. 142-4-3 CJF</span>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">Calendrier des mémoires</div>
               <ul class="proc-ul" style="margin:0">
                 <li>Requête → <strong>1 mois</strong> pour le mémoire en défense</li>
                 <li>Notification → <strong>1 mois</strong> pour le mémoire en réplique</li>
@@ -1144,7 +1237,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
                 <li>Transmission → <strong>15 jours</strong> pour le mémoire en duplique <span class="proc-ref">art. R. 321-3 CJF</span></li>
               </ul>
             </div>
-            <div class="proc-callout" style="margin-top:10px"><div class="proc-callout-title">⚠ Pourvoi en cassation</div>Le pourvoi devant le Conseil d'État <strong>n'est pas suspensif</strong> : l'amende est exigible dès la notification de l'arrêt d'appel.</div>
+            <div class="proc-callout" style="margin-top:10px"><div class="proc-callout-title">Pourvoi en cassation</div>Le pourvoi devant le Conseil d'État <strong>n'est pas suspensif</strong> : l'amende est exigible dès la notification de l'arrêt d'appel.</div>
           </div></div>
         </div>
       </div>
@@ -1166,18 +1259,133 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
 
     </div>
 
-    <div class="chart-container" style="padding:17px 19px">
-      <h3 style="margin-bottom:13px">Vue d'ensemble de la procédure</h3>
-      <div class="proc-flow-mini">
-        <div class="proc-flow-node">Déféré / Initiative PG</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Réquisitoire ou classement</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Instruction</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Ordonnance de règlement</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Renvoi / classement PG</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Audience publique</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Arrêt (relaxe / amende)</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Appel CAF</div><div class="proc-flow-arrow">→</div>
-        <div class="proc-flow-node">Pourvoi CE</div>
+    <div class="chart-container" style="padding:20px 24px 24px">
+      <h3 style="margin-bottom:4px;font-size:1rem">Schéma de la procédure juridictionnelle</h3>
+      <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:20px">Mission responsabilité, doctrine et contrôle interne comptables — Cour des comptes, novembre 2025</p>
+
+      <!-- SCHEMA CSS -->
+      <style>
+      .rgp-schema{display:flex;flex-direction:column;gap:0;font-family:'DM Sans',sans-serif;font-size:0.78rem}
+      .rgp-phase{display:flex;gap:0;align-items:stretch;margin-bottom:2px}
+      .rgp-phase-label{writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-subtle);padding:10px 6px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px 0 0 6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px}
+      .rgp-phase-body{flex:1;border:1px solid var(--border);border-left:none;border-radius:0 6px 6px 0;padding:14px 16px;background:var(--surface)}
+      .rgp-row{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}
+      .rgp-box{background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:0.76rem;line-height:1.5;color:var(--text)}
+      .rgp-box.actor{background:linear-gradient(135deg,rgba(11,26,51,0.06),rgba(19,41,75,0.03));border-color:rgba(11,26,51,0.18);font-weight:600;color:var(--navy-mid)}
+      [data-theme="dark"] .rgp-box.actor{background:rgba(91,155,213,0.08);border-color:rgba(91,155,213,0.25);color:#7bb8e8}
+      .rgp-box.decision{background:rgba(184,154,60,0.07);border-color:rgba(184,154,60,0.35);font-weight:500}
+      .rgp-box.outcome-red{background:rgba(217,64,64,0.06);border-color:rgba(217,64,64,0.3);color:#c03030}
+      [data-theme="dark"] .rgp-box.outcome-red{color:#ff8080}
+      .rgp-box.outcome-green{background:rgba(39,160,110,0.07);border-color:rgba(39,160,110,0.3);color:#1e7a52}
+      [data-theme="dark"] .rgp-box.outcome-green{color:#5ecba1}
+      .rgp-box.note{font-size:0.7rem;color:var(--text-muted);background:transparent;border-style:dashed;border-color:var(--border);font-style:italic}
+      .rgp-arrow{display:flex;align-items:center;color:var(--gold);font-size:1rem;font-weight:700;flex-shrink:0;padding-top:8px}
+      .rgp-arrow-down{text-align:center;color:var(--gold);font-size:0.85rem;padding:4px 0;width:100%}
+      .rgp-divider{width:100%;border:none;border-top:1px dashed var(--border);margin:12px 0}
+      .rgp-delay{font-size:0.65rem;font-weight:700;background:rgba(184,154,60,0.12);color:#7a5e10;border:1px solid rgba(184,154,60,0.3);border-radius:20px;padding:2px 8px;display:inline-block;margin-top:4px;white-space:nowrap}
+      [data-theme="dark"] .rgp-delay{color:var(--gold-lt);background:rgba(184,154,60,0.15)}
+      .rgp-sub{font-size:0.69rem;color:var(--text-muted);margin-top:3px;line-height:1.5}
+      .rgp-fork{display:flex;gap:10px;align-items:flex-start;width:100%;margin-top:6px}
+      .rgp-fork-branch{flex:1;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+      .rgp-label-section{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-subtle);padding:0 0 6px;display:block}
+      </style>
+
+      <div class="rgp-schema">
+
+        <!-- Phase pré-instruction -->
+        <div class="rgp-phase">
+          <div class="rgp-phase-label">Pré-instruction</div>
+          <div class="rgp-phase-body">
+            <div class="rgp-row" style="align-items:center;gap:12px">
+              <div class="rgp-box actor">Autorités de déféré</div>
+              <div class="rgp-arrow">→</div>
+              <div>
+                <div class="rgp-box actor">Ministère public<br><span style="font-size:0.68rem;font-weight:400;color:var(--text-muted)">(peut s'auto-saisir)</span></div>
+                <div class="rgp-delay">Décision sous 2 mois maximum</div>
+              </div>
+            </div>
+            <hr class="rgp-divider"/>
+            <div class="rgp-fork">
+              <div class="rgp-fork-branch">
+                <div class="rgp-box outcome-red" style="width:100%">Classe sans suite<br><span class="rgp-sub">(possible rappel à la loi)</span></div>
+                <div class="rgp-arrow-down" style="text-align:left;padding-left:12px">↓</div>
+                <div class="rgp-box note">Information de l'auteur du déféré</div>
+              </div>
+              <div class="rgp-fork-branch">
+                <div class="rgp-box outcome-green" style="width:100%">Engage les poursuites</div>
+                <div class="rgp-arrow-down" style="text-align:left;padding-left:12px">↓</div>
+                <div class="rgp-box decision" style="width:100%">Réquisitoire<br><span class="rgp-sub">à l'encontre d'un agent nommé ou non — réquisitoires supplétifs possibles</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rgp-arrow-down">↓</div>
+
+        <!-- Phase instruction -->
+        <div class="rgp-phase">
+          <div class="rgp-phase-label">Instruction</div>
+          <div class="rgp-phase-body">
+            <div class="rgp-row" style="align-items:flex-start;gap:12px">
+              <div>
+                <div class="rgp-box actor">Président de la chambre<br>du contentieux</div>
+              </div>
+              <div class="rgp-arrow">→</div>
+              <div>
+                <div class="rgp-box actor">Magistrat instructeur<br><span style="font-size:0.68rem;font-weight:400;color:var(--text-muted)">(désigne un ou plusieurs magistrats)</span></div>
+                <div class="rgp-box note" style="margin-top:6px;max-width:340px">Le mis en cause peut à tout moment accéder aux pièces du dossier · être entendu par le magistrat · produire des observations · être assisté d'un avocat · des expertises peuvent être diligentées</div>
+              </div>
+            </div>
+            <hr class="rgp-divider"/>
+            <div class="rgp-row" style="align-items:center;gap:10px">
+              <div style="flex:1">
+                <div class="rgp-box decision">Ordonnance de mise en cause<br><span class="rgp-sub">Non susceptible de recours · ouvre la phase contradictoire · notifiée aux mis en cause avec le réquisitoire · également notifiée au ministère public · le mis en cause dispose de 2 mois pour produire un mémoire écrit</span></div>
+              </div>
+            </div>
+            <div class="rgp-arrow-down">↓</div>
+            <div class="rgp-row" style="align-items:center;gap:10px">
+              <div style="flex:1">
+                <div class="rgp-box decision">Ordonnance de règlement (Magistrat instructeur)<br><span class="rgp-sub">Non susceptible de recours · clôt l'instruction · présente les éléments à charge, à décharge et les propositions de suites · notifiée aux mis en cause et au ministère public</span></div>
+              </div>
+              <div class="rgp-arrow" style="padding-top:0">→</div>
+              <div>
+                <div class="rgp-box actor">Ministère public</div>
+                <div class="rgp-delay">Décision sous 3 mois</div>
+              </div>
+            </div>
+            <hr class="rgp-divider"/>
+            <div class="rgp-fork">
+              <div class="rgp-fork-branch" style="flex:1.2">
+                <div class="rgp-box outcome-red" style="width:100%">Classe sans suite<br><span class="rgp-sub">(possible rappel à la loi)</span></div>
+              </div>
+              <div class="rgp-fork-branch" style="flex:1.2">
+                <div class="rgp-box decision" style="width:100%">Demande un complément<br>d'instruction</div>
+              </div>
+              <div class="rgp-fork-branch" style="flex:1.5">
+                <div class="rgp-box outcome-green" style="width:100%">Renvoie devant la chambre<br>du contentieux</div>
+                <div class="rgp-arrow-down" style="text-align:left;padding-left:12px">↓</div>
+                <div class="rgp-box actor">Président de la chambre inscrit l'audience au rôle</div>
+              </div>
+            </div>
+            <hr class="rgp-divider" style="margin-bottom:6px"/>
+            <div class="rgp-box note">Dans chacun des cas : notification aux mis en cause et à l'auteur du déféré</div>
+          </div>
+        </div>
+
+        <div class="rgp-arrow-down">↓</div>
+
+        <!-- Phase jugement -->
+        <div class="rgp-phase">
+          <div class="rgp-phase-label">Jugement</div>
+          <div class="rgp-phase-body">
+            <div class="rgp-box note" style="margin-bottom:12px">Information de la personne renvoyée au moins 7 jours avant l'audience (sauf urgence : 2 jours) · possibilité d'être assistée ou représentée par un avocat</div>
+            <div class="rgp-row" style="align-items:center;gap:10px">
+              <div class="rgp-box actor" style="flex:1">La chambre du contentieux rend un arrêt motivé</div>
+            </div>
+            <div class="rgp-box note" style="margin-top:8px">L'arrêt est notifié aux parties et communiqué à l'auteur du déféré · possibilité d'appel par la personne condamnée ou le ministère public dans les 2 mois suivant la notification</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1943,6 +2151,65 @@ window.cbSend=function(){
   }
   if(_origCbSend) _origCbSend();
 };
+
+/* ── DÉFÉRÉS SUB-TABS ─────────────────────────────────────────── */
+function switchDeferesTab(id, btn) {
+  document.querySelectorAll('#deferesTab .deferes-sub-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.deferes-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── PDF DÉFÉRÉS ──────────────────────────────────────────────── */
+function handleDeferesDrop(e) {
+  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
+  var file = e.dataTransfer.files[0];
+  if (file) loadDeferesPdf(file);
+}
+function handleDeferesPdfSelect(e) {
+  var file = e.target.files[0];
+  if (file) loadDeferesPdf(file);
+}
+function loadDeferesPdf(file) {
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var b64 = ev.target.result;
+    var sizeMB = (file.size / 1048576).toFixed(2);
+    try {
+      localStorage.setItem('deferes_pdf_data', b64);
+      localStorage.setItem('deferes_pdf_name', file.name);
+      localStorage.setItem('deferes_pdf_size', sizeMB);
+    } catch(e) {
+      alert('Fichier trop volumineux pour être conservé localement (limite ~5 Mo). Il sera visible jusqu\'au rechargement.');
+    }
+    renderDeferesPdfCard(b64, file.name, sizeMB);
+  };
+  reader.readAsDataURL(file);
+}
+function renderDeferesPdfCard(b64, name, sizeMB) {
+  document.getElementById('deferesPdfName').textContent = name;
+  document.getElementById('deferesPdfMeta').textContent = sizeMB + ' Mo · PDF';
+  document.getElementById('deferesPdfOpenBtn').href = b64;
+  document.getElementById('deferesPdfOpenBtn').download = name;
+  document.getElementById('deferesPdfViewer').src = b64;
+  document.getElementById('deferesPdfCard').style.display = 'block';
+  document.getElementById('deferesPdfDropZone').style.display = 'none';
+}
+function removeDeferesPdf() {
+  localStorage.removeItem('deferes_pdf_data');
+  localStorage.removeItem('deferes_pdf_name');
+  localStorage.removeItem('deferes_pdf_size');
+  document.getElementById('deferesPdfCard').style.display = 'none';
+  document.getElementById('deferesPdfDropZone').style.display = 'block';
+  document.getElementById('deferesPdfInput').value = '';
+  document.getElementById('deferesPdfViewer').src = '';
+}
+(function restoreDeferesPdf() {
+  var b64 = localStorage.getItem('deferes_pdf_data');
+  var name = localStorage.getItem('deferes_pdf_name');
+  var size = localStorage.getItem('deferes_pdf_size');
+  if (b64 && name && size) renderDeferesPdfCard(b64, name, size);
+})();
 
 /* ── PROCÉDURE RGP ──────────────────────────────────────────── */
 function toggleProcStep(el){
