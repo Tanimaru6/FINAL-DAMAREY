@@ -491,6 +491,113 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
 .legal-article-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:7px}
 .legal-article-text{font-size:0.8rem;color:var(--text-muted);line-height:1.72;max-width:72ch}
 
+
+/* ── DRAWER JURISPRUDENCE CARDS ─── */
+.drawer-juris-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:8px;cursor:pointer;transition:border-color .18s,box-shadow .18s}
+.drawer-juris-card:hover{border-color:var(--gold);box-shadow:0 2px 8px rgba(184,154,60,0.12)}
+.drawer-juris-card.expanded{border-color:rgba(184,154,60,0.4);background:rgba(184,154,60,0.04)}
+.djc-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px}
+.djc-outcome{flex-shrink:0;margin-top:1px}
+.djc-entity{font-size:0.82rem;font-weight:600;color:var(--text);line-height:1.35;flex:1}
+.djc-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:0}
+.djc-ref{font-family:monospace;font-size:0.66rem;color:var(--text-subtle)}
+.djc-amount{font-size:0.72rem;font-weight:700;color:var(--gold)}
+.djc-infs{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
+.djc-body{margin-top:9px;padding-top:9px;border-top:1px solid var(--border);display:none}
+.djc-body.open{display:block}
+.djc-note{font-size:0.78rem;color:var(--text-muted);line-height:1.65;font-style:italic}
+.djc-note strong{font-style:normal;color:var(--text)}
+.djc-link-btn{margin-top:8px;display:inline-flex;align-items:center;gap:5px;font-size:0.72rem;font-weight:600;color:var(--gold);cursor:pointer;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif}
+.djc-link-btn:hover{text-decoration:underline}
+.drawer-juris-empty{font-size:0.78rem;color:var(--text-subtle);padding:8px 0;font-style:italic}
+.drawer-year-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.dyc{padding:4px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted);transition:all .16s}
+.dyc.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.dyc:hover:not(.active){border-color:var(--gold);color:var(--gold)}
+
+/* ── PROCÉDURE RGP ─────────────────────────────────────────── */
+.proc-wrapper{padding:28px 52px 58px}
+@media(max-width:900px){.proc-wrapper{padding:20px 16px 38px}}
+.proc-stepper{display:flex;flex-direction:column;margin-bottom:32px}
+.proc-step{display:grid;grid-template-columns:52px 1fr;cursor:pointer}
+.proc-step-left{display:flex;flex-direction:column;align-items:center}
+.proc-step-circle{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold);background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--gold);transition:all 0.22s;flex-shrink:0;z-index:1}
+.proc-step.open .proc-step-circle{background:var(--gold);color:var(--navy);box-shadow:0 0 0 4px rgba(184,154,60,0.15)}
+.proc-step-line{width:2px;flex:1;min-height:20px;background:linear-gradient(to bottom,rgba(184,154,60,0.4),rgba(184,154,60,0.08));margin:0 auto}
+.proc-step:last-child .proc-step-line{opacity:0}
+.proc-step-body{padding:0 0 0 14px;padding-bottom:4px}
+.proc-step-header{display:flex;align-items:center;gap:10px;padding:9px 0 9px;min-height:58px}
+.proc-step-title{font-family:'Playfair Display',serif;font-size:1.03rem;font-weight:600;color:var(--text);flex:1;line-height:1.3}
+.proc-step-tag{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.proc-tag-blue{background:rgba(19,41,75,0.1);color:var(--navy-mid)}
+.proc-tag-gold{background:rgba(184,154,60,0.14);color:#7a5e10}
+.proc-tag-green{background:rgba(39,160,110,0.1);color:#1e7a52}
+.proc-tag-red{background:rgba(217,64,64,0.1);color:#c03030}
+.proc-tag-purple{background:rgba(150,100,200,0.12);color:#6030a0}
+[data-theme="dark"] .proc-tag-blue{background:rgba(91,155,213,0.18);color:#7bb8e8}
+[data-theme="dark"] .proc-tag-gold{background:rgba(184,154,60,0.18);color:var(--gold-lt)}
+[data-theme="dark"] .proc-tag-green{background:rgba(39,160,110,0.15);color:#5ecba1}
+[data-theme="dark"] .proc-tag-red{background:rgba(217,64,64,0.15);color:#ff8080}
+[data-theme="dark"] .proc-tag-purple{background:rgba(150,100,200,0.18);color:#c090f0}
+.proc-chevron{width:15px;height:15px;color:var(--text-subtle);transition:transform 0.22s;flex-shrink:0}
+.proc-step.open .proc-chevron{transform:rotate(180deg);color:var(--gold)}
+.proc-step-content{display:none;padding-bottom:16px}
+.proc-step.open .proc-step-content{display:block;animation:fadeUp 0.25s var(--ease)}
+.proc-step-inner{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:17px 19px}
+.proc-para{font-size:0.875rem;line-height:1.82;color:var(--text);margin-bottom:11px;text-align:justify;hyphens:auto}
+.proc-para:last-child{margin-bottom:0}
+.proc-callout{background:linear-gradient(135deg,rgba(11,26,51,0.04),rgba(184,154,60,0.07));border-left:3px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:11px 15px;margin:10px 0;font-size:0.845rem;color:var(--text);line-height:1.75}
+.proc-callout-title{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:4px}
+.proc-ul{list-style:none;margin:7px 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.proc-ul li{font-size:0.855rem;line-height:1.7;color:var(--text);padding-left:14px;position:relative}
+.proc-ul li::before{content:'—';position:absolute;left:0;color:var(--gold);font-weight:700}
+.proc-ref{font-family:monospace;font-size:0.77rem;color:var(--text-subtle);background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1px 5px;display:inline;white-space:nowrap}
+.proc-actors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:26px}
+@media(max-width:900px){.proc-actors{grid-template-columns:1fr 1fr}}
+.proc-actor-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:13px 14px;box-shadow:var(--shadow-sm)}
+.proc-actor-icon{font-size:1.3rem;margin-bottom:5px;line-height:1}
+.proc-actor-name{font-family:'Playfair Display',serif;font-size:0.87rem;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.3}
+.proc-actor-desc{font-size:0.73rem;color:var(--text-muted);line-height:1.55}
+.proc-presc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:900px){.proc-presc-row{grid-template-columns:1fr}}
+.proc-presc-card{border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 13px;background:var(--surface)}
+.proc-presc-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:2px}
+.proc-presc-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:600}
+.proc-presc-note{font-size:0.73rem;color:var(--text-muted);margin-top:4px;line-height:1.5}
+.proc-flow-mini{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:10px}
+.proc-flow-node{font-size:0.7rem;font-weight:600;padding:4px 9px;border-radius:4px;background:var(--surface);border:1px solid var(--border);color:var(--text-muted)}
+.proc-flow-arrow{color:var(--gold);font-size:0.85rem;font-weight:700;flex-shrink:0}
+.proc-footnote{margin-top:26px;padding-top:13px;border-top:1px solid var(--border);font-size:0.77rem;color:var(--text-subtle);line-height:1.75}
+.proc-source-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(184,154,60,0.08);border:1px solid rgba(184,154,60,0.25);border-radius:20px;padding:4px 12px;font-size:0.68rem;color:var(--gold);font-weight:600;margin-bottom:20px}
+
+/* ── DOCUMENTS TAB ───────────────────────────────────────────── */
+.doc-wrapper{padding:28px 52px 58px}
+@media(max-width:900px){.doc-wrapper{padding:20px 16px 38px}}
+.doc-section-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.doc-section-title svg{color:var(--gold)}
+.drop-zone{border:2px dashed var(--border);border-radius:var(--radius-lg);padding:44px 24px;text-align:center;cursor:pointer;transition:all 0.22s var(--ease);background:var(--surface);margin-bottom:28px;position:relative}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--gold);background:rgba(184,154,60,0.04)}
+.drop-zone-icon{width:52px;height:52px;border-radius:50%;background:rgba(184,154,60,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;transition:transform 0.22s var(--ease)}
+.drop-zone:hover .drop-zone-icon{transform:translateY(-3px)}
+.drop-zone-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:5px}
+.drop-zone-sub{font-size:0.78rem;color:var(--text-muted);line-height:1.6}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.doc-file-card{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);margin-bottom:10px;transition:all 0.2s var(--ease)}
+.doc-file-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:rgba(184,154,60,0.3)}
+.doc-file-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.2rem}
+.doc-file-icon.pdf{background:rgba(217,64,64,0.1)}
+.doc-file-icon.xls{background:rgba(39,160,110,0.1)}
+.doc-file-name{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.doc-file-meta{font-size:0.72rem;color:var(--text-muted)}
+.doc-file-actions{margin-left:auto;display:flex;gap:8px;flex-shrink:0}
+.doc-action-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:all 0.18s var(--ease)}
+.doc-action-btn.open{background:linear-gradient(135deg,var(--navy-mid),var(--navy));color:#fff}
+.doc-action-btn.open:hover{opacity:0.88}
+.doc-action-btn.dl{background:rgba(184,154,60,0.1);color:var(--gold);border:1px solid rgba(184,154,60,0.3)}
+.doc-action-btn.dl:hover{background:rgba(184,154,60,0.18)}
+.doc-empty{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:var(--radius-md);background:var(--surface-2);border:1px solid var(--border);font-size:0.8rem;color:var(--text-muted);font-style:italic}
+.doc-empty svg{flex-shrink:0;color:var(--text-subtle)}
+
 </style>
 </head>
 <body>
@@ -551,6 +658,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
       Témoignages
     </button>
     <div class="nav-section-label">Ressources</div>
+    <button class="nav-item" onclick="openTab('procedureTab',this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+      Procédure RGP
+      <span class="nav-new-badge">NEW</span>
+    </button>
         <button class="nav-item" onclick="openTab('jurisprudenceTab',this)">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       Jurisprudence
@@ -563,6 +675,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
     <button class="nav-item" onclick="openTab('linksTab',this)">
       <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       Sites des CRTC
+    </button>
+    <button class="nav-item" onclick="openTab('documentsTab',this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+      Documents
+      <span class="nav-new-badge">NEW</span>
     </button>
   </div>
   <div class="sidebar-footer">© Cour des comptes · 2025</div>
@@ -767,11 +884,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
   <div class="page-header"><div class="page-header-inner">
     <div class="eyebrow">Paroles de praticiens</div>
     <h2>Témoignages</h2>
-    <p class="subtitle">Entretiens réalisés auprès de magistrats financiers des juridictions régionales et territoriales.</p>
+    <p class="subtitle">Entretiens réalisés auprès de magistrats financiers et d'avocats spécialisés dans le régime de responsabilité des gestionnaires publics.</p>
   </div></div>
   <div class="content-area">
+    <div class="testimony-card"><div class="testimony-avatar">TG</div><div><div class="testimony-role">Procureur financier dirigeant le ministère public</div><div class="testimony-name">Thomas Govedarica</div><div class="testimony-detail">Chambre territoriale des comptes de Nouvelle-Calédonie &amp; Chambre territoriale des comptes de Polynésie française</div></div></div>
+    <div class="testimony-card"><div class="testimony-avatar">EL</div><div><div class="testimony-role">Avocat associé</div><div class="testimony-name">Éric Landot</div><div class="testimony-detail"></div></div></div>
+    <div class="testimony-card"><div class="testimony-avatar">NP</div><div><div class="testimony-role">Président des chambres régionales des comptes</div><div class="testimony-name">Nicolas Péhau</div><div class="testimony-detail">CRC La Réunion et de Mayotte</div></div></div>
+    <div class="testimony-card"><div class="testimony-avatar">FG</div><div><div class="testimony-role">Avocat — Docteur en Droit public</div><div class="testimony-name">Florent Gaullier-Camus</div><div class="testimony-detail"></div></div></div>
     <div class="testimony-card"><div class="testimony-avatar">CP</div><div><div class="testimony-role">Vice-présidente</div><div class="testimony-name">Clotilde Pézerat-Santoni</div><div class="testimony-detail">Chambre régionale des comptes Nouvelle-Aquitaine</div></div></div>
-    <div class="testimony-card"><div class="testimony-avatar">TG</div><div><div class="testimony-role">Procureur financier — Ministère public</div><div class="testimony-name">Thomas Govedarica</div><div class="testimony-detail">CTC Nouvelle-Calédonie &amp; CTC Polynésie française</div></div></div>
   </div>
 </div>
 
@@ -909,6 +1029,256 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
     </div>
   </div>
 </div>
+<!-- PROCÉDURE RGP -->
+<div id="procedureTab" class="tab-panel">
+  <div class="page-header"><div class="page-header-inner">
+    <div class="eyebrow">Mission Responsabilité, Doctrine et Contrôle Interne Comptables · novembre 2025</div>
+    <h2>Procédure juridictionnelle RGP</h2>
+    <p class="subtitle">Déroulement complet d'une procédure devant la Cour des comptes dans le cadre du régime de responsabilité financière des gestionnaires publics (ordonnance du 23 mars 2022).</p>
+  </div></div>
+  <div class="proc-wrapper">
+
+    <div class="proc-source-badge">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Source : Fiche procédure RGP — Cour des comptes · novembre 2025
+    </div>
+
+    <div class="proc-actors">
+      <div class="proc-actor-card"><div class="proc-actor-icon">⚖️</div><div class="proc-actor-name">Procédure inquisitoriale</div><div class="proc-actor-desc">Écrite et contradictoire. Séparation stricte poursuite / instruction / jugement <span class="proc-ref">art. L. 142-1-10 CJF</span></div></div>
+      <div class="proc-actor-card"><div class="proc-actor-icon">👨‍⚖️</div><div class="proc-actor-name">Procureur général</div><div class="proc-actor-desc">Monopole des poursuites. Exerce le ministère public près la Cour des comptes et la CAF <span class="proc-ref">art. L. 112-2 CJF</span></div></div>
+      <div class="proc-actor-card"><div class="proc-actor-icon">🔍</div><div class="proc-actor-name">Magistrat instructeur</div><div class="proc-actor-desc">Instruit à charge et à décharge, de façon indépendante. Désigné par le président de la chambre du contentieux.</div></div>
+      <div class="proc-actor-card"><div class="proc-actor-icon">🏛️</div><div class="proc-actor-name">Chambre du contentieux</div><div class="proc-actor-desc">Formation de jugement. Délibéré secret, décisions à la majorité <span class="proc-ref">art. L. 142-1-9 CJF</span></div></div>
+      <div class="proc-actor-card"><div class="proc-actor-icon">📣</div><div class="proc-actor-name">Cour d'appel financière</div><div class="proc-actor-desc">Juridiction d'appel suspensif de l'exécution de l'arrêt <span class="proc-ref">art. L. 311-6 CJF</span></div></div>
+      <div class="proc-actor-card"><div class="proc-actor-icon">🛡️</div><div class="proc-actor-name">Droits de la défense</div><div class="proc-actor-desc">Accès au dossier, avocat, droit au silence (Conv. EDH art. 6 — Cour EDH 3 mai 2001, n° 31827/96).</div></div>
+    </div>
+
+    <div class="proc-stepper">
+
+      <div class="proc-step" onclick="toggleProcStep(this)">
+        <div class="proc-step-left"><div class="proc-step-circle">1</div><div class="proc-step-line"></div></div>
+        <div class="proc-step-body">
+          <div class="proc-step-header">
+            <div class="proc-step-title">Engagement des poursuites ou classement</div>
+            <span class="proc-step-tag proc-tag-blue">Parquet général</span>
+            <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="proc-step-content"><div class="proc-step-inner">
+            <p class="proc-para">Le procureur général déclenche l'action publique par <strong>réquisitoire</strong>, soit de sa propre initiative, soit à la suite d'un <strong>déféré</strong> par l'une des autorités habilitées <span class="proc-ref">art. L. 142-1-1 CJF</span>. Titulaire du <strong>monopole des poursuites</strong>, il n'est pas lié par le déféré et apprécie librement les suites à donner <span class="proc-ref">art. L. 142-1-2 CJF</span>. Il informe l'auteur du déféré des suites données <span class="proc-ref">art. R. 142-1-1 CJF</span>.</p>
+            <p class="proc-para">Dans un <strong>délai de deux mois</strong> suivant la réception du déféré, le parquet peut :</p>
+            <ul class="proc-ul">
+              <li><strong>Classer l'affaire</strong> — avec rappel éventuel des obligations légales à l'auteur des faits ;</li>
+              <li><strong>Engager les poursuites</strong> — par réquisitoire, éventuellement pris à l'encontre de X.</li>
+            </ul>
+            <div class="proc-presc-row">
+              <div class="proc-presc-card"><div class="proc-presc-num">5 ans</div><div class="proc-presc-lbl">Prescription générale</div><div class="proc-presc-note">À compter du fait constitutif d'infraction <span class="proc-ref">art. L. 142-1-3 CJF</span></div></div>
+              <div class="proc-presc-card"><div class="proc-presc-num">10 ans</div><div class="proc-presc-lbl">Gestion de fait</div><div class="proc-presc-note">Délai porté à 10 années révolues pour la gestion de fait.</div></div>
+            </div>
+            <div class="proc-callout"><div class="proc-callout-title">⚠ Prescription</div>L'enregistrement du déféré au ministère public <strong>interrompt le délai de prescription</strong>. En l'absence de déféré, c'est le réquisitoire qui l'interrompt.</div>
+            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-top:8px;margin-bottom:0"><strong>Autorités habilitées à déférer :</strong> présidents des assemblées, Premier ministre, ministre du budget, membres du gouvernement, Cour des comptes, CRTC, procureurs de la République, représentants de l'État, directeurs des finances publiques, exécutifs locaux, créanciers (art. L. 131-14), chefs de service des IGS (IGA, IGAS, IGF), commissaires aux comptes, Agence française anticorruption.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="proc-step" onclick="toggleProcStep(this)">
+        <div class="proc-step-left"><div class="proc-step-circle">2</div><div class="proc-step-line"></div></div>
+        <div class="proc-step-body">
+          <div class="proc-step-header">
+            <div class="proc-step-title">L'instruction</div>
+            <span class="proc-step-tag proc-tag-gold">Magistrat instructeur</span>
+            <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="proc-step-content"><div class="proc-step-inner">
+            <p class="proc-para">Le réquisitoire ouvre la phase d'instruction, limitée aux seuls faits qu'il mentionne <span class="proc-ref">art. R. 142-2-2 CJF</span>. Le président de la chambre du contentieux désigne un ou plusieurs magistrats pour instruire <strong>à charge et à décharge</strong> de façon indépendante. Le magistrat identifie les personnes concernées par son <strong>ordonnance de mise en cause</strong>, notifiée au parquet et aux intéressés — ce qui ouvre la <strong>phase contradictoire</strong>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">📋 Droits des personnes mises en cause</div>
+              <ul class="proc-ul" style="margin:0">
+                <li>Accès au dossier dans son entièreté <span class="proc-ref">art. R. 142-2-5 CJF</span></li>
+                <li>Assistance d'un avocat</li>
+                <li>Production de documents et observations écrites</li>
+                <li>Demande d'expertise <span class="proc-ref">art. R. 142-2-9 CJF</span></li>
+                <li>Demande de récusation du magistrat instructeur <span class="proc-ref">art. R. 142-2-10 CJF</span></li>
+              </ul>
+            </div>
+            <p class="proc-para">Concrètement, le magistrat envoie un <strong>questionnaire préalable</strong> avec délai de réponse. Des questionnaires complémentaires et auditions peuvent suivre <span class="proc-ref">art. R. 142-2-4 CJF</span>. En cas de difficulté, une demande motivée de prolongation est toujours possible.</p>
+            <div class="proc-callout"><div class="proc-callout-title">⚠ Droit au silence</div>Le principe selon lequel <strong>nul n'est tenu de s'accuser</strong> s'applique pleinement. Le droit au silence couvre toute procédure portant sur une « accusation en matière pénale » au sens de l'article 6 Conv. EDH — y compris en droit administratif (<em>Cour EDH 3 mai 2001, n° 31827/96 ; Conseil const. n° 2016-594-QPC</em>).</div>
+            <p class="proc-para" style="margin-bottom:0">Au terme de ses investigations (délai raisonnable, <span class="proc-ref">art. R. 142-2-11 CJF</span>), le magistrat prend une <strong>ordonnance de règlement</strong> clôturant l'instruction, avec ses propositions de classement ou de renvoi <span class="proc-ref">art. R. 142-2-12 CJF</span>. Le parquet dispose ensuite de <strong>3 mois</strong> pour classer, demander un complément ou renvoyer devant la chambre du contentieux <span class="proc-ref">art. R. 142-2-13 CJF</span>.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="proc-step" onclick="toggleProcStep(this)">
+        <div class="proc-step-left"><div class="proc-step-circle">3</div><div class="proc-step-line"></div></div>
+        <div class="proc-step-body">
+          <div class="proc-step-header">
+            <div class="proc-step-title">Le jugement</div>
+            <span class="proc-step-tag proc-tag-green">Chambre du contentieux</span>
+            <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="proc-step-content"><div class="proc-step-inner">
+            <p class="proc-para">L'audience est <strong>publique</strong>, sauf exception légale (huis clos) <span class="proc-ref">art. L. 142-1-6 CJF</span>. La personne renvoyée est avertie au moins <strong>7 jours</strong> avant l'audience <span class="proc-ref">art. R. 142-3-7 CJF</span>. Elle peut présenter des observations orales. À l'issue des débats, le ministère public présente ses réquisitions, puis la défense conclut — <strong>la personne renvoyée a la parole en dernier</strong> <span class="proc-ref">art. R. 142-3-9 CJF</span>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">⚠ Amende pour non-comparution</div>La formation de jugement peut infliger jusqu'à <strong>10 000 €</strong> aux personnes ou témoins ne répondant pas aux convocations <span class="proc-ref">art. R. 142-3-4 CJF</span>.</div>
+            <p class="proc-para">Le délibéré a lieu <strong>hors la présence</strong> du magistrat instructeur et du parquet <span class="proc-ref">art. R. 142-3-12 CJF</span>. Il est secret, décisions à la majorité. L'arrêt est motivé et revêtu de la formule exécutoire <span class="proc-ref">art. L. 142-1-11 CJF</span>.</p>
+            <div class="proc-presc-row">
+              <div class="proc-presc-card"><div class="proc-presc-num">Relaxe</div><div class="proc-presc-lbl">Responsabilité non avérée</div><div class="proc-presc-note">L'arrêt prononce la relaxe si la responsabilité n'est pas établie.</div></div>
+              <div class="proc-presc-card"><div class="proc-presc-num">Amende</div><div class="proc-presc-lbl">Responsabilité reconnue</div><div class="proc-presc-note">Proportionnée à la gravité, la réitération et l'importance du préjudice <span class="proc-ref">art. L. 131-16 CJF</span>. Dispense possible si le dommage est réparé <span class="proc-ref">art. L. 131-19 al. 2 CJF</span>.</div></div>
+            </div>
+            <p class="proc-para" style="font-size:0.79rem;color:var(--text-muted);margin-bottom:0">Recouvrement par la DCST. Exigible dès l'arrêt définitif (absence d'appel ou confirmation). Des facilités de paiement peuvent être sollicitées auprès de la DCST. L'arrêt est notifié aux parties et communiqué à l'auteur du déféré <span class="proc-ref">art. R. 142-3-14 CJF</span>.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="proc-step" onclick="toggleProcStep(this)">
+        <div class="proc-step-left"><div class="proc-step-circle">4</div><div class="proc-step-line"></div></div>
+        <div class="proc-step-body">
+          <div class="proc-step-header">
+            <div class="proc-step-title">L'appel devant la Cour d'appel financière</div>
+            <span class="proc-step-tag proc-tag-red">Cour d'appel financière</span>
+            <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="proc-step-content"><div class="proc-step-inner">
+            <p class="proc-para">L'appel <strong>suspend l'exécution</strong> de l'arrêt <span class="proc-ref">art. L. 311-6 CJF</span>. Il peut être formé par le ministère public ou la personne renvoyée dans un délai de <strong>2 mois</strong> à compter de la notification <span class="proc-ref">art. R. 142-4-1 CJF</span>. Ce délai est majoré d'1 mois pour les DOM-COM et de 2 mois pour les personnes domiciliées à l'étranger. La requête d'appel doit contenir, <strong>à peine de nullité</strong>, l'exposé des faits et moyens, les conclusions et une copie de l'arrêt attaqué <span class="proc-ref">art. R. 142-4-3 CJF</span>.</p>
+            <div class="proc-callout"><div class="proc-callout-title">📅 Calendrier des mémoires</div>
+              <ul class="proc-ul" style="margin:0">
+                <li>Requête → <strong>1 mois</strong> pour le mémoire en défense</li>
+                <li>Notification → <strong>1 mois</strong> pour le mémoire en réplique</li>
+                <li>Transmission → <strong>15 jours</strong> pour le second mémoire en défense</li>
+                <li>Transmission → <strong>15 jours</strong> pour le mémoire en duplique <span class="proc-ref">art. R. 321-3 CJF</span></li>
+              </ul>
+            </div>
+            <div class="proc-callout" style="margin-top:10px"><div class="proc-callout-title">⚠ Pourvoi en cassation</div>Le pourvoi devant le Conseil d'État <strong>n'est pas suspensif</strong> : l'amende est exigible dès la notification de l'arrêt d'appel.</div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="proc-step" onclick="toggleProcStep(this)">
+        <div class="proc-step-left"><div class="proc-step-circle">5</div><div class="proc-step-line"></div></div>
+        <div class="proc-step-body">
+          <div class="proc-step-header">
+            <div class="proc-step-title">La révision</div>
+            <span class="proc-step-tag proc-tag-purple">Voie extraordinaire</span>
+            <svg class="proc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="proc-step-content"><div class="proc-step-inner">
+            <p class="proc-para">Après expiration du délai d'appel, la personne renvoyée peut demander la <strong>révision d'un arrêt</strong> en cas de <strong>fait nouveau</strong> ou d'élément inconnu de nature à établir son absence de responsabilité. La requête est adressée au président de la chambre du contentieux, avec exposé des faits et justifications <span class="proc-ref">art. R. 142-4-6 CJF</span>.</p>
+            <p class="proc-para" style="margin-bottom:0">Un magistrat est désigné pour instruire la demande. La chambre statue sur la recevabilité et, s'il y a lieu, sur le fond, par <strong>arrêt unique</strong> après audience publique et conclusions du parquet <span class="proc-ref">art. R. 142-4-7 CJF</span>.</p>
+          </div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="chart-container" style="padding:17px 19px">
+      <h3 style="margin-bottom:13px">Vue d'ensemble de la procédure</h3>
+      <div class="proc-flow-mini">
+        <div class="proc-flow-node">Déféré / Initiative PG</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Réquisitoire ou classement</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Instruction</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Ordonnance de règlement</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Renvoi / classement PG</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Audience publique</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Arrêt (relaxe / amende)</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Appel CAF</div><div class="proc-flow-arrow">→</div>
+        <div class="proc-flow-node">Pourvoi CE</div>
+      </div>
+    </div>
+
+    <div class="proc-footnote"><strong>Source :</strong> Fiche procédure RGP — Mission Responsabilité, Doctrine et Contrôle Interne Comptables, Cour des comptes, novembre 2025. Références : <em>Code des juridictions financières (CJF)</em>, ordonnance du 23 mars 2022, loi du 22 décembre 2022. Conv. EDH art. 6 ; Cour EDH 3 mai 2001, n° 31827/96 ; Conseil const. n° 2016-594-QPC.</div>
+
+  </div>
+</div>
+
+<!-- DOCUMENTS -->
+<div id="documentsTab" class="tab-panel">
+  <div class="page-header"><div class="page-header-inner">
+    <div class="eyebrow">Ressources partagées</div>
+    <h2>Documents</h2>
+    <p class="subtitle">Déposez votre rapport et votre tableau Excel pour les rendre accessibles directement depuis l'observatoire.</p>
+  </div></div>
+  <div class="doc-wrapper">
+
+    <!-- Rapport PDF -->
+    <div class="doc-section-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Rapport (PDF)
+    </div>
+
+    <div class="drop-zone" id="pdfDropZone" ondrop="handleDrop(event,'pdf')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+      <input type="file" accept=".pdf" onchange="handleFileSelect(event,'pdf')" id="pdfInput"/>
+      <div class="drop-zone-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b89a3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="drop-zone-title">Glissez votre rapport ici</div>
+      <div class="drop-zone-sub">ou cliquez pour sélectionner un fichier PDF<br><span style="font-size:0.7rem;color:var(--text-subtle);margin-top:4px;display:block">Le fichier sera accessible pour ouverture directe dans le navigateur</span></div>
+    </div>
+
+    <div id="pdfFileCard" style="display:none">
+      <div class="doc-file-card">
+        <div class="doc-file-icon pdf">📄</div>
+        <div style="flex:1;min-width:0">
+          <div class="doc-file-name" id="pdfFileName">—</div>
+          <div class="doc-file-meta" id="pdfFileMeta">—</div>
+        </div>
+        <div class="doc-file-actions">
+          <a id="pdfOpenBtn" href="#" target="_blank" class="doc-action-btn open">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Ouvrir
+          </a>
+          <button class="doc-action-btn dl" onclick="removeFile('pdf')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Retirer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="pdfEmpty" class="doc-empty" style="display:none">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Aucun rapport déposé. Utilisez la zone ci-dessus pour en ajouter un.
+    </div>
+
+    <!-- Tableau Excel -->
+    <div class="doc-section-title" style="margin-top:36px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Tableau Excel
+    </div>
+
+    <div class="drop-zone" id="xlsDropZone" ondrop="handleDrop(event,'xls')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+      <input type="file" accept=".xls,.xlsx,.csv" onchange="handleFileSelect(event,'xls')" id="xlsInput"/>
+      <div class="drop-zone-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#27a06e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="drop-zone-title">Glissez votre tableau ici</div>
+      <div class="drop-zone-sub">ou cliquez pour sélectionner un fichier Excel (.xlsx, .xls, .csv)<br><span style="font-size:0.7rem;color:var(--text-subtle);margin-top:4px;display:block">Les utilisateurs pourront le télécharger directement</span></div>
+    </div>
+
+    <div id="xlsFileCard" style="display:none">
+      <div class="doc-file-card">
+        <div class="doc-file-icon xls">📊</div>
+        <div style="flex:1;min-width:0">
+          <div class="doc-file-name" id="xlsFileName">—</div>
+          <div class="doc-file-meta" id="xlsFileMeta">—</div>
+        </div>
+        <div class="doc-file-actions">
+          <a id="xlsDownloadBtn" href="#" download class="doc-action-btn open">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger
+          </a>
+          <button class="doc-action-btn dl" onclick="removeFile('xls')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Retirer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="xlsEmpty" class="doc-empty" style="display:none">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Aucun tableau déposé. Utilisez la zone ci-dessus pour en ajouter un.
+    </div>
+
+    <div style="margin-top:36px;padding:14px 16px;background:rgba(184,154,60,0.06);border:1px solid rgba(184,154,60,0.2);border-radius:var(--radius-md);font-size:0.78rem;color:var(--text-muted);line-height:1.7">
+      <strong style="color:var(--gold)">ℹ Note :</strong> Les fichiers déposés sont chargés localement dans le navigateur et restent disponibles pendant toute la session. Ils ne sont pas envoyés sur un serveur.
+    </div>
+
+  </div>
+</div>
 
 </main>
 
@@ -939,8 +1309,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);tra
     </div>
     <!-- Affaires réelles from Excel -->
     <div class="drawer-section" id="drawerAffairesSection">
-      <div class="drawer-section-label">Affaires réelles (base Excel)</div>
-      <div class="drawer-affaires" id="drawerAffaires"></div>
+      <div class="drawer-section-label">Jurisprudence liée à cette chambre</div>
+      <div id="drawerAffaires"></div>
     </div>
     <div class="drawer-section">
       <div class="drawer-section-label">Lien officiel</div>
@@ -1018,24 +1388,24 @@ let tileLayer=L.tileLayer(getTileUrl(),{attribution:'&copy; OpenStreetMap &copy;
 const markersLayer=L.layerGroup().addTo(map);
 
 const chambers=[
-  {name:"CRC Auvergne-Rhône-Alpes",type:"CRC",year:2025,lat:45.75,lng:4.85,deferes:{2023:7,2024:5,2025:9},url:"https://www.ccomptes.fr/fr/crc-auvergne-rhone-alpes",president:"Pierre-Edouard Colliex",juridiction:"Région Auvergne-Rhône-Alpes"},
-  {name:"CRC Bourgogne-Franche-Comté",type:"CRC",year:2025,lat:47.32,lng:5.04,deferes:{2023:3,2024:2,2025:4},url:"https://www.ccomptes.fr/fr/crc-bourgogne-franche-comte",president:"Éric Godinot",juridiction:"Région Bourgogne-Franche-Comté"},
-  {name:"CRC Bretagne",type:"CRC",year:2024,lat:48.11,lng:-1.68,deferes:{2023:5,2024:3,2025:6},url:"https://www.ccomptes.fr/fr/crc-bretagne",president:"Thierry Klinka",juridiction:"Région Bretagne"},
-  {name:"CRC Centre-Val de Loire",type:"CRC",year:2024,lat:47.39,lng:0.69,deferes:{2023:4,2024:3,2025:5},url:"https://www.ccomptes.fr/fr/crc-centre-val-de-loire",president:"Gilles Andréani",juridiction:"Région Centre-Val de Loire"},
-  {name:"CRC Corse",type:"CRC",year:2023,lat:41.92,lng:8.73,deferes:{2023:2,2024:1,2025:2},url:"https://www.ccomptes.fr/fr/crc-corse",president:"Thierry Mosimann",juridiction:"Collectivité de Corse"},
-  {name:"CRC Grand Est",type:"CRC",year:2025,lat:48.58,lng:7.75,deferes:{2023:4,2024:3,2025:5},url:"https://www.ccomptes.fr/fr/crc-grand-est",president:"Philippe Hayez",juridiction:"Région Grand Est"},
-  {name:"CRC Hauts-de-France",type:"CRC",year:2023,lat:50.29,lng:2.78,deferes:{2023:3,2024:4,2025:6},url:"https://www.ccomptes.fr/fr/crc-hauts-de-france",president:"Didier Guédon",juridiction:"Région Hauts-de-France"},
-  {name:"CRC Normandie",type:"CRC",year:2023,lat:49.44,lng:1.09,deferes:{2023:4,2024:3,2025:5},url:"https://www.ccomptes.fr/fr/crc-normandie",president:"Alain Levionnois",juridiction:"Région Normandie"},
-  {name:"CRC Nouvelle-Aquitaine",type:"CRC",year:2024,lat:44.84,lng:-0.58,deferes:{2023:6,2024:4,2025:7},url:"https://www.ccomptes.fr/fr/crc-nouvelle-aquitaine",president:"Clotilde Pézerat-Santoni",juridiction:"Région Nouvelle-Aquitaine"},
-  {name:"CRC Occitanie",type:"CRC",year:2025,lat:43.61,lng:1.44,deferes:{2023:6,2024:5,2025:8},url:"https://www.ccomptes.fr/fr/crc-occitanie",president:"Muriel Gérardin-Lavaud",juridiction:"Région Occitanie"},
-  {name:"CRC Pays de la Loire",type:"CRC",year:2023,lat:47.22,lng:-1.55,deferes:{2023:5,2024:4,2025:6},url:"https://www.ccomptes.fr/fr/crc-pays-de-la-loire",president:"Jean-Marie Bertrand",juridiction:"Région Pays de la Loire"},
-  {name:"CRC Provence-Alpes-Côte d'Azur",type:"CRC",year:2025,lat:43.30,lng:5.37,deferes:{2023:8,2024:6,2025:9},url:"https://www.ccomptes.fr/fr/crc-provence-alpes-cote-dazur",president:"Valérie Moquin-Renaudie",juridiction:"Région Provence-Alpes-Côte d'Azur"},
-  {name:"CRC Île-de-France",type:"CRC",year:2025,lat:48.849,lng:2.631,deferes:{2023:12,2024:8,2025:15},url:"https://www.ccomptes.fr/fr/crc-ile-de-france",president:"Christine Gateau",juridiction:"Région Île-de-France"},
-  {name:"CRC La Réunion - Mayotte",type:"CRC",year:2024,lat:-20.88,lng:55.45,deferes:{2023:3,2024:2,2025:4},url:"https://www.ccomptes.fr/fr/crc-reunion-mayotte",president:"Yves Roquelet",juridiction:"La Réunion et Mayotte"},
-  {name:"CRC Guadeloupe, Guyane et Martinique",type:"CRC",year:2024,lat:14.61,lng:-61.07,deferes:{2023:4,2024:3,2025:5},url:"https://www.ccomptes.fr/fr/crc-antilles-guyane",president:"Serge Boumendil",juridiction:"Guadeloupe, Guyane, Martinique"},
-  {name:"CTC Saint-Martin et Saint-Barthélémy",type:"CTC",year:2025,lat:18.07,lng:-63.08,deferes:{2023:1,2024:1,2025:1},url:"https://www.ccomptes.fr/fr/ctc-saint-martin-saint-barthelemy",president:"Luc Derepas",juridiction:"Saint-Martin et Saint-Barthélemy"},
-  {name:"CTC Nouvelle-Calédonie",type:"CTC",year:2023,lat:-22.27,lng:166.45,deferes:{2023:2,2024:1,2025:3},url:"https://www.ccomptes.fr/fr/ctc-nouvelle-caledonie",president:"Guy Yelou",juridiction:"Nouvelle-Calédonie"},
-  {name:"CTC Polynésie française",type:"CTC",year:2025,lat:-17.55,lng:-149.56,deferes:{2023:1,2024:0,2025:2},url:"https://www.ccomptes.fr/fr/ctc-polynesie-francaise",president:"Asmaa Ibnouzahir",juridiction:"Polynésie française"}
+  {name:"CRC Auvergne-Rhône-Alpes",type:"CRC",year:2025,lat:45.75,lng:4.85,deferes:{2023:2,2024:3,2025:0},url:"https://www.ccomptes.fr/fr/crc-auvergne-rhone-alpes",president:"Pierre-Edouard Colliex",juridiction:"Région Auvergne-Rhône-Alpes"},
+  {name:"CRC Bourgogne-Franche-Comté",type:"CRC",year:2025,lat:47.32,lng:5.04,deferes:{2023:2,2024:2,2025:0},url:"https://www.ccomptes.fr/fr/crc-bourgogne-franche-comte",president:"Éric Godinot",juridiction:"Région Bourgogne-Franche-Comté"},
+  {name:"CRC Bretagne",type:"CRC",year:2024,lat:48.11,lng:-1.68,deferes:{2023:5,2024:3,2025:0},url:"https://www.ccomptes.fr/fr/crc-bretagne",president:"Thierry Klinka",juridiction:"Région Bretagne"},
+  {name:"CRC Centre-Val de Loire",type:"CRC",year:2024,lat:47.39,lng:0.69,deferes:{2023:1,2024:2,2025:0},url:"https://www.ccomptes.fr/fr/crc-centre-val-de-loire",president:"Gilles Andréani",juridiction:"Région Centre-Val de Loire"},
+  {name:"CRC Corse",type:"CRC",year:2023,lat:41.92,lng:8.73,deferes:{2023:1,2024:3,2025:0},url:"https://www.ccomptes.fr/fr/crc-corse",president:"Thierry Mosimann",juridiction:"Collectivité de Corse"},
+  {name:"CRC Grand Est",type:"CRC",year:2025,lat:48.58,lng:7.75,deferes:{2023:1,2024:2,2025:0},url:"https://www.ccomptes.fr/fr/crc-grand-est",president:"Philippe Hayez",juridiction:"Région Grand Est"},
+  {name:"CRC Hauts-de-France",type:"CRC",year:2023,lat:50.29,lng:2.78,deferes:{2023:3,2024:3,2025:0},url:"https://www.ccomptes.fr/fr/crc-hauts-de-france",president:"Didier Guédon",juridiction:"Région Hauts-de-France"},
+  {name:"CRC Normandie",type:"CRC",year:2023,lat:49.44,lng:1.09,deferes:{2023:3,2024:1,2025:0},url:"https://www.ccomptes.fr/fr/crc-normandie",president:"Alain Levionnois",juridiction:"Région Normandie"},
+  {name:"CRC Nouvelle-Aquitaine",type:"CRC",year:2024,lat:44.84,lng:-0.58,deferes:{2023:13,2024:9,2025:0},url:"https://www.ccomptes.fr/fr/crc-nouvelle-aquitaine",president:"Clotilde Pézerat-Santoni",juridiction:"Région Nouvelle-Aquitaine"},
+  {name:"CRC Occitanie",type:"CRC",year:2025,lat:43.61,lng:1.44,deferes:{2023:0,2024:7,2025:0},url:"https://www.ccomptes.fr/fr/crc-occitanie",president:"Muriel Gérardin-Lavaud",juridiction:"Région Occitanie"},
+  {name:"CRC Pays de la Loire",type:"CRC",year:2023,lat:47.22,lng:-1.55,deferes:{2023:0,2024:4,2025:0},url:"https://www.ccomptes.fr/fr/crc-pays-de-la-loire",president:"Jean-Marie Bertrand",juridiction:"Région Pays de la Loire"},
+  {name:"CRC Provence-Alpes-Côte d'Azur",type:"CRC",year:2025,lat:43.30,lng:5.37,deferes:{2023:3,2024:3,2025:2},url:"https://www.ccomptes.fr/fr/crc-provence-alpes-cote-dazur",president:"Valérie Moquin-Renaudie",juridiction:"Région Provence-Alpes-Côte d'Azur"},
+  {name:"CRC Île-de-France",type:"CRC",year:2025,lat:48.849,lng:2.631,deferes:{2023:2,2024:2,2025:0},url:"https://www.ccomptes.fr/fr/crc-ile-de-france",president:"Christine Gateau",juridiction:"Région Île-de-France"},
+  {name:"CRC La Réunion - Mayotte",type:"CRC",year:2024,lat:-20.88,lng:55.45,deferes:{2023:1,2024:9,2025:0},url:"https://www.ccomptes.fr/fr/crc-reunion-mayotte",president:"Yves Roquelet",juridiction:"La Réunion et Mayotte"},
+  {name:"CRC Guadeloupe, Guyane et Martinique",type:"CRC",year:2024,lat:14.61,lng:-61.07,deferes:{2023:3,2024:0,2025:0},url:"https://www.ccomptes.fr/fr/crc-antilles-guyane",president:"Serge Boumendil",juridiction:"Guadeloupe, Guyane, Martinique"},
+  {name:"CTC Saint-Martin et Saint-Barthélémy",type:"CTC",year:2025,lat:18.07,lng:-63.08,deferes:{2023:0,2024:0,2025:0},url:"https://www.ccomptes.fr/fr/ctc-saint-martin-saint-barthelemy",president:"Luc Derepas",juridiction:"Saint-Martin et Saint-Barthélemy"},
+  {name:"CTC Nouvelle-Calédonie",type:"CTC",year:2023,lat:-22.27,lng:166.45,deferes:{2023:2,2024:2,2025:1},url:"https://www.ccomptes.fr/fr/ctc-nouvelle-caledonie",president:"Guy Yelou",juridiction:"Nouvelle-Calédonie"},
+  {name:"CTC Polynésie française",type:"CTC",year:2025,lat:-17.55,lng:-149.56,deferes:{2023:0,2024:0,2025:0},url:"https://www.ccomptes.fr/fr/ctc-polynesie-francaise",president:"Asmaa Ibnouzahir",juridiction:"Polynésie française"}
 ];
 
 function makeIcon(type,hi){const d=document.documentElement.getAttribute('data-theme')==='dark';const fill=type==='CRC'?(d?'#5b9bd5':'#13294b'):'#b89a3c';const sz=hi?32:26;const h=Math.round(sz*1.3);const a=Math.round(sz/2);return L.divIcon({html:`<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${h}" viewBox="0 0 28 36"><path d="M14 0C6.27 0 0 6.27 0 14c0 9.63 14 22 14 22S28 23.63 28 14C28 6.27 21.73 0 14 0z" fill="${fill}" stroke="${hi?'#ffffff':'rgba(0,0,0,0.2)'}" stroke-width="1.5"/><circle cx="14" cy="14" r="5.5" fill="white" opacity="0.9"/></svg>`,className:'',iconSize:[sz,h],iconAnchor:[a,h],popupAnchor:[0,-h]})}
@@ -1051,7 +1421,7 @@ function render(){
   let count=0,crcN=0,ctcN=0;
   chambers.forEach(c=>{
     const tm=typeSelect.value==='all'||typeSelect.value===c.type;
-    const ym=yearSelect.value==='all'||String(yearSelect.value)===String(c.year);
+    const ym=yearSelect.value==='all'||(c.deferes&&c.deferes[yearSelect.value]>0);
     const op=(tm&&ym)?1:0.18;
     const y=yearSelect.value!=='all'?yearSelect.value:2023;
     const def=c.deferes&&c.deferes[y]!==undefined?c.deferes[y]:'–';
@@ -1088,34 +1458,99 @@ function openDrawer(c){
   const years=[2023,2024,2025];const vals=years.map(y=>c.deferes[y]||0);const maxV=Math.max(...vals,1);
   const sparkEl=document.getElementById('dSparkline');sparkEl.innerHTML='';
   years.forEach((y,i)=>{const pct=Math.round(vals[i]/maxV*100);const col=document.createElement('div');col.className='sparkline-col';
-    col.innerHTML=`<div class="sparkline-value">${vals[i]}</div><div class="sparkline-bar-wrap"><div class="sparkline-bar ${c.type==='CRC'?'crc-bar':''}" style="height:4px" data-pct="${pct}"></div></div><div class="sparkline-year">${y}</div>`;
+    col.innerHTML='<div class="sparkline-value">'+vals[i]+'</div><div class="sparkline-bar-wrap"><div class="sparkline-bar '+(c.type==='CRC'?'crc-bar':'')+'" style="height:4px" data-pct="'+pct+'"></div></div><div class="sparkline-year">'+y+'</div>';
     sparkEl.appendChild(col)});
   setTimeout(()=>{sparkEl.querySelectorAll('.sparkline-bar').forEach(b=>{const h=Math.max(Math.round(parseInt(b.dataset.pct)/100*70),4);b.style.height=h+'px'})},380);
 
-  // Real affaires from Excel
-  const nameNorm=c.name.toLowerCase().replace(/[^a-z]/g,' ').trim();
-  const chamberAff=AFFAIRES.filter(a=>{const an=a.auteur.toLowerCase().replace(/[^a-z]/g,' ').trim();
-    return an.includes(nameNorm.split(' ')[1])||nameNorm.includes(an.split(' ')[2]||'xxxxxx')||
-    (nameNorm.includes('nouvelle-aquit')&&an.includes('nouvelle aquitaine'))||
-    (nameNorm.includes('île-de-france')&&an.includes('île de france'))||
-    (nameNorm.includes('hauts-de-france')&&an.includes('hauts-de-france'))||
-    (nameNorm.includes('provence')&&an.includes('provence'))||
-    (nameNorm.includes('auvergne')&&an.includes('auvergne'))||
-    (nameNorm.includes('bretagne')&&an.includes('bretagne'))||
-    (nameNorm.includes('grand est')&&an.includes('grand-est'))||
-    (nameNorm.includes('corse')&&an.includes('corse'))||
-    (nameNorm.includes('bourgogne')&&an.includes('bourgogne'))||
-    (nameNorm.includes('calédonie')&&an.includes('calédonie'))||
-    (nameNorm.includes('pays de la loire')&&an.includes('pays de la loire'))
-  });
-  const affEl=document.getElementById('drawerAffaires');affEl.innerHTML='';
-  if(chamberAff.length===0){affEl.innerHTML=`<div style="font-size:0.78rem;color:var(--text-subtle);padding:10px 0">Aucune affaire référencée dans la base Excel pour cette chambre.</div>`}
-  else{chamberAff.forEach(a=>{const div=document.createElement('div');div.className='drawer-aff-item';
-    div.innerHTML=`<span class="da-year aff-year-chip y${a.year}">${a.year}</span><div class="da-entity">${a.entity}</div><div class="da-ref">${a.ref||a.detail}</div>`;
-    affEl.appendChild(div)})};
+  // ── Jurisprudence linked to this chamber ──
+  const jurisEl=document.getElementById('drawerAffaires');
+  jurisEl.innerHTML='';
+  const outLabels={condemnation:'Condamnation',relaxe:'Relaxe',partiel:'Partielle',confirmation:'Confirmation',cassation:'Cassation',inconstitutionnalite:'Inconstitutionnalité','sans objet':'Sans objet'};
+  const outCls={condemnation:'ob-condemnation',relaxe:'ob-relaxe',partiel:'ob-partiel',confirmation:'ob-confirmation',cassation:'ob-cassation',inconstitutionnalite:'ob-inconstitutionnalite','sans objet':'ob-partiel'};
+
+  // Filter JURISPRUDENCE by crc match + also Excel AFFAIRES for completeness
+  const chamberJuris = (typeof JURISPRUDENCE !== 'undefined') ? JURISPRUDENCE.filter(j=>j.crc===c.name) : [];
+  
+  // Year filter chips
+  const yearsWithCases = [...new Set(chamberJuris.map(j=>j.date.substring(0,4)))].sort();
+  let activeYear = 'all';
+  
+  function renderDrawerJuris(filterYear){
+    jurisEl.innerHTML='';
+    const filtered = filterYear==='all' ? chamberJuris : chamberJuris.filter(j=>j.date.startsWith(filterYear));
+    
+    // Year chips
+    if(chamberJuris.length>0){
+      const chipsDiv=document.createElement('div');chipsDiv.className='drawer-year-chips';
+      ['all',...yearsWithCases].forEach(yr=>{
+        const chip=document.createElement('button');chip.className='dyc'+(filterYear===yr?' active':'');
+        chip.textContent=yr==='all'?'Toutes':yr;
+        chip.onclick=()=>renderDrawerJuris(yr);
+        chipsDiv.appendChild(chip);
+      });
+      jurisEl.appendChild(chipsDiv);
+    }
+
+    if(filtered.length===0){
+      const empty=document.createElement('div');empty.className='drawer-juris-empty';
+      empty.textContent=chamberJuris.length===0
+        ?'Aucune décision de jurisprudence directement liée à cette chambre.'
+        :'Aucune décision pour cette année.';
+      jurisEl.appendChild(empty);
+      return;
+    }
+
+    filtered.sort((a,b)=>b.date.localeCompare(a.date)).forEach(j=>{
+      const d=j.date.split('-');
+      const dateStr=d[2]+'/'+d[1]+'/'+d[0];
+      const totalAm=j.amendes.reduce((a,b)=>a+b,0);
+      const card=document.createElement('div');card.className='drawer-juris-card';
+      card.innerHTML=
+        '<div class="djc-top">'+
+          '<span class="djc-outcome outcome-badge '+(outCls[j.outcome]||'ob-partiel')+'">'+(outLabels[j.outcome]||j.outcome)+'</span>'+
+          '<span class="djc-entity">'+j.entity+(j.lieu?'<span style="font-weight:400;color:var(--text-muted);font-size:0.75rem"> — '+j.lieu+'</span>':'')+'</span>'+
+        '</div>'+
+        '<div class="djc-meta">'+
+          '<span class="djc-ref">'+j.ref+'</span>'+
+          '<span style="color:var(--border)">·</span>'+
+          '<span style="font-size:0.7rem;color:var(--text-subtle)">'+dateStr+'</span>'+
+          (totalAm>0?'<span style="color:var(--border)">·</span><span class="djc-amount">'+totalAm.toLocaleString('fr-FR')+'\u202f€</span>':'')+
+        '</div>'+
+        '<div class="djc-infs">'+j.inf.map(i=>'<span class="inf-tag">'+i+'</span>').join('')+'</div>'+
+        '<div class="djc-body"><div class="djc-note">'+j.note+'</div>'+
+          '<button class="djc-link-btn" onclick="goToJurisEntry(\''+j.ref+'\')">'+
+            '→ Voir dans l\'onglet jurisprudence'+
+          '</button>'+
+        '</div>';
+      card.onclick=function(e){
+        if(e.target.classList.contains('djc-link-btn')||e.target.closest('.djc-link-btn'))return;
+        const body=card.querySelector('.djc-body');
+        const open=body.classList.toggle('open');
+        card.classList.toggle('expanded',open);
+      };
+      jurisEl.appendChild(card);
+    });
+  }
+  renderDrawerJuris('all');
+
   document.getElementById('chamberDrawer').classList.add('open');
   document.getElementById('drawerOverlay').classList.add('visible');
 }
+
+function goToJurisEntry(ref){
+  closeDrawer();
+  const btn=document.querySelector('[onclick*="jurisprudenceTab"]');
+  if(btn)openTab('jurisprudenceTab',btn);
+  setTimeout(()=>{
+    buildJuris();
+    const inp=document.getElementById('juris-search');
+    if(inp){inp.value=ref;renderJuris();}
+    // Scroll to table
+    const tbl=document.getElementById('jurisBody');
+    if(tbl)tbl.scrollIntoView({behavior:'smooth',block:'start'});
+  },120);
+}
+
 function closeDrawer(){document.getElementById('chamberDrawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('visible')}
 
 // ── AFFAIRES TABLE ───────────────────────────────────────────
@@ -1306,62 +1741,62 @@ inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.pr
 
 <script>
 const JURISPRUDENCE = [
-  {date:"2023-05-11",ref:"S-2023-0604",entity:"Société Alpexpo",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12","L.131-13-3°"],outcome:"partiel",amendes:[3500],note:"🏛 1er arrêt du régime rénové. Directrice générale de fait condamnée (3 500 €). Deux présidents relaxés : préjudice non significatif. Non-rétroactivité de L.131-12 à soi-même posée."},
-  {date:"2023-05-31",ref:"S-2023-0667",entity:"Commune d'Ajaccio",lieu:"Corse-du-Sud",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[10000],note:"2e arrêt. Maire condamné 10 000 € : astreintes pour inexécution d'une décision de justice prononcée en faveur d'un agent communal."},
-  {date:"2023-07-10",ref:"S-2023-0858",entity:"Centre hospitalier Sainte-Marie à Marie-Galante",lieu:"",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[7000,2000,1000],note:"3e arrêt. Directrice (2012-2021) : 7 000 €. Successeur : 2 000 €. Attachée suivi contentieux : 1 000 €. Astreintes pour inexécution de décision de justice."},
-  {date:"2023-10-20",ref:"S-2023-1184",entity:"Régie régionale des transports des Landes (RRTL)",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : L.131-12 (avantage injustifié à soi-même) non rétroactif — ne peut sanctionner des faits commis avant le 01/01/2023."},
-  {date:"2023-11-24",ref:"S-2023-1382",entity:"Caisse de crédit municipal de Bordeaux",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[20000,10000],note:"1ère décision L.131-9. Dossiers de prêts incomplets, sûretés insuffisantes. Préjudice : 3,9 M€. DG : 20 000 €. DGA : 10 000 €. Publication au JO."},
-  {date:"2024-05-03",ref:"S-2024-0715",entity:"Département de l'Eure",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[2500,2500],note:"1ère décision sur l'intégralité de la chaîne de la dépense. Fraude aux faux ordres de virement (FOVI) — 800 000 €. Ordonnateur + adjoint comptable. Circonstances atténuantes (fraude sophistiquée en bande organisée)."},
-  {date:"2024-05-03",ref:"S-2024-0723",entity:"Département de la Haute-Saône",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[9000],note:"Président condamné 9 000 € : 70 000 € d'indemnités injustifiées à sa directrice de cabinet. Intérêt personnel indirect démontré par 15 ans de relations professionnelles."},
-  {date:"2024-05-03",ref:"S-2024-0696",entity:"Chambre régionale agriculture Bretagne / E-TOILE",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : marché sans mise en concurrence mais absence de préjudice prouvé. Le dépassement budgétaire n'était pas imputable à l'irrégularité de passation."},
-  {date:"2024-06-21",ref:"S-2024-0793",entity:"France Médias Monde (FMM)",lieu:"",juri:"CDC",inf:["L.131-13-2°","L.131-13-3°","L.131-9"],outcome:"partiel",amendes:[5000,2000,1000],note:"Conventions transactionnelles sans consultation CGEFI + marchés hors délégation. DG délégué : 5 000 €. DRH : 2 000 €. Relaxe sur L.131-9 (préjudice non déterminable)."},
-  {date:"2024-06-25",ref:"S-2024-0943",entity:"Régie Gazélec de Péronne",lieu:"",juri:"CDC",inf:["L.131-13-1°","L.131-13-3°"],outcome:"condemnation",amendes:[4000,3000],note:"Non-production comptes + engagement sans pouvoir. Revirement Alpexpo : L.131-13 1° applicable aux faits antérieurs à 2023 car infraction préexistante sous forme générique."},
-  {date:"2024-07-02",ref:"S-2024-1006",entity:"Office du Tourisme de Strasbourg (OTSR)",lieu:"",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500],note:"Dépenses au-delà de la délégation (30 000 €), dont 400 000 € pour un marché de Noël à New York sans aucune habilitation. Caractère répété = aggravante."},
-  {date:"2024-07-05",ref:"S-2024-1038",entity:"Régie métropolitaine PARCUB devenue METPARK",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"condemnation",amendes:[2500,8000],note:"Directeur : 2 500 € (modulé, sans emploi). Directeur financier : 8 000 €. Significativité appréciée sur produits de gestion moyens (19,4 M€)."},
-  {date:"2024-07-23",ref:"S-2024-1128",entity:"SAEM SAGA (parc de loisirs de Saint-Cyr)",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12"],outcome:"condemnation",amendes:[4000,1000],note:"Non-recouvrement part fixe DSP (368 000 €) + double avantage injustifié (primes artificiellement majorées). 2e président dispensé de peine (Covid, régularisation rapide)."},
-  {date:"2024-10-07",ref:"S-2024-1305",entity:"Commune de Sainte-Eulalie-en-Born",lieu:"Landes",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[1000],note:"DGS condamnée 1 000 € (modulé, situation précaire). Non-transmission déclarations sinistre → 44 770 € de pertes. Faute simple devenue grave par répétition (2018-2021)."},
-  {date:"2024-10-10",ref:"S-2024-1311",entity:"Commune de Felleries",lieu:"Nord",juri:"CDC",inf:["L.131-15","L.131-13-1°"],outcome:"partiel",amendes:[3000,2000,1000,1000],note:"Gestion de fait via 2 associations. Relaxe pour défaut de production comptes (exige reconnaissance préalable de gestionnaire de fait). Maire : 3 000 €."},
-  {date:"2024-11-14",ref:"S-2024-1396",entity:"Commune de Bantzenheim",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[5000,10000],note:"Maire : 5 000 €. Secrétaire de mairie : 10 000 €. Indemnités irrégulières au départ en retraite. Intérêt indirect : renoncement délibéré au contrôle hiérarchique."},
-  {date:"2024-12-16",ref:"S-2024-1528",entity:"Commune de Richwiller",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[1000],note:"Prime de fin d'année indue (28 agents). Condamné 1 000 € en 1ère instance. Infirmé en appel (CAF, 20/06/2025) : intérêt personnel non établi."},
-  {date:"2024-12-19",ref:"S-2024-1571",entity:"AgroParisTech / DNID — Château de Grignon",lieu:"Yvelines",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[5000,4000,3000,3000],note:"Vente mobilier du domaine public sans déclassement préalable. Préjudice : 218 981 €. DGA AgroParisTech : 5 000 €. Directeur site : 4 000 €. 2 agents DNID : 3 000 € chacun."},
-  {date:"2024-12-23",ref:"S-2024-1604",entity:"SCI Protis Développement et SAEM Marseille Habitat",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"partiel",amendes:[1000],note:"Relaxe revente parkings (pas de moins-value → pas de préjudice). Directrice condamnée 1 000 € pour avenant à son propre contrat signé sans CA préalable."},
-  {date:"2025-01-08",ref:"S-2024-1612",entity:"Fondation Assistance aux animaux",lieu:"",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500,1000],note:"Acquisitions immobilières et marché lobbying sans habilitation du CA. Présidente : 1 500 €. Directeur : 1 000 €. Délibération postérieure non rétroactive."},
-  {date:"2025-03-24",ref:"S-2025-0381",entity:"Saint-Louis Agglomération (SLA)",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[3000],note:"Prime de fin d'année à agents sans droit. Condamné 3 000 €. Infirmé en appel (CAF, 12/12/2025) : intérêt personnel non établi — éviter conflit social peut relever de l'intérêt général."},
-  {date:"2025-04-10",ref:"S-2025-0533",entity:"CMCAS de La Réunion",lieu:"",juri:"CDC",inf:["L.131-13-1°"],outcome:"condemnation",amendes:[4000,2500],note:"Non-production comptes 2016-2022 (retards systématiques). Président : 4 000 €. Trésorier : 2 500 €. Confirmé en appel (CAF, 16/01/2026)."},
-  {date:"2025-04-17",ref:"S-2025-0624",entity:"Hôpital de Pédiatrie et de Rééducation de Bullion",lieu:"Yvelines",juri:"CDC",inf:["L.131-15"],outcome:"relaxe",amendes:[],note:"Gestion de fait non retenue : les dons de particuliers à une association ne sont pas des deniers publics, même reversés via l'hôpital."},
-  {date:"2025-05-13",ref:"S-2025-0647",entity:"Commune d'Éguilles",lieu:"Bouches-du-Rhône",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[7500],note:"Comptable condamné 7 500 € → réduit à 3 000 € en appel. Paiements sans contrôle des calculs de liquidation. 281 505 €. Régularisation ex-post sans effet sur l'infraction."},
-  {date:"2025-06-24",ref:"S-2025-0910",entity:"Communauté de communes de Marana-Golo",lieu:"Haute-Corse",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[5000,4000],note:"Défaut recouvrement eau (3,85 M€ créances). 2 comptables : 5 000 € + 4 000 €. DGS dispensé de peine. Admission en non-valeur ≠ exonération rétroactive."},
-  {date:"2025-07-01",ref:"S-2025-0944",entity:"ECPAD",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12"],outcome:"partiel",amendes:[2000],note:"Renvoi après cassation CE. L.131-12 non retenu (intérêt personnel non établi). L.131-9 retenu. Amende 2 000 € (CDBF avait prononcé 2 500 €)."},
-  {date:"2025-07-08",ref:"S-2025-0978",entity:"Commune de Morne-à-l'Eau",lieu:"Guadeloupe",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[2500],note:"Maire condamné 2 500 €. Non-mandatement décisions de justice (réintégration refusée à agent irrégulièrement radié). L.131-14 2° vise le mandatement, pas le paiement."},
-  {date:"2025-07-22",ref:"S-2025-1040",entity:"Association Laval Mayenne Technopole",lieu:"Mayenne",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1000],note:"Directeur : 14 contrats + 430 000 € de dépenses sans pouvoir. Aucune délégation dans statuts ni contrat de travail. Amende 1 000 € (présidents passifs = atténuante majeure)."},
-  {date:"2025-07-22",ref:"S-2025-1041",entity:"Commune de Provin",lieu:"Nord",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500],note:"DGS condamné 1 500 €. Dépenses au-delà délégation + sans délégation après renouvellement du mandat du maire. Délégation caduque dès réélection du maire."},
-  {date:"2025-09-02",ref:"S-2025-1195",entity:"Commune de Poindimié",lieu:"Nouvelle-Calédonie",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[4000],note:"Maire condamné 4 000 €. Non-mandatement condamnations pécuniaires dans les 2 mois. Insuffisance de trésorerie = atténuante. Récidive (CDBF antérieure)."},
-  {date:"2025-09-02",ref:"S-2025-1208",entity:"Régie Golfe du Morbihan Vannes Tourisme",lieu:"Morbihan",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[2000],note:"3,5 M€ de dépenses engagées sans habilitation (2019-2023). Directeur condamné 2 000 €. Caractère systématique = aggravante. Absence délégation par CA = atténuante."},
-  {date:"2025-09-05",ref:"S-2025-1360",entity:"CDG38 — Isère",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"relaxe",amendes:[],note:"Relaxe : délibération de 1990 illégale mais exécutoire pendant 30 ans sans observation préfectorale. Abrogée dès information des dirigeants. Apparences de légalité maintenues."},
-  {date:"2025-10-17",ref:"S-2025-1542",entity:"SEM LIGER",lieu:"Morbihan",juri:"CDC",inf:["L.131-15","L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe totale. SEM exerçait pour son propre compte, réseau de chaleur = réseau privé. Absence de délégation de service public. Gestion de fait et avantage injustifié non retenus."},
-  {date:"2025-11-14",ref:"S-2025-1664",entity:"Chambre départ. agriculture Lot-et-Garonne",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12","L.131-13-1°","L.131-14","L.131-15"],outcome:"partiel",amendes:[14000,7000,5000,5000,2000],note:"Affaire Caussade. Construction retenue eau illégale. Préjudice ≥ 4,2 M€. 5 infractions. Non bis in idem écarté. Président : 14 000 €. 5 personnes condamnées."},
-  {date:"2025-11-21",ref:"S-2025-1722",entity:"Biarritz Tourisme",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"partiel",amendes:[6000,1000],note:"Agent comptable relaxé (violation droits de défense). Directeur : 6 000 € (remises tarifaires irrégulières + marchés + cession véhicule à soi-même). Président : 1 000 €."},
-  {date:"2025-12-12",ref:"S-2025-1836",entity:"Commune d'Échirolles",lieu:"Isère",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : avantage injustifié et préjudice établis mais intérêt personnel non démontré. Réquisition motivée par éviter dysfonctionnement services publics ≠ intérêt personnel moral."},
-  {date:"2025-12-18",ref:"S-2025-1734",entity:"Chambre départ. agriculture Loir-et-Cher",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-1°"],outcome:"partiel",amendes:[1000],note:"Non-production comptes 2020-2022 retenue. L.131-9 relaxe (coûts pris en charge par Chambres France). QPC L.131-16 non transmise. Président condamné 1 000 €. Agent comptable dispensé."},
-  {date:"2026-01-13",ref:"S-2025-1888",entity:"Centre hospitalier de Guéret",lieu:"Creuse",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1000],note:"DG ARS condamné 1 000 €. Engagement de dépenses du CH sans habilitation (renouvellement mission experts sans publicité). L'accord de volontés préalable = acte constitutif."},
-  {date:"2026-02-06",ref:"S-2026-0044",entity:"École des Beaux-Arts de Nantes Saint-Nazaire",lieu:"Loire-Atlantique",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[1000],note:"Directeur condamné 1 000 €. Prime illégale 2019-2021 (396 837 €). EPCC ne peut pas avoir d'avantage collectivement acquis antérieur à 1984. Délibération 2019 inopérante."},
-  {date:"2026-02-16",ref:"S-2026-0107",entity:"CAF du Val-de-Marne",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[8000,6000],note:"Faux codes interruptifs de prescription (5,4 M€ indus non recouvrés). Agent comptable : 8 000 €. Fondée de pouvoir : 6 000 €. Infraction continue. Non bis in idem écarté."},
-  {date:"2026-03-10",ref:"S-2026-0200",entity:"Association La case des artistes",lieu:"Nouvelle-Calédonie",juri:"CDC",inf:["L.131-9","L.131-13-3°","L.131-13-1°"],outcome:"partiel",amendes:[2000,3000,1000],note:"L.131-12 non retenu (intérêt personnel absent). Président : 2 000 € + 1 000 € (absence injustifiée à l'audience). Directeur : 3 000 €. Préjudice cumulé : 468 000 €."},
+  {date:"2023-05-11",ref:"S-2023-0604",entity:"Société Alpexpo",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12","L.131-13-3°"],outcome:"partiel",amendes:[3500],note:"🏛 1er arrêt du régime rénové. Directrice générale de fait condamnée (3 500 €). Deux présidents relaxés : préjudice non significatif. Non-rétroactivité de L.131-12 à soi-même posée.",crc:"CRC Auvergne-Rhône-Alpes"},
+  {date:"2023-05-31",ref:"S-2023-0667",entity:"Commune d'Ajaccio",lieu:"Corse-du-Sud",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[10000],note:"2e arrêt. Maire condamné 10 000 € : astreintes pour inexécution d'une décision de justice prononcée en faveur d'un agent communal.",crc:"CRC Corse"},
+  {date:"2023-07-10",ref:"S-2023-0858",entity:"Centre hospitalier Sainte-Marie à Marie-Galante",lieu:"",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[7000,2000,1000],note:"3e arrêt. Directrice (2012-2021) : 7 000 €. Successeur : 2 000 €. Attachée suivi contentieux : 1 000 €. Astreintes pour inexécution de décision de justice.",crc:"CRC Guadeloupe, Guyane et Martinique"},
+  {date:"2023-10-20",ref:"S-2023-1184",entity:"Régie régionale des transports des Landes (RRTL)",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : L.131-12 (avantage injustifié à soi-même) non rétroactif — ne peut sanctionner des faits commis avant le 01/01/2023.",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2023-11-24",ref:"S-2023-1382",entity:"Caisse de crédit municipal de Bordeaux",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[20000,10000],note:"1ère décision L.131-9. Dossiers de prêts incomplets, sûretés insuffisantes. Préjudice : 3,9 M€. DG : 20 000 €. DGA : 10 000 €. Publication au JO.",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2024-05-03",ref:"S-2024-0715",entity:"Département de l'Eure",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[2500,2500],note:"1ère décision sur l'intégralité de la chaîne de la dépense. Fraude aux faux ordres de virement (FOVI) — 800 000 €. Ordonnateur + adjoint comptable. Circonstances atténuantes (fraude sophistiquée en bande organisée).",crc:"CRC Normandie"},
+  {date:"2024-05-03",ref:"S-2024-0723",entity:"Département de la Haute-Saône",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[9000],note:"Président condamné 9 000 € : 70 000 € d'indemnités injustifiées à sa directrice de cabinet. Intérêt personnel indirect démontré par 15 ans de relations professionnelles.",crc:"CRC Bourgogne-Franche-Comté"},
+  {date:"2024-05-03",ref:"S-2024-0696",entity:"Chambre régionale agriculture Bretagne / E-TOILE",lieu:"",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : marché sans mise en concurrence mais absence de préjudice prouvé. Le dépassement budgétaire n'était pas imputable à l'irrégularité de passation.",crc:"CRC Bretagne"},
+  {date:"2024-06-21",ref:"S-2024-0793",entity:"France Médias Monde (FMM)",lieu:"",juri:"CDC",inf:["L.131-13-2°","L.131-13-3°","L.131-9"],outcome:"partiel",amendes:[5000,2000,1000],note:"Conventions transactionnelles sans consultation CGEFI + marchés hors délégation. DG délégué : 5 000 €. DRH : 2 000 €. Relaxe sur L.131-9 (préjudice non déterminable).",crc:"CRC Île-de-France"},
+  {date:"2024-06-25",ref:"S-2024-0943",entity:"Régie Gazélec de Péronne",lieu:"",juri:"CDC",inf:["L.131-13-1°","L.131-13-3°"],outcome:"condemnation",amendes:[4000,3000],note:"Non-production comptes + engagement sans pouvoir. Revirement Alpexpo : L.131-13 1° applicable aux faits antérieurs à 2023 car infraction préexistante sous forme générique.",crc:"CRC Hauts-de-France"},
+  {date:"2024-07-02",ref:"S-2024-1006",entity:"Office du Tourisme de Strasbourg (OTSR)",lieu:"",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500],note:"Dépenses au-delà de la délégation (30 000 €), dont 400 000 € pour un marché de Noël à New York sans aucune habilitation. Caractère répété = aggravante.",crc:"CRC Grand Est"},
+  {date:"2024-07-05",ref:"S-2024-1038",entity:"Régie métropolitaine PARCUB devenue METPARK",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"condemnation",amendes:[2500,8000],note:"Directeur : 2 500 € (modulé, sans emploi). Directeur financier : 8 000 €. Significativité appréciée sur produits de gestion moyens (19,4 M€).",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2024-07-23",ref:"S-2024-1128",entity:"SAEM SAGA (parc de loisirs de Saint-Cyr)",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12"],outcome:"condemnation",amendes:[4000,1000],note:"Non-recouvrement part fixe DSP (368 000 €) + double avantage injustifié (primes artificiellement majorées). 2e président dispensé de peine (Covid, régularisation rapide).",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2024-10-07",ref:"S-2024-1305",entity:"Commune de Sainte-Eulalie-en-Born",lieu:"Landes",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[1000],note:"DGS condamnée 1 000 € (modulé, situation précaire). Non-transmission déclarations sinistre → 44 770 € de pertes. Faute simple devenue grave par répétition (2018-2021).",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2024-10-10",ref:"S-2024-1311",entity:"Commune de Felleries",lieu:"Nord",juri:"CDC",inf:["L.131-15","L.131-13-1°"],outcome:"partiel",amendes:[3000,2000,1000,1000],note:"Gestion de fait via 2 associations. Relaxe pour défaut de production comptes (exige reconnaissance préalable de gestionnaire de fait). Maire : 3 000 €.",crc:"CRC Hauts-de-France"},
+  {date:"2024-11-14",ref:"S-2024-1396",entity:"Commune de Bantzenheim",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[5000,10000],note:"Maire : 5 000 €. Secrétaire de mairie : 10 000 €. Indemnités irrégulières au départ en retraite. Intérêt indirect : renoncement délibéré au contrôle hiérarchique.",crc:"CRC Grand Est"},
+  {date:"2024-12-16",ref:"S-2024-1528",entity:"Commune de Richwiller",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[1000],note:"Prime de fin d'année indue (28 agents). Condamné 1 000 € en 1ère instance. Infirmé en appel (CAF, 20/06/2025) : intérêt personnel non établi.",crc:"CRC Grand Est"},
+  {date:"2024-12-19",ref:"S-2024-1571",entity:"AgroParisTech / DNID — Château de Grignon",lieu:"Yvelines",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[5000,4000,3000,3000],note:"Vente mobilier du domaine public sans déclassement préalable. Préjudice : 218 981 €. DGA AgroParisTech : 5 000 €. Directeur site : 4 000 €. 2 agents DNID : 3 000 € chacun.",crc:"CRC Île-de-France"},
+  {date:"2024-12-23",ref:"S-2024-1604",entity:"SCI Protis Développement et SAEM Marseille Habitat",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"partiel",amendes:[1000],note:"Relaxe revente parkings (pas de moins-value → pas de préjudice). Directrice condamnée 1 000 € pour avenant à son propre contrat signé sans CA préalable.",crc:"CRC Provence-Alpes-Côte d'Azur"},
+  {date:"2025-01-08",ref:"S-2024-1612",entity:"Fondation Assistance aux animaux",lieu:"",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500,1000],note:"Acquisitions immobilières et marché lobbying sans habilitation du CA. Présidente : 1 500 €. Directeur : 1 000 €. Délibération postérieure non rétroactive.",crc:"CRC Île-de-France"},
+  {date:"2025-03-24",ref:"S-2025-0381",entity:"Saint-Louis Agglomération (SLA)",lieu:"Haut-Rhin",juri:"CDC",inf:["L.131-12"],outcome:"condemnation",amendes:[3000],note:"Prime de fin d'année à agents sans droit. Condamné 3 000 €. Infirmé en appel (CAF, 12/12/2025) : intérêt personnel non établi — éviter conflit social peut relever de l'intérêt général.",crc:"CRC Grand Est"},
+  {date:"2025-04-10",ref:"S-2025-0533",entity:"CMCAS de La Réunion",lieu:"",juri:"CDC",inf:["L.131-13-1°"],outcome:"condemnation",amendes:[4000,2500],note:"Non-production comptes 2016-2022 (retards systématiques). Président : 4 000 €. Trésorier : 2 500 €. Confirmé en appel (CAF, 16/01/2026).",crc:"CRC La Réunion - Mayotte"},
+  {date:"2025-04-17",ref:"S-2025-0624",entity:"Hôpital de Pédiatrie et de Rééducation de Bullion",lieu:"Yvelines",juri:"CDC",inf:["L.131-15"],outcome:"relaxe",amendes:[],note:"Gestion de fait non retenue : les dons de particuliers à une association ne sont pas des deniers publics, même reversés via l'hôpital.",crc:"CRC Île-de-France"},
+  {date:"2025-05-13",ref:"S-2025-0647",entity:"Commune d'Éguilles",lieu:"Bouches-du-Rhône",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[7500],note:"Comptable condamné 7 500 € → réduit à 3 000 € en appel. Paiements sans contrôle des calculs de liquidation. 281 505 €. Régularisation ex-post sans effet sur l'infraction.",crc:"CRC Provence-Alpes-Côte d'Azur"},
+  {date:"2025-06-24",ref:"S-2025-0910",entity:"Communauté de communes de Marana-Golo",lieu:"Haute-Corse",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[5000,4000],note:"Défaut recouvrement eau (3,85 M€ créances). 2 comptables : 5 000 € + 4 000 €. DGS dispensé de peine. Admission en non-valeur ≠ exonération rétroactive.",crc:"CRC Corse"},
+  {date:"2025-07-01",ref:"S-2025-0944",entity:"ECPAD",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12"],outcome:"partiel",amendes:[2000],note:"Renvoi après cassation CE. L.131-12 non retenu (intérêt personnel non établi). L.131-9 retenu. Amende 2 000 € (CDBF avait prononcé 2 500 €).",crc:"CRC Île-de-France"},
+  {date:"2025-07-08",ref:"S-2025-0978",entity:"Commune de Morne-à-l'Eau",lieu:"Guadeloupe",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[2500],note:"Maire condamné 2 500 €. Non-mandatement décisions de justice (réintégration refusée à agent irrégulièrement radié). L.131-14 2° vise le mandatement, pas le paiement.",crc:"CRC Guadeloupe, Guyane et Martinique"},
+  {date:"2025-07-22",ref:"S-2025-1040",entity:"Association Laval Mayenne Technopole",lieu:"Mayenne",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1000],note:"Directeur : 14 contrats + 430 000 € de dépenses sans pouvoir. Aucune délégation dans statuts ni contrat de travail. Amende 1 000 € (présidents passifs = atténuante majeure).",crc:"CRC Pays de la Loire"},
+  {date:"2025-07-22",ref:"S-2025-1041",entity:"Commune de Provin",lieu:"Nord",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1500],note:"DGS condamné 1 500 €. Dépenses au-delà délégation + sans délégation après renouvellement du mandat du maire. Délégation caduque dès réélection du maire.",crc:"CRC Hauts-de-France"},
+  {date:"2025-09-02",ref:"S-2025-1195",entity:"Commune de Poindimié",lieu:"Nouvelle-Calédonie",juri:"CDC",inf:["L.131-14"],outcome:"condemnation",amendes:[4000],note:"Maire condamné 4 000 €. Non-mandatement condamnations pécuniaires dans les 2 mois. Insuffisance de trésorerie = atténuante. Récidive (CDBF antérieure).",crc:"CTC Nouvelle-Calédonie"},
+  {date:"2025-09-02",ref:"S-2025-1208",entity:"Régie Golfe du Morbihan Vannes Tourisme",lieu:"Morbihan",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[2000],note:"3,5 M€ de dépenses engagées sans habilitation (2019-2023). Directeur condamné 2 000 €. Caractère systématique = aggravante. Absence délégation par CA = atténuante.",crc:"CRC Bretagne"},
+  {date:"2025-09-05",ref:"S-2025-1360",entity:"CDG38 — Isère",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"relaxe",amendes:[],note:"Relaxe : délibération de 1990 illégale mais exécutoire pendant 30 ans sans observation préfectorale. Abrogée dès information des dirigeants. Apparences de légalité maintenues.",crc:"CRC Auvergne-Rhône-Alpes"},
+  {date:"2025-10-17",ref:"S-2025-1542",entity:"SEM LIGER",lieu:"Morbihan",juri:"CDC",inf:["L.131-15","L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe totale. SEM exerçait pour son propre compte, réseau de chaleur = réseau privé. Absence de délégation de service public. Gestion de fait et avantage injustifié non retenus.",crc:"CRC Bretagne"},
+  {date:"2025-11-14",ref:"S-2025-1664",entity:"Chambre départ. agriculture Lot-et-Garonne",lieu:"",juri:"CDC",inf:["L.131-9","L.131-12","L.131-13-1°","L.131-14","L.131-15"],outcome:"partiel",amendes:[14000,7000,5000,5000,2000],note:"Affaire Caussade. Construction retenue eau illégale. Préjudice ≥ 4,2 M€. 5 infractions. Non bis in idem écarté. Président : 14 000 €. 5 personnes condamnées.",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2025-11-21",ref:"S-2025-1722",entity:"Biarritz Tourisme",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-3°"],outcome:"partiel",amendes:[6000,1000],note:"Agent comptable relaxé (violation droits de défense). Directeur : 6 000 € (remises tarifaires irrégulières + marchés + cession véhicule à soi-même). Président : 1 000 €.",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2025-12-12",ref:"S-2025-1836",entity:"Commune d'Échirolles",lieu:"Isère",juri:"CDC",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Relaxe : avantage injustifié et préjudice établis mais intérêt personnel non démontré. Réquisition motivée par éviter dysfonctionnement services publics ≠ intérêt personnel moral.",crc:"CRC Auvergne-Rhône-Alpes"},
+  {date:"2025-12-18",ref:"S-2025-1734",entity:"Chambre départ. agriculture Loir-et-Cher",lieu:"",juri:"CDC",inf:["L.131-9","L.131-13-1°"],outcome:"partiel",amendes:[1000],note:"Non-production comptes 2020-2022 retenue. L.131-9 relaxe (coûts pris en charge par Chambres France). QPC L.131-16 non transmise. Président condamné 1 000 €. Agent comptable dispensé.",crc:"CRC Centre-Val de Loire"},
+  {date:"2026-01-13",ref:"S-2025-1888",entity:"Centre hospitalier de Guéret",lieu:"Creuse",juri:"CDC",inf:["L.131-13-3°"],outcome:"condemnation",amendes:[1000],note:"DG ARS condamné 1 000 €. Engagement de dépenses du CH sans habilitation (renouvellement mission experts sans publicité). L'accord de volontés préalable = acte constitutif.",crc:"CRC Nouvelle-Aquitaine"},
+  {date:"2026-02-06",ref:"S-2026-0044",entity:"École des Beaux-Arts de Nantes Saint-Nazaire",lieu:"Loire-Atlantique",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[1000],note:"Directeur condamné 1 000 €. Prime illégale 2019-2021 (396 837 €). EPCC ne peut pas avoir d'avantage collectivement acquis antérieur à 1984. Délibération 2019 inopérante.",crc:"CRC Pays de la Loire"},
+  {date:"2026-02-16",ref:"S-2026-0107",entity:"CAF du Val-de-Marne",lieu:"",juri:"CDC",inf:["L.131-9"],outcome:"condemnation",amendes:[8000,6000],note:"Faux codes interruptifs de prescription (5,4 M€ indus non recouvrés). Agent comptable : 8 000 €. Fondée de pouvoir : 6 000 €. Infraction continue. Non bis in idem écarté.",crc:"CRC Île-de-France"},
+  {date:"2026-03-10",ref:"S-2026-0200",entity:"Association La case des artistes",lieu:"Nouvelle-Calédonie",juri:"CDC",inf:["L.131-9","L.131-13-3°","L.131-13-1°"],outcome:"partiel",amendes:[2000,3000,1000],note:"L.131-12 non retenu (intérêt personnel absent). Président : 2 000 € + 1 000 € (absence injustifiée à l'audience). Directeur : 3 000 €. Préjudice cumulé : 468 000 €.",crc:"CTC Nouvelle-Calédonie"},
   // CAF
-  {date:"2024-01-12",ref:"2024-01",entity:"Société Alpexpo",lieu:"",juri:"CAF",inf:["L.131-9","L.131-12"],outcome:"confirmation",amendes:[],note:"1er arrêt CAF. Confirmation relaxe présidents. Confirmation non-rétroactivité L.131-12 à soi-même. Préjudice doit être évalué avec précision suffisante au regard d'éléments financiers pertinents."},
-  {date:"2025-02-06",ref:"2025-01",entity:"Département de l'Eure",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"confirmation",amendes:[2500],note:"Confirmation. Faute isolée peut être grave. Significativité appréciée sur dépenses d'investissement. Un ordre de grandeur suffit (pas le montant exact)."},
-  {date:"2025-04-16",ref:"2025-03",entity:"Régie Gazélec de Péronne",lieu:"",juri:"CAF",inf:["L.131-13-1°"],outcome:"partiel",amendes:[2500],note:"Confirmation infraction. Amende réduite 3 000 € → 2 500 €. L'obligation de soumission des comptes au CA incombe au seul ordonnateur, pas à l'agent comptable."},
-  {date:"2025-06-20",ref:"2025-04",entity:"Commune de Richwiller",lieu:"",juri:"CAF",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Infirmation. Avantage injustifié établi mais intérêt personnel non prouvé. Le manquement à une obligation ne suffit pas. Éviter conflit social peut répondre à l'intérêt général."},
-  {date:"2025-10-07",ref:"2025-05",entity:"AgroParisTech / DNID — Château de Grignon",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[500],note:"Infraction confirmée. Amende commissaire aux ventes : 3 000 € → 500 € (absence pour raison de santé lors des visites de site)."},
-  {date:"2025-12-12",ref:"2025-06",entity:"Saint-Louis Agglomération",lieu:"",juri:"CAF",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Infirmation. Intérêt personnel non établi. Éviter conflit social = intérêt général possible. Utiliser la réquisition n'établit pas l'intérêt personnel. Jurisprudence Richwiller confirmée."},
-  {date:"2025-12-15",ref:"2025-07",entity:"Commune d'Éguilles",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[3000],note:"Confirmation infraction. Amende 7 500 € → 3 000 €. L'impartialité du magistrat instructeur ne se déduit pas du seul fait qu'il n'a pas instruit à l'égard de l'ordonnateur."},
-  {date:"2026-01-16",ref:"2026-01",entity:"CMCAS de La Réunion",lieu:"",juri:"CAF",inf:["L.131-13-1°"],outcome:"confirmation",amendes:[4000,2500],note:"Rejet appel. L.131-13 1° conforme CEDH et DDHC. Caractère systématique = aggravante. Existence d'un préjudice financier non exigée pour cette infraction."},
-  {date:"2026-03-11",ref:"2026-03",entity:"Communauté de communes de Marana-Golo",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[4000,3000],note:"Annulation arrêt 1ère instance (motivation insuffisante, omission à statuer). Rejugement. Amendes réduites. Convention partenariale = recommandation, non règle. Préjudice de trésorerie non démontré."},
+  {date:"2024-01-12",ref:"2024-01",entity:"Société Alpexpo",lieu:"",juri:"CAF",inf:["L.131-9","L.131-12"],outcome:"confirmation",amendes:[],note:"1er arrêt CAF. Confirmation relaxe présidents. Confirmation non-rétroactivité L.131-12 à soi-même. Préjudice doit être évalué avec précision suffisante au regard d'éléments financiers pertinents.",crc:null},
+  {date:"2025-02-06",ref:"2025-01",entity:"Département de l'Eure",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"confirmation",amendes:[2500],note:"Confirmation. Faute isolée peut être grave. Significativité appréciée sur dépenses d'investissement. Un ordre de grandeur suffit (pas le montant exact).",crc:null},
+  {date:"2025-04-16",ref:"2025-03",entity:"Régie Gazélec de Péronne",lieu:"",juri:"CAF",inf:["L.131-13-1°"],outcome:"partiel",amendes:[2500],note:"Confirmation infraction. Amende réduite 3 000 € → 2 500 €. L'obligation de soumission des comptes au CA incombe au seul ordonnateur, pas à l'agent comptable.",crc:null},
+  {date:"2025-06-20",ref:"2025-04",entity:"Commune de Richwiller",lieu:"",juri:"CAF",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Infirmation. Avantage injustifié établi mais intérêt personnel non prouvé. Le manquement à une obligation ne suffit pas. Éviter conflit social peut répondre à l'intérêt général.",crc:null},
+  {date:"2025-10-07",ref:"2025-05",entity:"AgroParisTech / DNID — Château de Grignon",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[500],note:"Infraction confirmée. Amende commissaire aux ventes : 3 000 € → 500 € (absence pour raison de santé lors des visites de site).",crc:null},
+  {date:"2025-12-12",ref:"2025-06",entity:"Saint-Louis Agglomération",lieu:"",juri:"CAF",inf:["L.131-12"],outcome:"relaxe",amendes:[],note:"Infirmation. Intérêt personnel non établi. Éviter conflit social = intérêt général possible. Utiliser la réquisition n'établit pas l'intérêt personnel. Jurisprudence Richwiller confirmée.",crc:null},
+  {date:"2025-12-15",ref:"2025-07",entity:"Commune d'Éguilles",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[3000],note:"Confirmation infraction. Amende 7 500 € → 3 000 €. L'impartialité du magistrat instructeur ne se déduit pas du seul fait qu'il n'a pas instruit à l'égard de l'ordonnateur.",crc:null},
+  {date:"2026-01-16",ref:"2026-01",entity:"CMCAS de La Réunion",lieu:"",juri:"CAF",inf:["L.131-13-1°"],outcome:"confirmation",amendes:[4000,2500],note:"Rejet appel. L.131-13 1° conforme CEDH et DDHC. Caractère systématique = aggravante. Existence d'un préjudice financier non exigée pour cette infraction.",crc:null},
+  {date:"2026-03-11",ref:"2026-03",entity:"Communauté de communes de Marana-Golo",lieu:"",juri:"CAF",inf:["L.131-9"],outcome:"partiel",amendes:[4000,3000],note:"Annulation arrêt 1ère instance (motivation insuffisante, omission à statuer). Rejugement. Amendes réduites. Convention partenariale = recommandation, non règle. Préjudice de trésorerie non démontré.",crc:null},
   // CE
-  {date:"2023-02-23",ref:"469199",entity:"QPC art. 29 ordonnance 23 mars 2022",lieu:"",juri:"CE",inf:[],outcome:"sans objet",amendes:[],note:"QPC devenue sans objet avec le transfert au 01/01/2023 des instances ouvertes devant la CDBF à la Cour des comptes."},
-  {date:"2024-04-30",ref:"470749",entity:"Directrice générale ECPAD",lieu:"",juri:"CE",inf:["L.131-9","L.131-12"],outcome:"cassation",amendes:[],note:"Cassation arrêt CDBF. Loi répressive plus douce applicable : L.131-9 exige faute grave + préjudice significatif. L.131-12 exige intérêt personnel. Renvoi à la Cour des comptes."},
+  {date:"2023-02-23",ref:"469199",entity:"QPC art. 29 ordonnance 23 mars 2022",lieu:"",juri:"CE",inf:[],outcome:"sans objet",amendes:[],note:"QPC devenue sans objet avec le transfert au 01/01/2023 des instances ouvertes devant la CDBF à la Cour des comptes.",crc:null},
+  {date:"2024-04-30",ref:"470749",entity:"Directrice générale ECPAD",lieu:"",juri:"CE",inf:["L.131-9","L.131-12"],outcome:"cassation",amendes:[],note:"Cassation arrêt CDBF. Loi répressive plus douce applicable : L.131-9 exige faute grave + préjudice significatif. L.131-12 exige intérêt personnel. Renvoi à la Cour des comptes.",crc:null},
   // CC
-  {date:"2025-07-18",ref:"2025-1148 QPC",entity:"L.131-17 CJF — Plafond amende justiciables sans rémunération",lieu:"",juri:"CC",inf:[],outcome:"inconstitutionnalite",amendes:[],note:"Art. L.131-17 inconstitutionnel. Principe d'égalité devant la loi violé : plafond fixe pour non-rémunérés vs 6 mois de salaire pour les autres. Abrogation au 19/07/2025, toutes affaires non définitivement jugées."},
+  {date:"2025-07-18",ref:"2025-1148 QPC",entity:"L.131-17 CJF — Plafond amende justiciables sans rémunération",lieu:"",juri:"CC",inf:[],outcome:"inconstitutionnalite",amendes:[],note:"Art. L.131-17 inconstitutionnel. Principe d'égalité devant la loi violé : plafond fixe pour non-rémunérés vs 6 mois de salaire pour les autres. Abrogation au 19/07/2025, toutes affaires non définitivement jugées.",crc:null},
 ];
 
 const LEGAL_ARTICLES = [
@@ -1461,7 +1896,11 @@ document.addEventListener('DOMContentLoaded',function(){
 
 /* ── PATCH openTab ── */
 var _origOpenTab2=window.openTab;
-window.openTab=function(id,btn){_origOpenTab2(id,btn);if(id==='jurisprudenceTab')setTimeout(buildJuris,80);};
+window.openTab=function(id,btn){
+  _origOpenTab2(id,btn);
+  if(id==='jurisprudenceTab')setTimeout(buildJuris,80);
+  if(id==='procedureTab'){var first=document.querySelector('#procedureTab .proc-step');if(first&&!first.classList.contains('open'))first.classList.add('open');}
+};
 
 /* ── ENRICH CHATBOT ── */
 var JURIS_FAQ=[
@@ -1504,6 +1943,62 @@ window.cbSend=function(){
   }
   if(_origCbSend) _origCbSend();
 };
+
+/* ── PROCÉDURE RGP ──────────────────────────────────────────── */
+function toggleProcStep(el){
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('#procedureTab .proc-step.open').forEach(function(s){s.classList.remove('open');});
+  if(!isOpen)el.classList.add('open');
+}
+
+/* ── DOCUMENTS ────────────────────────────────────────────────── */
+var _docUrls={pdf:null,xls:null};
+
+function handleDragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over')}
+function handleDragLeave(e){e.currentTarget.classList.remove('drag-over')}
+function handleDrop(e,type){
+  e.preventDefault();e.currentTarget.classList.remove('drag-over');
+  var file=e.dataTransfer.files[0];
+  if(file)loadDocFile(file,type);
+}
+function handleFileSelect(e,type){
+  var file=e.target.files[0];
+  if(file)loadDocFile(file,type);
+}
+function loadDocFile(file,type){
+  if(_docUrls[type])URL.revokeObjectURL(_docUrls[type]);
+  var url=URL.createObjectURL(file);
+  _docUrls[type]=url;
+  var sizeMB=(file.size/1048576).toFixed(2);
+  if(type==='pdf'){
+    document.getElementById('pdfFileName').textContent=file.name;
+    document.getElementById('pdfFileMeta').textContent=sizeMB+' Mo · PDF';
+    document.getElementById('pdfOpenBtn').href=url;
+    document.getElementById('pdfFileCard').style.display='block';
+    document.getElementById('pdfDropZone').style.display='none';
+    document.getElementById('pdfEmpty').style.display='none';
+  } else {
+    document.getElementById('xlsFileName').textContent=file.name;
+    document.getElementById('xlsFileMeta').textContent=sizeMB+' Mo · '+file.name.split('.').pop().toUpperCase();
+    var dlBtn=document.getElementById('xlsDownloadBtn');
+    dlBtn.href=url;dlBtn.download=file.name;
+    document.getElementById('xlsFileCard').style.display='block';
+    document.getElementById('xlsDropZone').style.display='none';
+    document.getElementById('xlsEmpty').style.display='none';
+  }
+}
+function removeFile(type){
+  if(_docUrls[type]){URL.revokeObjectURL(_docUrls[type]);_docUrls[type]=null;}
+  if(type==='pdf'){
+    document.getElementById('pdfFileCard').style.display='none';
+    document.getElementById('pdfDropZone').style.display='block';
+    document.getElementById('pdfInput').value='';
+  } else {
+    document.getElementById('xlsFileCard').style.display='none';
+    document.getElementById('xlsDropZone').style.display='block';
+    document.getElementById('xlsInput').value='';
+  }
+}
 
 </script>
 </body>
