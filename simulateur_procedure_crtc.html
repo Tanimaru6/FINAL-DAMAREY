@@ -1,0 +1,737 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0b1a33;
+  --navy-mid: #13294b;
+  --navy-lt: #1e3a6e;
+  --gold: #b89a3c;
+  --gold-lt: #d8bd6a;
+  --gold-pale: #f5efe0;
+}
+
+#sim {
+  font-family: 'DM Sans', sans-serif;
+  background: transparent;
+  color: var(--color-text-primary);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0.5rem 0 2rem;
+}
+
+/* Header */
+.sim-header {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+  border-radius: 14px;
+  padding: 22px 28px 18px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.sim-header::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(184,154,60,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sim-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.sim-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.sim-subtitle {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+}
+
+/* Progress bar */
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.progress-bar-bg {
+  flex: 1;
+  height: 5px;
+  background: var(--color-border-tertiary);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy-mid), var(--gold));
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.progress-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Score badges */
+.score-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.score-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+}
+.score-badge.gold-badge {
+  background: rgba(184,154,60,0.1);
+  border-color: rgba(184,154,60,0.3);
+  color: var(--gold);
+}
+.score-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Scenario card */
+.scenario-card {
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: var(--color-background-primary);
+}
+.scenario-tag {
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tag-pill {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(184,154,60,0.25);
+  color: var(--gold-lt);
+}
+.scenario-num {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  margin-left: auto;
+}
+.scenario-body {
+  padding: 18px 20px;
+}
+.scenario-situation {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.scenario-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+/* Choices */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.choice-btn {
+  width: 100%;
+  text-align: left;
+  padding: 13px 16px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: 10px;
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.choice-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  background: rgba(184,154,60,0.04);
+}
+.choice-btn:disabled { cursor: default; }
+.choice-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--color-background-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-text-secondary);
+  transition: all 0.18s;
+}
+.choice-btn:hover:not(:disabled) .choice-letter {
+  background: rgba(184,154,60,0.2);
+  color: var(--gold);
+}
+.choice-btn.correct {
+  border-color: #27a06e;
+  background: rgba(39,160,110,0.06);
+}
+.choice-btn.correct .choice-letter {
+  background: #27a06e;
+  color: #fff;
+}
+.choice-btn.wrong {
+  border-color: #d94040;
+  background: rgba(217,64,64,0.06);
+}
+.choice-btn.wrong .choice-letter {
+  background: #d94040;
+  color: #fff;
+}
+.choice-btn.dimmed {
+  opacity: 0.4;
+}
+
+/* Feedback */
+.feedback-box {
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.65;
+  margin-bottom: 16px;
+  display: none;
+  border-left: 3px solid transparent;
+}
+.feedback-box.correct-fb {
+  background: rgba(39,160,110,0.07);
+  border-color: #27a06e;
+  color: var(--color-text-primary);
+}
+.feedback-box.wrong-fb {
+  background: rgba(217,64,64,0.06);
+  border-color: #d94040;
+  color: var(--color-text-primary);
+}
+.feedback-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.feedback-box.correct-fb .feedback-title { color: #27a06e; }
+.feedback-box.wrong-fb .feedback-title { color: #d94040; }
+
+/* Nav buttons */
+.nav-row {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.nav-btn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  display: none;
+}
+.nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.nav-btn.primary {
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+  color: #fff;
+  border-color: transparent;
+}
+.nav-btn.primary:hover { opacity: 0.88; color: #fff; }
+
+/* Results screen */
+#results-screen {
+  display: none;
+}
+.results-card {
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-background-primary);
+}
+.results-header {
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+  padding: 28px 28px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-header::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(184,154,60,0.2) 0%, transparent 70%);
+}
+.results-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.results-score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--gold-lt);
+  line-height: 1;
+  position: relative;
+}
+.results-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 6px;
+  position: relative;
+}
+.results-mention {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 8px;
+  position: relative;
+}
+.results-body {
+  padding: 22px 24px;
+}
+.results-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.detail-cell {
+  text-align: center;
+  padding: 12px 8px;
+  background: var(--color-background-secondary);
+  border-radius: 8px;
+}
+.detail-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+.detail-lbl {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+.review-list {
+  border-top: 0.5px solid var(--color-border-tertiary);
+  padding-top: 16px;
+  margin-bottom: 18px;
+}
+.review-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.review-item:last-child { border-bottom: none; }
+.ri-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 700;
+}
+.ri-icon.ok { background: #27a06e; color: #fff; }
+.ri-icon.ko { background: #d94040; color: #fff; }
+.ri-q { color: var(--color-text-primary); font-weight: 500; flex: 1; }
+.ri-ans { color: var(--color-text-secondary); font-size: 11px; margin-top: 2px; }
+.restart-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: opacity 0.18s;
+}
+.restart-btn:hover { opacity: 0.88; }
+</style>
+
+<div id="sim">
+  <h2 class="sr-only">Simulateur de procédure devant les Chambres Régionales des Comptes</h2>
+
+  <div class="sim-header">
+    <div class="sim-eyebrow">Simulateur interactif</div>
+    <div class="sim-title">Procédure devant les CRTC</div>
+    <div class="sim-subtitle">Prenez les bonnes décisions à chaque étape de la procédure</div>
+  </div>
+
+  <div id="quiz-screen">
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="prog-label">Question 1 / 6</div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-badge gold-badge">
+        <div class="score-dot"></div>
+        <span id="score-display">Score : 0 pt</span>
+      </div>
+      <div class="score-badge">
+        <div class="score-dot" style="background:#27a06e"></div>
+        <span id="correct-display">0 correcte(s)</span>
+      </div>
+      <div class="score-badge">
+        <div class="score-dot" style="background:#d94040"></div>
+        <span id="wrong-display">0 erreur(s)</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-tag">
+        <span class="tag-pill" id="q-tag">Saisine</span>
+        <span id="q-title" style="font-size:12px;color:rgba(255,255,255,0.7);font-weight:500"></span>
+        <span class="scenario-num" id="q-num">1/6</span>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-situation" id="q-situation"></div>
+        <div class="scenario-question" id="q-question"></div>
+      </div>
+    </div>
+
+    <div class="choices" id="choices-container"></div>
+
+    <div class="feedback-box" id="feedback-box">
+      <div class="feedback-title" id="feedback-title"></div>
+      <div id="feedback-text"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-btn" id="next-btn" onclick="nextQuestion()">Question suivante →</button>
+      <button class="nav-btn primary" id="finish-btn" onclick="showResults()">Voir mes résultats →</button>
+    </div>
+  </div>
+
+  <div id="results-screen">
+    <div class="results-card">
+      <div class="results-header">
+        <div class="results-icon" id="res-icon">⚖</div>
+        <div class="results-score-big" id="res-score"></div>
+        <div class="results-label" id="res-label"></div>
+        <div class="results-mention" id="res-mention"></div>
+      </div>
+      <div class="results-body">
+        <div class="results-detail">
+          <div class="detail-cell">
+            <div class="detail-val" id="det-correct"></div>
+            <div class="detail-lbl">Correctes</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-val" id="det-wrong"></div>
+            <div class="detail-lbl">Erreurs</div>
+          </div>
+          <div class="detail-cell">
+            <div class="detail-val" id="det-score"></div>
+            <div class="detail-lbl">Points</div>
+          </div>
+        </div>
+        <div class="review-list" id="review-list"></div>
+        <button class="restart-btn" onclick="restart()">Recommencer le simulateur</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    tag: "Saisine",
+    title: "Origine de la procédure",
+    situation: "Le préfet de région reçoit un rapport d'inspection signalant de graves irrégularités dans la gestion d'une commune : des dépenses non mandatées, des marchés passés sans mise en concurrence, et un déficit budgétaire dissimulé.",
+    question: "Qui peut saisir la Chambre Régionale des Comptes pour ouvrir une procédure en responsabilité financière ?",
+    choices: [
+      "Le préfet de région uniquement, en sa qualité de représentant de l'État",
+      "Le procureur financier, le Premier président de la Cour des comptes, ou le ministère public",
+      "N'importe quel contribuable local ayant constaté une irrégularité",
+      "Le conseil municipal à la majorité des deux tiers"
+    ],
+    correct: 1,
+    feedback: "Le ministère public près la CRC est compétent pour déclencher la procédure. La saisine peut également émaner du Premier président de la Cour des comptes ou, dans certains cas, du représentant de l'État. Un simple contribuable ne peut pas directement saisir la chambre, même s'il peut alerter le procureur financier."
+  },
+  {
+    tag: "Instruction",
+    title: "Phase d'enquête",
+    situation: "La CRC d'Île-de-France ouvre une instruction contre le directeur général des services d'une agglomération. Le rapporteur désigné souhaite accéder aux documents comptables et entendre les agents de la collectivité.",
+    question: "Durant la phase d'instruction, quels pouvoirs d'investigation le rapporteur possède-t-il ?",
+    choices: [
+      "Il peut uniquement consulter les documents transmis volontairement par la collectivité",
+      "Il dispose d'un droit de communication des documents et peut procéder à des auditions, mais ne peut pas perquisitionner",
+      "Il peut perquisitionner les locaux, saisir les documents et procéder à des arrestations provisoires",
+      "Son rôle est purement administratif : il compile les rapports sans pouvoir enquêter"
+    ],
+    correct: 1,
+    feedback: "Le rapporteur dispose d'un droit de communication étendu : il peut demander tous documents utiles à l'instruction, convoquer et entendre toute personne dont le témoignage est jugé nécessaire. En revanche, il n'a pas de pouvoirs coercitifs comme la perquisition ou l'arrestation, qui relèvent du juge pénal."
+  },
+  {
+    tag: "Contradictoire",
+    title: "Droits de la défense",
+    situation: "Le directeur financier d'un hôpital public est mis en cause pour avoir payé des factures sans service fait. Il reçoit un rapport d'observations provisoires de la CRC. Il dispose de 30 jours pour répondre.",
+    question: "Quelle est la portée juridique du rapport d'observations provisoires dans le respect du contradictoire ?",
+    choices: [
+      "Il s'agit d'une condamnation définitive notifiée à l'intéressé avant recours",
+      "C'est une simple information sans valeur juridique, que le mis en cause peut ignorer",
+      "C'est un document provisoire permettant à la personne mise en cause de faire valoir ses observations écrites avant toute décision",
+      "Il déclenche automatiquement la suspension des fonctions du mis en cause"
+    ],
+    correct: 2,
+    feedback: "Le rapport d'observations provisoires est au cœur du principe du contradictoire. Il garantit les droits de la défense : la personne mise en cause peut consulter l'intégralité du dossier, présenter ses observations écrites dans le délai imparti (généralement 1 mois), et demander à être entendue. Aucune décision définitive ne peut intervenir sans cette étape."
+  },
+  {
+    tag: "Déféré",
+    title: "Saisine du parquet",
+    situation: "Après instruction, la CRC de Provence-Alpes-Côte d'Azur constate des irrégularités graves : un ordonnateur a engagé des dépenses sur exercice clôturé, causant un préjudice financier significatif à la collectivité.",
+    question: "Dans quel cas la Chambre peut-elle prononcer un déféré et à quelle juridiction ?",
+    choices: [
+      "Elle défère au tribunal administratif pour toute irrégularité comptable constatée",
+      "Elle défère au procureur de la République les faits susceptibles de constituer une infraction pénale",
+      "Elle défère à la Cour des comptes pour obtenir une sanction disciplinaire",
+      "Elle défère directement au Conseil d'État pour annulation de l'acte irrégulier"
+    ],
+    correct: 1,
+    feedback: "Lorsque la CRC constate des faits susceptibles de constituer des infractions pénales (détournement, favoritisme, prise illégale d'intérêts...), elle est tenue de les déférer au procureur de la République compétent, en application de l'article 40 du Code de procédure pénale. Le déféré au pénal est distinct de la procédure de responsabilité financière conduite par la chambre."
+  },
+  {
+    tag: "Audience",
+    title: "Délibéré et décision",
+    situation: "L'audience publique se tient. Le commissaire du gouvernement a présenté ses conclusions. Le mis en cause et son avocat ont été entendus. La chambre se retire pour délibérer.",
+    question: "Comment se déroule le délibéré de la Chambre Régionale des Comptes ?",
+    choices: [
+      "Le délibéré est public et les parties peuvent y assister pour suivre les débats",
+      "Le délibéré est secret, hors la présence du rapporteur, du contre-rapporteur et des membres de la formation",
+      "Le président de chambre décide seul et notifie sa décision sans délibéré collégial",
+      "Le délibéré est présidé par le préfet de région en qualité de commissaire du gouvernement"
+    ],
+    correct: 1,
+    feedback: "Le délibéré est secret et collégial : seuls les membres de la formation de jugement, le rapporteur et le contre-rapporteur y participent. Le commissaire du gouvernement n'y est pas admis. Cette règle garantit l'indépendance et l'impartialité de la décision. Le président de chambre préside sans voix prépondérante en cas de partage des voix, sauf disposition contraire."
+  },
+  {
+    tag: "Voies de recours",
+    title: "Appel et cassation",
+    situation: "Le gestionnaire condamné par la CRC Occitanie conteste la décision. Il estime que des règles de procédure ont été violées et que l'évaluation du préjudice financier est erronée.",
+    question: "Quelle est la voie de recours de droit commun contre un arrêt d'une CRC ?",
+    choices: [
+      "Le pourvoi en cassation devant le Conseil d'État, compétent pour tous les actes administratifs",
+      "L'appel devant la Cour des comptes, puis éventuellement le pourvoi en cassation devant le Conseil d'État",
+      "L'appel devant la Cour administrative d'appel, compétente en matière de finances publiques",
+      "La saisine directe du Conseil constitutionnel pour violation des droits fondamentaux"
+    ],
+    correct: 1,
+    feedback: "Le schéma classique des voies de recours est le suivant : 1) appel devant la Cour des comptes, qui statue en formation d'appel sur les décisions des CRC et CTC ; 2) pourvoi en cassation devant le Conseil d'État pour les questions de droit. La Cour administrative d'appel n'est pas compétente en matière juridictionnelle financière."
+  }
+];
+
+let current = 0;
+let score = 0;
+let correct = 0;
+let wrong = 0;
+let answered = false;
+let userAnswers = [];
+
+function init() {
+  current = 0; score = 0; correct = 0; wrong = 0;
+  answered = false; userAnswers = [];
+  renderQuestion();
+  updateScore();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  const total = questions.length;
+  const pct = Math.round((current / total) * 100);
+
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = 'Question ' + (current+1) + ' / ' + total;
+  document.getElementById('q-tag').textContent = q.tag;
+  document.getElementById('q-title').textContent = q.title;
+  document.getElementById('q-num').textContent = (current+1) + '/' + total;
+  document.getElementById('q-situation').textContent = q.situation;
+  document.getElementById('q-question').textContent = q.question;
+
+  const fb = document.getElementById('feedback-box');
+  fb.style.display = 'none';
+  fb.className = 'feedback-box';
+
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('finish-btn').style.display = 'none';
+  answered = false;
+
+  const container = document.getElementById('choices-container');
+  container.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.choices.forEach((ch, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = '<span class="choice-letter">' + letters[i] + '</span><span>' + ch + '</span>';
+    btn.onclick = () => answer(i);
+    container.appendChild(btn);
+  });
+}
+
+function answer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.choice-btn');
+  const isCorrect = idx === q.correct;
+  const letters = ['A','B','C','D'];
+
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add('correct');
+    else if (i === idx && !isCorrect) btn.classList.add('wrong');
+    else btn.classList.add('dimmed');
+  });
+
+  const fb = document.getElementById('feedback-box');
+  const fbt = document.getElementById('feedback-title');
+  const fbtxt = document.getElementById('feedback-text');
+
+  if (isCorrect) {
+    score += 2; correct++;
+    fb.className = 'feedback-box correct-fb';
+    fbt.textContent = '✓ Bonne réponse (+2 points)';
+  } else {
+    wrong++;
+    fb.className = 'feedback-box wrong-fb';
+    fbt.textContent = '✗ Réponse incorrecte — La bonne réponse était ' + letters[q.correct];
+  }
+  fbtxt.textContent = q.feedback;
+  fb.style.display = 'block';
+
+  userAnswers.push({ q: q.question.substring(0, 60) + '…', correct: isCorrect, answer: q.choices[idx].substring(0,50) + '…', rightAnswer: q.choices[q.correct].substring(0,50) + '…' });
+
+  updateScore();
+
+  if (current < questions.length - 1) {
+    document.getElementById('next-btn').style.display = 'inline-block';
+  } else {
+    document.getElementById('finish-btn').style.display = 'inline-block';
+  }
+}
+
+function updateScore() {
+  document.getElementById('score-display').textContent = 'Score : ' + score + ' pt' + (score>1?'s':'');
+  document.getElementById('correct-display').textContent = correct + ' correcte' + (correct>1?'s':'');
+  document.getElementById('wrong-display').textContent = wrong + ' erreur' + (wrong>1?'s':'');
+}
+
+function nextQuestion() {
+  current++;
+  renderQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  const total = questions.length;
+  const maxScore = total * 2;
+  const pct = Math.round((score / maxScore) * 100);
+
+  document.getElementById('res-score').textContent = score + ' / ' + maxScore;
+  document.getElementById('res-label').textContent = pct + '% de réussite · ' + correct + ' bonne(s) réponse(s) sur ' + total;
+
+  let mention, icon;
+  if (pct >= 90) { mention = 'Excellent — Niveau magistrat confirmé'; icon = '🏛'; }
+  else if (pct >= 70) { mention = 'Bien — Bonne maîtrise de la procédure'; icon = '⚖'; }
+  else if (pct >= 50) { mention = 'Assez bien — Des lacunes à combler'; icon = '📋'; }
+  else { mention = 'À retravailler — Relisez la procédure'; icon = '📖'; }
+
+  document.getElementById('res-icon').textContent = icon;
+  document.getElementById('res-mention').textContent = mention;
+  document.getElementById('det-correct').textContent = correct;
+  document.getElementById('det-wrong').textContent = wrong;
+  document.getElementById('det-score').textContent = score + 'pts';
+
+  const prog = document.getElementById('prog-fill');
+  prog.style.width = '100%';
+
+  const rl = document.getElementById('review-list');
+  rl.innerHTML = '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-secondary);margin-bottom:10px">Récapitulatif</div>';
+  userAnswers.forEach((a, i) => {
+    const div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = '<div class="ri-icon ' + (a.correct ? 'ok' : 'ko') + '">' + (a.correct ? '✓' : '✗') + '</div>' +
+      '<div><div class="ri-q">Q' + (i+1) + '. ' + a.q + '</div>' +
+      '<div class="ri-ans">' + (a.correct ? '✓ ' + a.answer : '✗ ' + a.answer + '<br>→ ' + a.rightAnswer) + '</div></div>';
+    rl.appendChild(div);
+  });
+}
+
+function restart() {
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  init();
+}
+
+init();
+</script>

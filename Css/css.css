@@ -1,0 +1,266 @@
+/* ============================= */
+/* IMPORT */
+/* ============================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+/* ============================= */
+/* RESET & BASE */
+/* ============================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f4f9;
+  color: #1a1a2e;
+}
+
+
+/* ============================= */
+/* HEADER */
+/* ============================= */
+header {
+  background: linear-gradient(135deg, #2a3d66, #1a1a2e);
+  color: white;
+  padding: 32px 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+header img {
+  width: 50px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+
+/* ============================= */
+/* ONGLETS (navigation) */
+/* ============================= */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 48px;
+  background: #e9ecf3;
+  border-bottom: 1px solid #d4d9e8;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2a3d66;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+
+.tab-btn:hover {
+  background: #d0d8ee;
+}
+
+.tab-btn.active {
+  background: #2a3d66;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ============================= */
+/* CONTENU ONGLETS */
+/* ============================= */
+.tab-content {
+  display: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 48px 48px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+
+/* ============================= */
+/* FILTRES */
+/* ============================= */
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+#filters label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
+}
+
+#filters select {
+  padding: 6px 10px;
+  border: 1px solid #ccd2e0;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+#filters select:focus {
+  outline: none;
+  border-color: #2a3d66;
+}
+
+
+/* ============================= */
+/* CARTE */
+/* ============================= */
+#map {
+  height: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+
+/* ============================= */
+/* LISTE DES CHAMBRES */
+/* ============================= */
+#chamberList {
+  margin-top: 16px;
+  background: white;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+#chamberList div {
+  padding: 10px 14px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+
+#chamberList div:last-child {
+  border-bottom: none;
+}
+
+#chamberList div:hover {
+  background: #eef6ff;
+}
+
+
+/* ============================= */
+/* POPUP LEAFLET */
+/* ============================= */
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+}
+
+.leaflet-popup-content img {
+  width: 180px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 8px;
+  display: block;
+}
+
+
+/* ============================= */
+/* INFO BOX (onglets texte) */
+/* ============================= */
+.info-box {
+  background: white;
+  padding: 28px 36px;
+  border-radius: 12px;
+  line-height: 1.75;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  max-width: 900px;
+  margin: 24px auto;
+}
+
+.info-box h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2a3d66;
+  margin-top: 36px;
+  margin-bottom: 10px;
+}
+
+.info-box h2:first-child {
+  margin-top: 0;
+}
+
+.info-box p {
+  font-size: 0.925rem;
+  color: #222;
+  text-align: justify;
+  hyphens: auto;
+  max-width: 70ch;
+  margin-bottom: 14px;
+}
+
+.info-box ul {
+  margin: 0 0 14px 22px;
+}
+
+.info-box li {
+  font-size: 0.925rem;
+  color: #333;
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (max-width: 768px) {
+  header {
+    padding: 24px 20px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .tabs {
+    padding: 12px 16px;
+  }
+
+  .tab-content {
+    padding: 20px 16px 40px;
+  }
+
+  .info-box {
+    padding: 20px 18px;
+  }
+
+  #map {
+    height: 400px;
+  }
+}

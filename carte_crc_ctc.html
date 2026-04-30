@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carte Interactive des CRC / CTC</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* ===== HEADER ===== */
+header {
+  padding: 32px 40px 24px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+header p {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ===== CONTROLS ===== */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 0 40px 20px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.control-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.6);
+  white-space: nowrap;
+}
+
+.control-group select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding-right: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.6)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+}
+
+.control-group select:focus {
+  outline: none;
+}
+
+.control-group select option {
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+/* ===== LEGEND ===== */
+#legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 40px 16px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-crc { background: #48dbfb; }
+.dot-ctc { background: #ffd32a; }
+
+/* ===== COUNT ===== */
+#count {
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  padding-bottom: 10px;
+}
+
+/* ===== MAP ===== */
+#map-wrapper {
+  padding: 0 24px 32px;
+}
+
+#map {
+  height: 600px;
+  width: 100%;
+  border-radius: 16px;
+  border: 2px solid rgba(72, 219, 251, 0.3);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+/* ===== LEAFLET POPUP ===== */
+.leaflet-popup-content-wrapper {
+  border-radius: 10px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 0.875rem !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2) !important;
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px !important;
+  line-height: 1.6;
+}
+
+.popup-name {
+  font-weight: 700;
+  color: #0f3460;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.popup-region {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.popup-deferes {
+  display: inline-block;
+  background: #eef6ff;
+  color: #0f3460;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.popup-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.badge-crc {
+  background: rgba(72, 219, 251, 0.15);
+  color: #0077aa;
+}
+
+.badge-ctc {
+  background: rgba(255, 211, 42, 0.2);
+  color: #8a6800;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  header { padding: 24px 20px 16px; }
+  header h1 { font-size: 1.35rem; }
+  #controls { padding: 0 16px 16px; }
+  #map-wrapper { padding: 0 12px 24px; }
+  #map { height: 420px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Carte Interactive des CRC / CTC</h1>
+  <p>Chambres régionales et territoriales des comptes — Juridictions financières</p>
+</header>
+
+<div id="controls">
+  <div class="control-group">
+    <label for="yearSelect">Année</label>
+    <select id="yearSelect">
+      <option value="2023" selected>2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label for="typeSelect">Type</label>
+    <select id="typeSelect">
+      <option value="all" selected>Tous</option>
+      <option value="crc">CRC uniquement</option>
+      <option value="ctc">CTC uniquement</option>
+    </select>
+  </div>
+</div>
+
+<div id="legend">
+  <div class="legend-item"><span class="legend-dot dot-crc"></span>Chambre régionale (CRC)</div>
+  <div class="legend-item"><span class="legend-dot dot-ctc"></span>Chambre territoriale (CTC)</div>
+</div>
+
+<div id="count"></div>
+
+<div id="map-wrapper">
+  <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+// ===== CARTE =====
+var map = L.map('map').setView([46.5, 2.5], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+// ===== ICÔNES PERSONNALISÉES =====
+function makeIcon(type) {
+  var color = type === 'crc' ? '#48dbfb' : '#ffd32a';
+  var svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+    <path d="M14 0C6.27 0 0 6.27 0 14c0 9.63 14 22 14 22S28 23.63 28 14C28 6.27 21.73 0 14 0z" fill="${color}" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+    <circle cx="14" cy="14" r="6" fill="white" opacity="0.9"/>
+  </svg>`;
+  return L.divIcon({
+    html: svg,
+    className: '',
+    iconSize: [28, 36],
+    iconAnchor: [14, 36],
+    popupAnchor: [0, -36]
+  });
+}
+
+// ===== DONNÉES COMPLÈTES =====
+var chambers = [
+  // CRC métropole
+  { name: "CRC Île-de-France",                    region: "Île-de-France",                    type: "crc", coords: [48.8566,  2.3522],  deferes: {2023: 12, 2024: 8,  2025: 15} },
+  { name: "CRC Auvergne-Rhône-Alpes",             region: "Auvergne-Rhône-Alpes",             type: "crc", coords: [45.75,    4.85],    deferes: {2023: 7,  2024: 5,  2025: 9 } },
+  { name: "CRC Nouvelle-Aquitaine",               region: "Nouvelle-Aquitaine",               type: "crc", coords: [44.84,   -0.58],    deferes: {2023: 6,  2024: 4,  2025: 7 } },
+  { name: "CRC Bretagne",                         region: "Bretagne",                         type: "crc", coords: [48.1173, -1.6778],  deferes: {2023: 5,  2024: 3,  2025: 6 } },
+  { name: "CRC Provence-Alpes-Côte d'Azur",       region: "Provence-Alpes-Côte d'Azur",       type: "crc", coords: [43.2965,  5.3698],  deferes: {2023: 8,  2024: 6,  2025: 9 } },
+  { name: "CRC Grand Est",                        region: "Grand Est",                        type: "crc", coords: [48.5734,  7.7521],  deferes: {2023: 4,  2024: 3,  2025: 5 } },
+  { name: "CRC Hauts-de-France",                  region: "Hauts-de-France",                  type: "crc", coords: [50.2920,  2.7796],  deferes: {2023: 3,  2024: 4,  2025: 6 } },
+  { name: "CRC Corse",                            region: "Corse",                            type: "crc", coords: [41.9192,  8.7386],  deferes: {2023: 2,  2024: 1,  2025: 2 } },
+  { name: "CRC Normandie",                        region: "Normandie",                        type: "crc", coords: [49.44,    1.09],    deferes: {2023: 4,  2024: 3,  2025: 5 } },
+  { name: "CRC Occitanie",                        region: "Occitanie",                        type: "crc", coords: [43.61,    1.44],    deferes: {2023: 6,  2024: 5,  2025: 8 } },
+  { name: "CRC Pays de la Loire",                 region: "Pays de la Loire",                 type: "crc", coords: [47.22,   -1.55],    deferes: {2023: 5,  2024: 4,  2025: 6 } },
+  { name: "CRC Bourgogne-Franche-Comté",          region: "Bourgogne-Franche-Comté",          type: "crc", coords: [47.32,    5.04],    deferes: {2023: 3,  2024: 2,  2025: 4 } },
+  { name: "CRC Centre-Val de Loire",              region: "Centre-Val de Loire",              type: "crc", coords: [47.39,    0.69],    deferes: {2023: 4,  2024: 3,  2025: 5 } },
+  // CRC outre-mer
+  { name: "CRC La Réunion - Mayotte",             region: "La Réunion / Mayotte",             type: "crc", coords: [-20.88,  55.45],    deferes: {2023: 3,  2024: 2,  2025: 4 } },
+  { name: "CRC Guadeloupe, Guyane et Martinique", region: "Guadeloupe / Guyane / Martinique", type: "crc", coords: [14.61,  -61.07],    deferes: {2023: 4,  2024: 3,  2025: 5 } },
+  // CTC
+  { name: "CTC Nouvelle-Calédonie",               region: "Nouvelle-Calédonie",               type: "ctc", coords: [-22.274, 166.448],  deferes: {2023: 2,  2024: 1,  2025: 3 } },
+  { name: "CTC Polynésie française",              region: "Polynésie française",              type: "ctc", coords: [-17.651,-149.426],  deferes: {2023: 1,  2024: 0,  2025: 2 } },
+  { name: "CTC Saint-Martin et Saint-Barthélémy", region: "Saint-Martin / Saint-Barthélemy",  type: "ctc", coords: [18.07,  -63.08],    deferes: {2023: 1,  2024: 1,  2025: 1 } },
+];
+
+// ===== RENDU =====
+var markers = [];
+var currentYear = '2023';
+var currentType = 'all';
+
+function displayMarkers(year, type) {
+  markers.forEach(m => map.removeLayer(m));
+  markers = [];
+
+  var count = 0;
+
+  chambers.forEach(function(c) {
+    if (type !== 'all' && c.type !== type) return;
+
+    var deferes = c.deferes[year] !== undefined ? c.deferes[year] : '–';
+    var badgeClass = c.type === 'crc' ? 'badge-crc' : 'badge-ctc';
+    var badgeLabel = c.type.toUpperCase();
+
+    var popup = `
+      <div>
+        <span class="popup-badge ${badgeClass}">${badgeLabel}</span>
+        <div class="popup-name">${c.name}</div>
+        <div class="popup-region">${c.region}</div>
+        <span class="popup-deferes">Déférés ${year} : ${deferes}</span>
+      </div>`;
+
+    var marker = L.marker(c.coords, { icon: makeIcon(c.type) })
+      .addTo(map)
+      .bindPopup(popup);
+
+    markers.push(marker);
+    count++;
+  });
+
+  document.getElementById('count').textContent =
+    count + ' juridiction' + (count > 1 ? 's' : '') + ' affichée' + (count > 1 ? 's' : '');
+}
+
+displayMarkers(currentYear, currentType);
+
+document.getElementById('yearSelect').addEventListener('change', function(e) {
+  currentYear = e.target.value;
+  displayMarkers(currentYear, currentType);
+});
+
+document.getElementById('typeSelect').addEventListener('change', function(e) {
+  currentType = e.target.value;
+  displayMarkers(currentYear, currentType);
+});
+</script>
+
+</body>
+</html>
