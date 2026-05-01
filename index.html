@@ -886,48 +886,208 @@ input:focus,select:focus,textarea:focus{outline:none}
 <!-- STATISTIQUES -->
 <div id="statsTab" class="tab-panel">
   <div class="page-header"><div class="page-header-inner">
-    <div class="eyebrow">Données chiffrées — Source Excel</div>
+    <div class="eyebrow">Données chiffrées — Sources officielles mises à jour</div>
     <h2>Statistiques réelles</h2>
-    <p class="subtitle">Données extraites de votre fichier Excel : 68 déférés reçus en 2023, ventilation par type d'infraction.</p>
+    <p class="subtitle">Données issues du rapport d'activité 2024 de la Cour des comptes et du rapport de suivi des recommandations (sept. 2025). Évolution 2023–2024 du régime de responsabilité des gestionnaires publics.</p>
   </div></div>
-  <div class="content-area">
-    <div class="data-badge">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Données extraites depuis votre fichier Excel · 2023–2025
-    </div>
-    <div class="stat-context">
-      <div class="stat-context-icon">⚖️</div>
-      <div class="stat-context-text">
-        <h4>Données réelles du parquet général — 2023</h4>
-        <p>En 2023, le parquet a reçu <strong>68 déférés</strong> au total. <strong>31 émanent des CRTC</strong> — soit 46 % du total — confirmant leur rôle central dans la mise en œuvre du régime de responsabilité financière. 11 proviennent de la Cour des comptes.</p>
+  <div class="content-area" style="max-width:980px">
+
+    <!-- Source badges -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+      <div class="data-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Rapport d'activité 2024 — Cour des comptes
+      </div>
+      <div class="data-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Suivi des recommandations — sept. 2025
       </div>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-number">68</div><div class="stat-label">Déférés reçus en 2023</div></div>
-      <div class="stat-card"><div class="stat-number">31</div><div class="stat-label">Dont CRTC (46 %)</div></div>
-      <div class="stat-card"><div class="stat-number">38</div><div class="stat-label">Affaires dans votre base</div></div>
+
+    <!-- Tabs 2023 / 2024 -->
+    <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border)">
+      <button id="yr2023btn" onclick="switchYear('2023')" style="padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--gold);border-bottom:2px solid var(--gold);margin-bottom:-2px;transition:all .18s">2023 — Fondation</button>
+      <button id="yr2024btn" onclick="switchYear('2024')" style="padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s">2024 — Montée en puissance</button>
     </div>
 
-    <!-- Infraction chart with donut -->
-    <div class="chart-container">
-      <h3>Types d'infractions — 2023 (99 infractions qualifiées)</h3>
-      <div class="donut-section" id="donutSection">
-        <div>
-          <div class="donut-wrap" id="donutWrap">
-            <svg width="180" height="180" viewBox="0 0 180 180" id="donutSvg"></svg>
-            <div class="donut-center"><div class="donut-big">99</div><div class="donut-sub">infractions<br>qualifiées</div></div>
+    <!-- 2023 block -->
+    <div id="statsYear2023">
+      <div class="stat-context" style="margin-bottom:20px">
+        <div class="stat-context-icon">⚖️</div>
+        <div class="stat-context-text">
+          <h4>Parquet général — première année d'exercice (2023)</h4>
+          <p>Dès la première année, le parquet a reçu <strong>68 déférés</strong>. Les CRTC en sont à l'origine pour 46 % (31 déférés), confirmant leur rôle central dans le déclenchement du nouveau régime. La Cour des comptes en a transmis 11, soit 16 %.</p>
+        </div>
+      </div>
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card"><div class="stat-number">68</div><div class="stat-label">Déférés reçus</div></div>
+        <div class="stat-card"><div class="stat-number">31</div><div class="stat-label">Dont CRTC (46 %)</div></div>
+        <div class="stat-card"><div class="stat-number">11</div><div class="stat-label">Dont Cour des comptes</div></div>
+        <div class="stat-card"><div class="stat-number">99</div><div class="stat-label">Infractions qualifiées</div></div>
+      </div>
+
+      <!-- Donut 2023 -->
+      <div class="chart-container">
+        <h3>Types d'infractions — 2023 (99 infractions qualifiées)</h3>
+        <div class="donut-section" id="donutSection">
+          <div>
+            <div class="donut-wrap" id="donutWrap">
+              <svg width="180" height="180" viewBox="0 0 180 180" id="donutSvg"></svg>
+              <div class="donut-center"><div class="donut-big">99</div><div class="donut-sub">infractions<br>qualifiées</div></div>
+            </div>
+          </div>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3>Déférés par chambre — base de données interne (2023–2025)</h3>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+    </div>
+
+    <!-- 2024 block (hidden by default) -->
+    <div id="statsYear2024" style="display:none">
+      <div class="stat-context" style="margin-bottom:20px">
+        <div class="stat-context-icon">📈</div>
+        <div class="stat-context-text">
+          <h4>Parquet général — montée en puissance (2024)</h4>
+          <p>En 2024, le régime a pleinement joué son rôle : <strong>77 déférés</strong> transmis au parquet général (+13 % vs 2023). Les CRTC représentent désormais <strong>61 % des déférés</strong> (47 sur 55 émanant des JF), signe d'une appropriation accrue par les chambres régionales. La chambre du contentieux atteint <strong>70 dossiers</strong> en cours d'instruction, contre une quarantaine fin 2023.</p>
+        </div>
+      </div>
+
+      <!-- KPI 2024 row -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+        <div class="stat-card" style="border-top:3px solid var(--gold)">
+          <div class="stat-number">77</div>
+          <div class="stat-label">Déférés reçus en 2024</div>
+          <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ +13 % vs 2023</div>
+        </div>
+        <div class="stat-card" style="border-top:3px solid var(--gold)">
+          <div class="stat-number">47</div>
+          <div class="stat-label">Dont CRTC (61 %)</div>
+          <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ +52 % vs 2023</div>
+        </div>
+        <div class="stat-card" style="border-top:3px solid var(--navy-mid)">
+          <div class="stat-number">70</div>
+          <div class="stat-label">Dossiers en instruction</div>
+          <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ ~+75 % vs fin 2023</div>
+        </div>
+        <div class="stat-card" style="border-top:3px solid var(--navy-mid)">
+          <div class="stat-number" style="font-size:1.6rem">&lt;18 mois</div>
+          <div class="stat-label">Délai moyen procédure</div>
+          <div style="font-size:0.68rem;color:var(--text-subtle);margin-top:6px">vs 40 mois (CDBF)</div>
+        </div>
+      </div>
+
+      <!-- Comparison bar chart 2023 vs 2024 -->
+      <div class="chart-container">
+        <h3>Évolution des déférés — comparaison 2023 / 2024</h3>
+        <div style="display:flex;flex-direction:column;gap:18px;margin-top:8px">
+          <!-- Total -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
+              <span>Total déférés reçus</span>
+              <span style="color:var(--text);font-weight:600">68 → <span style="color:var(--gold)">77</span></span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <div style="height:10px;width:calc(68/100*100%);background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55;max-width:68%"></div>
+              <div style="height:10px;width:calc(9/100*100%);background:var(--gold);border-radius:0 5px 5px 0;max-width:9%"></div>
+            </div>
+          </div>
+          <!-- CRTC -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
+              <span>Dont CRTC</span>
+              <span style="color:var(--text);font-weight:600">31 → <span style="color:var(--gold)">47</span></span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <div style="height:10px;width:31%;background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55"></div>
+              <div style="height:10px;width:16%;background:var(--gold);border-radius:0 5px 5px 0"></div>
+            </div>
+          </div>
+          <!-- CDC -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
+              <span>Dont Cour des comptes</span>
+              <span style="color:var(--text);font-weight:600">11 → <span style="color:var(--text-muted)">8</span></span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <div style="height:10px;width:11%;background:var(--navy-mid);border-radius:5px;opacity:0.55"></div>
+              <div style="height:10px;width:3%;background:#c03030;border-radius:5px;opacity:0.6"></div>
+            </div>
+          </div>
+          <!-- Dossiers instruction -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
+              <span>Dossiers en instruction</span>
+              <span style="color:var(--text);font-weight:600">~40 → <span style="color:var(--gold)">70</span></span>
+            </div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <div style="height:10px;width:40%;background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55"></div>
+              <div style="height:10px;width:30%;background:var(--gold);border-radius:0 5px 5px 0"></div>
+            </div>
           </div>
         </div>
-        <div class="donut-legend" id="donutLegend"></div>
+        <div style="display:flex;gap:16px;margin-top:14px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:var(--navy-mid);border-radius:3px;opacity:0.55"></div>2023</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:var(--gold);border-radius:3px"></div>Progression 2024</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:#c03030;border-radius:3px;opacity:0.6"></div>Recul 2024</div>
+        </div>
+      </div>
+
+      <!-- Additional KPIs -->
+      <div class="chart-container">
+        <h3>Autres indicateurs — 2024</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Recommandations appliquées</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">76 %</div>
+            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">des recommandations des JF totalement ou partiellement mises en œuvre en 2024</div>
+          </div>
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Délai moyen de contrôle</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">10 mois</div>
+            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">délai moyen pour la Cour et les CRTC en 2024, en forte amélioration depuis 2020</div>
+          </div>
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Signalements pertinents 2024</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">842</div>
+            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">signalements transmis aux chambres après analyse par le ministère public (85 % vers les CRTC)</div>
+          </div>
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Part des déférés JF / total 2024</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">71 %</div>
+            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">55 des 77 déférés 2024 proviennent des juridictions financières (Cour + CRTC)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnotes">
+        <strong>Sources :</strong> Rapport d'activité 2024 de la Cour des comptes (juin 2025) ; Rapport « Quelles suites au contrôle des JF » (sept. 2025) · <em>Données officielles publiées sur ccomptes.fr</em>
       </div>
     </div>
 
-    <div class="chart-container">
-      <h3>Déférés par chambre — base de données interne</h3>
-      <div class="bar-chart" id="barChart"></div>
-    </div>
   </div>
 </div>
+
+<script>
+function switchYear(yr) {
+  var b23 = document.getElementById('yr2023btn');
+  var b24 = document.getElementById('yr2024btn');
+  var s23 = document.getElementById('statsYear2023');
+  var s24 = document.getElementById('statsYear2024');
+  if (yr === '2023') {
+    s23.style.display = ''; s24.style.display = 'none';
+    b23.style.color = 'var(--gold)'; b23.style.borderBottomColor = 'var(--gold)';
+    b24.style.color = 'var(--text-muted)'; b24.style.borderBottomColor = 'transparent';
+  } else {
+    s23.style.display = 'none'; s24.style.display = '';
+    b24.style.color = 'var(--gold)'; b24.style.borderBottomColor = 'var(--gold)';
+    b23.style.color = 'var(--text-muted)'; b23.style.borderBottomColor = 'transparent';
+  }
+}
+</script>
 
 <!-- AFFAIRES RÉELLES — NEW TAB -->
 <div id="affairesTab" class="tab-panel">
