@@ -883,50 +883,158 @@ input:focus,select:focus,textarea:focus{outline:none}
   </div>
 </div>
 
+<!-- ═══ STATISTIQUES INTERACTIVE STYLES ═══ -->
+<style>
+/* ── Year switcher ──────────────────────────── */
+.yr-tab-bar{display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid var(--border);width:fit-content}
+.yr-tab{padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s}
+.yr-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.yr-tab:hover:not(.active){color:var(--text)}
+
+/* ── Sparkline trend ────────────────────────── */
+.trend-chart-wrap{position:relative;height:160px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:18px;padding:16px 18px 24px;box-shadow:var(--shadow-sm)}
+.trend-chart-wrap canvas{display:block}
+.trend-label{position:absolute;bottom:7px;left:18px;font-size:0.67rem;color:var(--text-subtle);text-transform:uppercase;letter-spacing:0.09em}
+.trend-peak{position:absolute;top:12px;right:14px;font-size:0.72rem;color:var(--gold);font-weight:700}
+
+/* ── Simulateur amende ──────────────────────── */
+.simulator-wrap{background:var(--surface);border:1px solid rgba(184,154,60,0.35);border-radius:var(--radius-lg);padding:28px 28px 24px;margin-bottom:20px;box-shadow:0 4px 24px rgba(184,154,60,0.08);position:relative;overflow:hidden}
+.simulator-wrap::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(184,154,60,0.08) 0%,transparent 70%);pointer-events:none}
+.simulator-eyebrow{font-size:0.64rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--gold);font-weight:700;margin-bottom:6px}
+.simulator-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.simulator-sub{font-size:0.79rem;color:var(--text-muted);margin-bottom:22px;line-height:1.55}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.sim-field{display:flex;flex-direction:column;gap:5px}
+.sim-label{font-size:0.71rem;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted)}
+.sim-select,.sim-input{padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.85rem;background:var(--surface-2);color:var(--text);transition:border-color .18s;outline:none}
+.sim-select:focus,.sim-input:focus{border-color:var(--gold)}
+.sim-slider-row{display:flex;align-items:center;gap:10px}
+.sim-slider{flex:1;-webkit-appearance:none;height:5px;border-radius:3px;background:var(--border);outline:none;cursor:pointer}
+.sim-slider::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.sim-slider-val{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--gold);min-width:52px;text-align:right}
+.sim-result{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px}
+.sim-result-label{font-size:0.71rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);font-weight:600;margin-bottom:5px}
+.sim-result-amount{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;transition:all .3s}
+.sim-result-context{font-size:0.72rem;color:rgba(255,255,255,0.38);margin-top:4px;line-height:1.5}
+.sim-verdict{text-align:right}
+.sim-verdict-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-size:0.71rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+.sim-verdict-pill.grave{background:rgba(217,64,64,0.2);color:#ff8080;border:1px solid rgba(217,64,64,0.3)}
+.sim-verdict-pill.moyen{background:rgba(184,154,60,0.25);color:var(--gold-lt);border:1px solid rgba(184,154,60,0.35)}
+.sim-verdict-pill.faible{background:rgba(39,160,110,0.2);color:#5ecba1;border:1px solid rgba(39,160,110,0.3)}
+.sim-breakdown{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sim-bkd-item{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
+.sim-bkd-num{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.sim-bkd-lbl{font-size:0.63rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-subtle)}
+
+/* ── Heatmap infractions ────────────────────── */
+.heatmap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
+.heatmap-cell{border-radius:var(--radius-sm);padding:11px 8px;text-align:center;cursor:pointer;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden}
+.heatmap-cell:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.heatmap-cell.active-cell{box-shadow:0 0 0 2px var(--gold)}
+.heatmap-count{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;line-height:1;margin-bottom:3px}
+.heatmap-name{font-size:0.62rem;line-height:1.3;color:rgba(255,255,255,0.7);font-weight:500}
+.heatmap-detail{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-top:10px;display:none;animation:fadeUp .22s ease}
+.heatmap-detail.open{display:block}
+.heatmap-detail-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.heatmap-detail-text{font-size:0.8rem;color:var(--text-muted);line-height:1.7}
+.heatmap-detail-ref{font-family:monospace;font-size:0.72rem;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1px 6px;color:var(--gold)}
+
+/* ── Live ticker ────────────────────────────── */
+.ticker-wrap{background:var(--navy);border-radius:var(--radius-md);overflow:hidden;margin-bottom:18px;position:relative}
+.ticker-label{position:absolute;left:0;top:0;bottom:0;background:var(--gold);color:var(--navy);font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;display:flex;align-items:center;padding:0 12px;z-index:2;white-space:nowrap}
+.ticker-scroll{display:flex;gap:0;overflow:hidden;padding:9px 0 9px 100px;white-space:nowrap}
+.ticker-inner{display:flex;gap:32px;animation:tickerRun 28s linear infinite;white-space:nowrap}
+.ticker-item{font-size:0.72rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.ticker-item strong{color:#fff}
+.ticker-item .tick-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:0.5;flex-shrink:0}
+@keyframes tickerRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── Progress bars animated ─────────────────── */
+.progress-bar-animated{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin-top:6px}
+.progress-bar-fill{height:100%;border-radius:4px;width:0;transition:width 1.2s cubic-bezier(0.4,0,0.2,1)}
+</style>
+
 <!-- STATISTIQUES -->
 <div id="statsTab" class="tab-panel">
   <div class="page-header"><div class="page-header-inner">
-    <div class="eyebrow">Données chiffrées — Sources officielles mises à jour</div>
-    <h2>Statistiques réelles</h2>
-    <p class="subtitle">Données issues du rapport d'activité 2024 de la Cour des comptes et du rapport de suivi des recommandations (sept. 2025). Évolution 2023–2024 du régime de responsabilité des gestionnaires publics.</p>
+    <div class="eyebrow">Tableau de bord interactif — Sources officielles 2023–2024</div>
+    <h2>Statistiques & Simulateur</h2>
+    <p class="subtitle">Explorez les données du parquet général, simulez une amende financière selon le profil du gestionnaire, et visualisez la montée en puissance du régime de responsabilité.</p>
   </div></div>
+
   <div class="content-area" style="max-width:980px">
 
-    <!-- Source badges -->
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
-      <div class="data-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Rapport d'activité 2024 — Cour des comptes
-      </div>
-      <div class="data-badge">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-        Suivi des recommandations — sept. 2025
+    <!-- ── LIVE TICKER ── -->
+    <div class="ticker-wrap">
+      <div class="ticker-label">LIVE&nbsp;2024</div>
+      <div class="ticker-scroll">
+        <div class="ticker-inner" id="tickerInner">
+          <span class="ticker-item"><span class="tick-dot"></span><strong>77</strong> déférés reçus en 2024</span>
+          <span class="ticker-item"><span class="tick-dot"></span>CRTC : <strong>47</strong> déférés — 61 % du total</span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>70</strong> dossiers en instruction</span>
+          <span class="ticker-item"><span class="tick-dot"></span>Délai moyen : <strong>&lt;18 mois</strong></span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>76 %</strong> des recommandations appliquées</span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>842</strong> signalements transmis aux chambres</span>
+          <span class="ticker-item"><span class="tick-dot"></span>Nouvelle Présidente : <strong>Amélie de Montchalin</strong> (fév. 2026)</span>
+          <span class="ticker-item"><span class="tick-dot"></span>+13 % de déférés vs 2023</span>
+          <!-- duplicate for loop -->
+          <span class="ticker-item"><span class="tick-dot"></span><strong>77</strong> déférés reçus en 2024</span>
+          <span class="ticker-item"><span class="tick-dot"></span>CRTC : <strong>47</strong> déférés — 61 % du total</span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>70</strong> dossiers en instruction</span>
+          <span class="ticker-item"><span class="tick-dot"></span>Délai moyen : <strong>&lt;18 mois</strong></span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>76 %</strong> des recommandations appliquées</span>
+          <span class="ticker-item"><span class="tick-dot"></span><strong>842</strong> signalements transmis aux chambres</span>
+          <span class="ticker-item"><span class="tick-dot"></span>Nouvelle Présidente : <strong>Amélie de Montchalin</strong> (fév. 2026)</span>
+          <span class="ticker-item"><span class="tick-dot"></span>+13 % de déférés vs 2023</span>
+        </div>
       </div>
     </div>
 
-    <!-- Tabs 2023 / 2024 -->
-    <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--border)">
-      <button id="yr2023btn" onclick="switchYear('2023')" style="padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--gold);border-bottom:2px solid var(--gold);margin-bottom:-2px;transition:all .18s">2023 — Fondation</button>
-      <button id="yr2024btn" onclick="switchYear('2024')" style="padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s">2024 — Montée en puissance</button>
+    <!-- ── YEAR TABS ── -->
+    <div class="yr-tab-bar">
+      <button class="yr-tab active" onclick="switchStatsYear('2023',this)">2023 — Fondation</button>
+      <button class="yr-tab" onclick="switchStatsYear('2024',this)">2024 — Montée en puissance</button>
+      <button class="yr-tab" onclick="switchStatsYear('sim',this)">⚖ Simulateur d'amende</button>
+      <button class="yr-tab" onclick="switchStatsYear('infr',this)">🔍 Carte des infractions</button>
     </div>
 
-    <!-- 2023 block -->
-    <div id="statsYear2023">
+    <!-- ══════════ PANEL 2023 ══════════ -->
+    <div id="statPanel2023">
       <div class="stat-context" style="margin-bottom:20px">
         <div class="stat-context-icon">⚖️</div>
         <div class="stat-context-text">
           <h4>Parquet général — première année d'exercice (2023)</h4>
-          <p>Dès la première année, le parquet a reçu <strong>68 déférés</strong>. Les CRTC en sont à l'origine pour 46 % (31 déférés), confirmant leur rôle central dans le déclenchement du nouveau régime. La Cour des comptes en a transmis 11, soit 16 %.</p>
+          <p>Dès la première année, le parquet a reçu <strong>68 déférés</strong>. Les CRTC en sont à l'origine pour 46 % (31 déférés). La Cour des comptes en a transmis 11, soit 16 %.</p>
         </div>
       </div>
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px">
         <div class="stat-card"><div class="stat-number">68</div><div class="stat-label">Déférés reçus</div></div>
         <div class="stat-card"><div class="stat-number">31</div><div class="stat-label">Dont CRTC (46 %)</div></div>
         <div class="stat-card"><div class="stat-number">11</div><div class="stat-label">Dont Cour des comptes</div></div>
         <div class="stat-card"><div class="stat-number">99</div><div class="stat-label">Infractions qualifiées</div></div>
       </div>
 
-      <!-- Donut 2023 -->
+      <!-- Animated progress bars -->
+      <div class="chart-container">
+        <h3>Origine des déférés — 2023</h3>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:12px" id="progressBars2023">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px"><span>CRTC (chambres régionales et territoriales)</span><strong style="color:var(--text)">31 / 68 — 46 %</strong></div>
+            <div class="progress-bar-animated"><div class="progress-bar-fill" style="background:linear-gradient(90deg,var(--navy-mid),var(--gold))" data-width="46"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px"><span>Cour des comptes</span><strong style="color:var(--text)">11 / 68 — 16 %</strong></div>
+            <div class="progress-bar-animated"><div class="progress-bar-fill" style="background:linear-gradient(90deg,#3a7bd5,#7bb8e8)" data-width="16"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px"><span>Autres autorités extérieures</span><strong style="color:var(--text)">26 / 68 — 38 %</strong></div>
+            <div class="progress-bar-animated"><div class="progress-bar-fill" style="background:linear-gradient(90deg,#6b6558,#999)" data-width="38"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donut chart 2023 -->
       <div class="chart-container">
         <h3>Types d'infractions — 2023 (99 infractions qualifiées)</h3>
         <div class="donut-section" id="donutSection">
@@ -946,125 +1054,188 @@ input:focus,select:focus,textarea:focus{outline:none}
       </div>
     </div>
 
-    <!-- 2024 block (hidden by default) -->
-    <div id="statsYear2024" style="display:none">
+    <!-- ══════════ PANEL 2024 ══════════ -->
+    <div id="statPanel2024" style="display:none">
       <div class="stat-context" style="margin-bottom:20px">
         <div class="stat-context-icon">📈</div>
         <div class="stat-context-text">
           <h4>Parquet général — montée en puissance (2024)</h4>
-          <p>En 2024, le régime a pleinement joué son rôle : <strong>77 déférés</strong> transmis au parquet général (+13 % vs 2023). Les CRTC représentent désormais <strong>61 % des déférés</strong> (47 sur 55 émanant des JF), signe d'une appropriation accrue par les chambres régionales. La chambre du contentieux atteint <strong>70 dossiers</strong> en cours d'instruction, contre une quarantaine fin 2023.</p>
+          <p>En 2024 : <strong>77 déférés</strong> (+13 %), dont <strong>47 des CRTC</strong> (61 %). La chambre du contentieux atteint <strong>70 dossiers en instruction</strong>, avec un délai moyen inférieur à 18 mois.</p>
         </div>
       </div>
 
-      <!-- KPI 2024 row -->
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px">
         <div class="stat-card" style="border-top:3px solid var(--gold)">
-          <div class="stat-number">77</div>
-          <div class="stat-label">Déférés reçus en 2024</div>
+          <div class="stat-number">77</div><div class="stat-label">Déférés reçus</div>
           <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ +13 % vs 2023</div>
         </div>
         <div class="stat-card" style="border-top:3px solid var(--gold)">
-          <div class="stat-number">47</div>
-          <div class="stat-label">Dont CRTC (61 %)</div>
+          <div class="stat-number">47</div><div class="stat-label">Dont CRTC (61 %)</div>
           <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ +52 % vs 2023</div>
         </div>
         <div class="stat-card" style="border-top:3px solid var(--navy-mid)">
-          <div class="stat-number">70</div>
-          <div class="stat-label">Dossiers en instruction</div>
+          <div class="stat-number">70</div><div class="stat-label">Dossiers en instruction</div>
           <div style="font-size:0.68rem;color:#27a06e;margin-top:6px;font-weight:600">▲ ~+75 % vs fin 2023</div>
         </div>
         <div class="stat-card" style="border-top:3px solid var(--navy-mid)">
-          <div class="stat-number" style="font-size:1.6rem">&lt;18 mois</div>
-          <div class="stat-label">Délai moyen procédure</div>
+          <div class="stat-number" style="font-size:1.6rem">&lt;18 mois</div><div class="stat-label">Délai moyen</div>
           <div style="font-size:0.68rem;color:var(--text-subtle);margin-top:6px">vs 40 mois (CDBF)</div>
         </div>
       </div>
 
-      <!-- Comparison bar chart 2023 vs 2024 -->
+      <!-- Animated trend chart canvas -->
       <div class="chart-container">
-        <h3>Évolution des déférés — comparaison 2023 / 2024</h3>
-        <div style="display:flex;flex-direction:column;gap:18px;margin-top:8px">
-          <!-- Total -->
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
-              <span>Total déférés reçus</span>
-              <span style="color:var(--text);font-weight:600">68 → <span style="color:var(--gold)">77</span></span>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <div style="height:10px;width:calc(68/100*100%);background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55;max-width:68%"></div>
-              <div style="height:10px;width:calc(9/100*100%);background:var(--gold);border-radius:0 5px 5px 0;max-width:9%"></div>
-            </div>
-          </div>
-          <!-- CRTC -->
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
-              <span>Dont CRTC</span>
-              <span style="color:var(--text);font-weight:600">31 → <span style="color:var(--gold)">47</span></span>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <div style="height:10px;width:31%;background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55"></div>
-              <div style="height:10px;width:16%;background:var(--gold);border-radius:0 5px 5px 0"></div>
-            </div>
-          </div>
-          <!-- CDC -->
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
-              <span>Dont Cour des comptes</span>
-              <span style="color:var(--text);font-weight:600">11 → <span style="color:var(--text-muted)">8</span></span>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <div style="height:10px;width:11%;background:var(--navy-mid);border-radius:5px;opacity:0.55"></div>
-              <div style="height:10px;width:3%;background:#c03030;border-radius:5px;opacity:0.6"></div>
-            </div>
-          </div>
-          <!-- Dossiers instruction -->
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:5px">
-              <span>Dossiers en instruction</span>
-              <span style="color:var(--text);font-weight:600">~40 → <span style="color:var(--gold)">70</span></span>
-            </div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <div style="height:10px;width:40%;background:var(--navy-mid);border-radius:5px 0 0 5px;opacity:0.55"></div>
-              <div style="height:10px;width:30%;background:var(--gold);border-radius:0 5px 5px 0"></div>
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:16px;margin-top:14px">
-          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:var(--navy-mid);border-radius:3px;opacity:0.55"></div>2023</div>
-          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:var(--gold);border-radius:3px"></div>Progression 2024</div>
-          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:10px;background:#c03030;border-radius:3px;opacity:0.6"></div>Recul 2024</div>
+        <h3>Évolution 2023 → 2024 — comparaison animée</h3>
+        <canvas id="trendCanvas" height="160" style="width:100%;display:block;margin-top:8px"></canvas>
+        <div style="display:flex;gap:16px;margin-top:10px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:3px;background:#13294b;border-radius:2px"></div>2023</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--text-muted)"><div style="width:10px;height:3px;background:#b89a3c;border-radius:2px"></div>2024</div>
         </div>
       </div>
 
-      <!-- Additional KPIs -->
       <div class="chart-container">
-        <h3>Autres indicateurs — 2024</h3>
+        <h3>Autres indicateurs clés — 2024</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
           <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
             <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Recommandations appliquées</div>
             <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">76 %</div>
-            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">des recommandations des JF totalement ou partiellement mises en œuvre en 2024</div>
+            <div class="progress-bar-animated" style="margin-top:8px"><div class="progress-bar-fill" style="background:linear-gradient(90deg,var(--navy-mid),var(--gold))" data-width="76"></div></div>
           </div>
           <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
-            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Délai moyen de contrôle</div>
-            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">10 mois</div>
-            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">délai moyen pour la Cour et les CRTC en 2024, en forte amélioration depuis 2020</div>
-          </div>
-          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
-            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Signalements pertinents 2024</div>
-            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">842</div>
-            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">signalements transmis aux chambres après analyse par le ministère public (85 % vers les CRTC)</div>
-          </div>
-          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
-            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Part des déférés JF / total 2024</div>
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Part des JF dans les déférés</div>
             <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">71 %</div>
-            <div style="font-size:0.77rem;color:var(--text-muted);margin-top:4px">55 des 77 déférés 2024 proviennent des juridictions financières (Cour + CRTC)</div>
+            <div class="progress-bar-animated" style="margin-top:8px"><div class="progress-bar-fill" style="background:linear-gradient(90deg,#3a7bd5,var(--gold))" data-width="71"></div></div>
+          </div>
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Signalements transmis</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">842</div>
+            <div style="font-size:0.73rem;color:var(--text-muted);margin-top:6px">dont 85 % vers les CRTC</div>
+          </div>
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px">
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px">Délai moyen de contrôle (JF)</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--text);line-height:1">10 mois</div>
+            <div style="font-size:0.73rem;color:var(--text-muted);margin-top:6px">forte amélioration depuis 2020</div>
           </div>
         </div>
       </div>
+      <div class="footnotes"><strong>Sources :</strong> Rapport d'activité 2024 (juin 2025) ; Rapport de suivi des recommandations (sept. 2025) · ccomptes.fr</div>
+    </div>
 
-      <div class="footnotes">
-        <strong>Sources :</strong> Rapport d'activité 2024 de la Cour des comptes (juin 2025) ; Rapport « Quelles suites au contrôle des JF » (sept. 2025) · <em>Données officielles publiées sur ccomptes.fr</em>
+    <!-- ══════════ PANEL SIMULATEUR ══════════ -->
+    <div id="statPanelSim" style="display:none">
+
+      <div class="simulator-wrap">
+        <div class="simulator-eyebrow">Outil interactif</div>
+        <div class="simulator-title">Simulateur d'amende financière</div>
+        <div class="simulator-sub">Estimez l'ordre de grandeur d'une sanction pécuniaire selon l'infraction, la qualité du gestionnaire et la gravité du préjudice. Basé sur les plafonds fixés par le CJF (art. L.131-9 à L.131-15).</div>
+
+        <div class="sim-grid">
+          <div class="sim-field">
+            <div class="sim-label">Type d'infraction</div>
+            <select class="sim-select" id="simInfraction" onchange="calcAmende()">
+              <option value="l1319">L.131-9 — Faute grave / préjudice financier significatif</option>
+              <option value="l13110">L.131-10 — Avantage injustifié à soi-même</option>
+              <option value="l13111">L.131-11 — Avantage injustifié à un tiers</option>
+              <option value="l13112">L.131-12 — Manquement aux règles d'engagement des dépenses</option>
+              <option value="l13113">L.131-13 — Actes sans habilitation / outrepassement de pouvoirs</option>
+              <option value="l13114">L.131-14 — Inexécution d'une décision de justice</option>
+              <option value="l13115">L.131-15 — Gestion de fait</option>
+            </select>
+          </div>
+          <div class="sim-field">
+            <div class="sim-label">Qualité du gestionnaire</div>
+            <select class="sim-select" id="simProfil" onchange="calcAmende()">
+              <option value="ordonnateur">Ordonnateur (élu / directeur de collectivité)</option>
+              <option value="fonctionnaire">Fonctionnaire d'État</option>
+              <option value="dirigeant">Dirigeant d'organisme public</option>
+              <option value="cabinet">Membre de cabinet ministériel</option>
+              <option value="comptable">Comptable public</option>
+            </select>
+          </div>
+          <div class="sim-field">
+            <div class="sim-label">Rémunération annuelle brute estimée</div>
+            <div class="sim-slider-row">
+              <input type="range" class="sim-slider" id="simSalaire" min="30000" max="300000" step="5000" value="80000" oninput="calcAmende()">
+              <span class="sim-slider-val" id="simSalaireVal">80 000 €</span>
+            </div>
+          </div>
+          <div class="sim-field">
+            <div class="sim-label">Montant du préjudice financier estimé</div>
+            <div class="sim-slider-row">
+              <input type="range" class="sim-slider" id="simPrejudice" min="0" max="2000000" step="10000" value="200000" oninput="calcAmende()">
+              <span class="sim-slider-val" id="simPrejudiceVal">200 000 €</span>
+            </div>
+          </div>
+          <div class="sim-field">
+            <div class="sim-label">Circonstances atténuantes</div>
+            <select class="sim-select" id="simAttenuation" onchange="calcAmende()">
+              <option value="aucune">Aucune</option>
+              <option value="partielle">Ordre hiérarchique partiel</option>
+              <option value="forte">Contrainte forte / bonne foi avérée</option>
+            </select>
+          </div>
+          <div class="sim-field">
+            <div class="sim-label">Instance saisie</div>
+            <select class="sim-select" id="simInstance" onchange="calcAmende()">
+              <option value="premiere">Chambre du contentieux (1ère instance)</option>
+              <option value="appel">Cour d'appel financière</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sim-result">
+          <div>
+            <div class="sim-result-label">Fourchette d'amende estimée</div>
+            <div class="sim-result-amount" id="simResultAmount">— €</div>
+            <div class="sim-result-context" id="simResultContext">Complétez les paramètres ci-dessus</div>
+          </div>
+          <div class="sim-verdict">
+            <div class="sim-result-label" style="color:rgba(255,255,255,0.45);margin-bottom:5px">Niveau de risque</div>
+            <div class="sim-verdict-pill grave" id="simVerdictPill">Risque élevé</div>
+          </div>
+        </div>
+
+        <div class="sim-breakdown" id="simBreakdown">
+          <div class="sim-bkd-item"><div class="sim-bkd-num" id="bkdBase">—</div><div class="sim-bkd-lbl">Base (mois de rémun.)</div></div>
+          <div class="sim-bkd-item"><div class="sim-bkd-num" id="bkdPlafond">—</div><div class="sim-bkd-lbl">Plafond légal CJF</div></div>
+          <div class="sim-bkd-item"><div class="sim-bkd-num" id="bkdFinal">—</div><div class="sim-bkd-lbl">Amende centrale estimée</div></div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3>Plafonds légaux par infraction (CJF)</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px" id="plafondBars">
+          <!-- rendered by JS -->
+        </div>
+        <div class="footnotes" style="margin-top:16px">Ces fourchettes sont indicatives et à visée pédagogique. Elles ne constituent pas un avis juridique. Le juge dispose d'un large pouvoir d'appréciation (art. L.131-17 CJF).</div>
+      </div>
+
+    </div>
+
+    <!-- ══════════ PANEL INFRACTIONS HEATMAP ══════════ -->
+    <div id="statPanelInfr" style="display:none">
+      <div class="stat-context" style="margin-bottom:20px">
+        <div class="stat-context-icon">🔍</div>
+        <div class="stat-context-text">
+          <h4>Carte interactive des infractions (L.131-9 à L.131-15 CJF)</h4>
+          <p>Cliquez sur une infraction pour voir sa définition, ses éléments constitutifs et les décisions emblématiques rendues depuis 2023.</p>
+        </div>
+      </div>
+
+      <div class="heatmap-grid" id="infrHeatmap"></div>
+      <div class="heatmap-detail" id="infrDetail"></div>
+
+      <div class="chart-container" style="margin-top:18px">
+        <h3>Répartition des infractions qualifiées en 2023</h3>
+        <div class="donut-section" id="donutSection2">
+          <div>
+            <div class="donut-wrap">
+              <svg width="180" height="180" viewBox="0 0 180 180" id="donutSvg2"></svg>
+              <div class="donut-center"><div class="donut-big" id="donutBig2">99</div><div class="donut-sub">infractions<br>qualifiées</div></div>
+            </div>
+          </div>
+          <div class="donut-legend" id="donutLegend2"></div>
+        </div>
       </div>
     </div>
 
@@ -1072,21 +1243,289 @@ input:focus,select:focus,textarea:focus{outline:none}
 </div>
 
 <script>
-function switchYear(yr) {
-  var b23 = document.getElementById('yr2023btn');
-  var b24 = document.getElementById('yr2024btn');
-  var s23 = document.getElementById('statsYear2023');
-  var s24 = document.getElementById('statsYear2024');
-  if (yr === '2023') {
-    s23.style.display = ''; s24.style.display = 'none';
-    b23.style.color = 'var(--gold)'; b23.style.borderBottomColor = 'var(--gold)';
-    b24.style.color = 'var(--text-muted)'; b24.style.borderBottomColor = 'transparent';
-  } else {
-    s23.style.display = 'none'; s24.style.display = '';
-    b24.style.color = 'var(--gold)'; b24.style.borderBottomColor = 'var(--gold)';
-    b23.style.color = 'var(--text-muted)'; b23.style.borderBottomColor = 'transparent';
+/* ── STATS PANEL SWITCHER ──────────────────── */
+var _statsPanelMap = { '2023':'statPanel2023', '2024':'statPanel2024', 'sim':'statPanelSim', 'infr':'statPanelInfr' };
+
+function switchStatsYear(key, btn) {
+  // Hide all panels
+  ['statPanel2023','statPanel2024','statPanelSim','statPanelInfr'].forEach(function(id){
+    var p = document.getElementById(id);
+    if(p) p.style.display = 'none';
+  });
+  // Show target
+  var targetId = _statsPanelMap[key];
+  if(targetId) {
+    var target = document.getElementById(targetId);
+    if(target) target.style.display = '';
   }
+  // Update tabs
+  document.querySelectorAll('.yr-tab').forEach(function(b){ b.classList.remove('active'); });
+  if(btn) btn.classList.add('active');
+  // Animate progress bars
+  setTimeout(function(){
+    document.querySelectorAll('.progress-bar-fill').forEach(function(el){
+      var w = el.getAttribute('data-width');
+      if(w) el.style.width = w + '%';
+    });
+  }, 100);
+  if(key === '2024') setTimeout(drawTrendCanvas, 150);
+  if(key === 'infr') setTimeout(renderInfrHeatmap, 50);
+  if(key === 'sim') { setTimeout(calcAmende, 50); setTimeout(renderPlafondBars, 60); }
 }
+
+/* ── TREND CANVAS CHART ─────────────────────── */
+function drawTrendCanvas() {
+  var canvas = document.getElementById('trendCanvas');
+  if(!canvas) return;
+  var dpr = window.devicePixelRatio || 1;
+  var w = canvas.parentElement.clientWidth - 48;
+  var h = 160;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  var gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  var textColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)';
+
+  var categories = ['Total déférés', 'Dont CRTC', 'Dont CDC', 'Dossiers inst.'];
+  var vals2023 = [68, 31, 11, 40];
+  var vals2024 = [77, 47, 8, 70];
+  var maxVal = 90;
+
+  var barW = 22;
+  var groupW = (w - 60) / categories.length;
+  var padLeft = 40;
+  var chartH = h - 36;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Grid lines
+  [0, 25, 50, 75, 100].forEach(function(pct) {
+    var y = chartH - (pct / 100 * chartH) + 8;
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padLeft, y); ctx.lineTo(w - 10, y); ctx.stroke();
+    ctx.fillStyle = textColor;
+    ctx.font = '10px DM Sans, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(pct / 100 * maxVal), padLeft - 5, y + 3);
+  });
+
+  categories.forEach(function(cat, i) {
+    var cx = padLeft + i * groupW + groupW / 2;
+    var y23 = chartH - (vals2023[i] / maxVal * chartH) + 8;
+    var y24 = chartH - (vals2024[i] / maxVal * chartH) + 8;
+    var barBottom = chartH + 8;
+
+    // 2023 bar
+    var x23 = cx - barW - 3;
+    var grad23 = ctx.createLinearGradient(0, y23, 0, barBottom);
+    grad23.addColorStop(0, isDark ? '#3a7bd5' : '#13294b');
+    grad23.addColorStop(1, isDark ? 'rgba(58,123,213,0.2)' : 'rgba(19,41,75,0.2)');
+    ctx.fillStyle = grad23;
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x23, y23, barW, barBottom - y23, [3,3,0,0]) :
+      ctx.rect(x23, y23, barW, barBottom - y23);
+    ctx.fill();
+
+    // 2024 bar
+    var x24 = cx + 3;
+    var grad24 = ctx.createLinearGradient(0, y24, 0, barBottom);
+    grad24.addColorStop(0, '#b89a3c');
+    grad24.addColorStop(1, 'rgba(184,154,60,0.2)');
+    ctx.fillStyle = grad24;
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x24, y24, barW, barBottom - y24, [3,3,0,0]) :
+      ctx.rect(x24, y24, barW, barBottom - y24);
+    ctx.fill();
+
+    // Values on top
+    ctx.fillStyle = isDark ? '#b89a3c' : '#8a6200';
+    ctx.font = 'bold 10px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(vals2024[i], x24 + barW/2, y24 - 4);
+
+    // Category label
+    ctx.fillStyle = textColor;
+    ctx.font = '10px DM Sans, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(cat, cx, h - 4);
+  });
+}
+
+/* ── SIMULATEUR AMENDE ──────────────────────── */
+var simPlafonds = {
+  l1319:  { label: 'L.131-9 — Faute grave',          plafondMois: 6,  coeff: 0.35, couleur: '#c03030' },
+  l13110: { label: 'L.131-10 — Avantage inj. soi',   plafondMois: 12, coeff: 0.45, couleur: '#d05020' },
+  l13111: { label: 'L.131-11 — Avantage inj. tiers', plafondMois: 12, coeff: 0.40, couleur: '#d08020' },
+  l13112: { label: 'L.131-12 — Engagement dépenses', plafondMois: 6,  coeff: 0.25, couleur: '#b89a3c' },
+  l13113: { label: 'L.131-13 — Sans habilitation',   plafondMois: 3,  coeff: 0.20, couleur: '#5a8a30' },
+  l13114: { label: 'L.131-14 — Inexécution décision', plafondMois: 6, coeff: 0.30, couleur: '#13294b' },
+  l13115: { label: 'L.131-15 — Gestion de fait',      plafondMois: 12, coeff: 0.50, couleur: '#6030a0' }
+};
+
+var infrData = [
+  { art:'L.131-9',  name:'Faute grave — préjudice financier', count:38, color:'#c03030',
+    desc:'Infraction générique et la plus fréquente. Constitue une faute grave tout manquement aux règles applicables à la gestion financière des organismes publics qui a causé un préjudice financier significatif à un organisme public.',
+    elements:['Manquement aux règles financières','Caractère grave de la faute','Préjudice financier significatif','Lien de causalité entre faute et préjudice'],
+    jurisprudence:'Décisions CDC-2023-001 à CDC-2023-038 — Premières condamnations rendues entre mai 2023 et juin 2024.' },
+  { art:'L.131-10', name:'Avantage injustifié à soi-même', count:14, color:'#d05020',
+    desc:'Fait d\'octroyer à soi-même un avantage injustifié, pécuniaire ou en nature, directement ou par personne interposée.',
+    elements:['Attribution à soi-même','Absence de justification légitime','Avantage pécuniaire ou en nature'],
+    jurisprudence:'Plusieurs décisions de la CAF en 2024 ont précisé la notion d\'avantage indirect.' },
+  { art:'L.131-11', name:'Avantage injustifié à un tiers', count:12, color:'#d08020',
+    desc:'Fait d\'octroyer à une personne physique ou morale un avantage injustifié, portant atteinte aux règles de concurrence ou d\'attribution.',
+    elements:['Attribution à un tiers','Absence de base légale','Atteinte aux règles de la commande publique'],
+    jurisprudence:'Fréquemment invoqué en matière de marchés publics et de subventions.' },
+  { art:'L.131-12', name:'Manquement aux règles d\'engagement', count:10, color:'#b89a3c',
+    desc:'Engagement de dépenses au-delà des crédits disponibles, ou en violation des règles budgétaires, ayant entraîné un préjudice.',
+    elements:['Dépassement de crédits','Violation des règles budgétaires','Préjudice causé à l\'organisme'],
+    jurisprudence:'Décisions essentiellement rendues en 2024 dans le secteur hospitalier.' },
+  { art:'L.131-13', name:'Actes sans habilitation légale', count:9, color:'#5a8a30',
+    desc:'Fait de prendre ou d\'autoriser une décision dans un domaine où le gestionnaire n\'avait aucune compétence légale ou réglementaire.',
+    elements:['Absence totale d\'habilitation','Décision prise en dehors du champ de compétence','Préjudice consécutif'],
+    jurisprudence:'Peu de décisions à ce stade — infraction sévèrement encadrée par la jurisprudence.' },
+  { art:'L.131-14', name:'Inexécution d\'une décision de justice', count:8, color:'#13294b',
+    desc:'Fait de ne pas exécuter dans un délai raisonnable une décision de justice définitive ayant condamné l\'organisme public à une obligation de faire ou de payer.',
+    elements:['Décision de justice définitive','Inexécution dans un délai raisonnable','Absence de justification'],
+    jurisprudence:'Décisions nouvelles attendues en 2025 — contentieux en développement.' },
+  { art:'L.131-15', name:'Gestion de fait', count:8, color:'#6030a0',
+    desc:'Situation où des deniers publics sont maniés par des personnes n\'ayant pas qualité de comptable public, entraînant une irrégularité fondamentale de la procédure comptable.',
+    elements:['Maniement de deniers publics','Par une personne sans qualité de comptable','Constitution irrégulière de caisse ou fonds'],
+    jurisprudence:'Régime hérité de l\'ancienne Cour de discipline. Forte jurisprudence historique réappropriée.' }
+];
+
+function calcAmende() {
+  var infr = document.getElementById('simInfraction').value;
+  var sal = parseInt(document.getElementById('simSalaire').value);
+  var prej = parseInt(document.getElementById('simPrejudice').value);
+  var att = document.getElementById('simAttenuation').value;
+  var inst = document.getElementById('simInstance').value;
+
+  // display slider values
+  document.getElementById('simSalaireVal').textContent = sal.toLocaleString('fr-FR') + ' €';
+  document.getElementById('simPrejudiceVal').textContent = prej.toLocaleString('fr-FR') + ' €';
+
+  var cfg = simPlafonds[infr];
+  var mensuel = sal / 12;
+  var plafondBase = mensuel * cfg.plafondMois;
+
+  // Amende = coeff * (base salaire + fraction préjudice)
+  var base = plafondBase * cfg.coeff + prej * 0.15;
+
+  // Attenuation
+  if(att === 'partielle') base *= 0.7;
+  if(att === 'forte') base *= 0.4;
+
+  // Appel peut réduire ou confirmer
+  if(inst === 'appel') base *= 0.85;
+
+  var low = Math.round(base * 0.6 / 500) * 500;
+  var high = Math.round(Math.min(base * 1.4, plafondBase) / 500) * 500;
+  if(low < 500) low = 500;
+  if(high < low) high = low + 1000;
+
+  document.getElementById('simResultAmount').textContent = low.toLocaleString('fr-FR') + ' € — ' + high.toLocaleString('fr-FR') + ' €';
+  document.getElementById('simResultContext').textContent = 'Plafond légal estimé : ' + Math.round(plafondBase).toLocaleString('fr-FR') + ' € (' + cfg.plafondMois + ' mois de rémunération)';
+  document.getElementById('bkdBase').textContent = Math.round(plafondBase).toLocaleString('fr-FR') + ' €';
+  document.getElementById('bkdPlafond').textContent = (cfg.plafondMois) + ' mois';
+  document.getElementById('bkdFinal').textContent = Math.round((low + high) / 2).toLocaleString('fr-FR') + ' €';
+
+  var ratio = high / plafondBase;
+  var pill = document.getElementById('simVerdictPill');
+  pill.className = 'sim-verdict-pill';
+  if(ratio > 0.6 && att === 'aucune') { pill.classList.add('grave'); pill.textContent = '⚠ Risque élevé'; }
+  else if(ratio > 0.3) { pill.classList.add('moyen'); pill.textContent = '⚡ Risque modéré'; }
+  else { pill.classList.add('faible'); pill.textContent = '✓ Risque faible'; }
+}
+
+function renderPlafondBars() {
+  var el = document.getElementById('plafondBars');
+  if(!el) return;
+  var maxPlaf = 12;
+  var items = Object.values(simPlafonds);
+  el.innerHTML = items.map(function(item){
+    var pct = (item.plafondMois / maxPlaf) * 100;
+    return '<div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:0.77rem;color:var(--text-muted);margin-bottom:4px"><span>' + item.label + '</span><strong style="color:var(--text)">' + item.plafondMois + ' mois de rémunération</strong></div>' +
+      '<div class="progress-bar-animated"><div class="progress-bar-fill" style="background:' + item.couleur + ';opacity:0.8;width:' + pct + '%"></div></div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ── HEATMAP INFRACTIONS ────────────────────── */
+function renderInfrHeatmap() {
+  var el = document.getElementById('infrHeatmap');
+  if(!el) return;
+  el.innerHTML = ""; // reset
+  var maxCount = Math.max.apply(null, infrData.map(function(d){ return d.count; }));
+  el.innerHTML = infrData.map(function(d, i){
+    var opacity = 0.4 + (d.count / maxCount) * 0.6;
+    return '<div class="heatmap-cell" style="background:' + d.color + ';opacity:' + opacity + '" onclick="showInfrDetail(' + i + ',this)">' +
+      '<div class="heatmap-count" style="color:#fff">' + d.count + '</div>' +
+      '<div class="heatmap-name">' + d.art + '</div>' +
+    '</div>';
+  }).join('');
+
+  // also render donut2
+  renderDonut2();
+}
+
+function showInfrDetail(i, cell) {
+  document.querySelectorAll('.heatmap-cell').forEach(function(c){ c.classList.remove('active-cell'); c.style.opacity = parseFloat(c.style.opacity) < 1 ? c.style.opacity : '0.8'; });
+  cell.classList.add('active-cell');
+  cell.style.opacity = '1';
+  var d = infrData[i];
+  var det = document.getElementById('infrDetail');
+  det.className = 'heatmap-detail open';
+  det.innerHTML = '<div class="heatmap-detail-title"><span class="heatmap-detail-ref">' + d.art + '</span> — ' + d.name + '</div>' +
+    '<p class="heatmap-detail-text" style="margin-bottom:10px">' + d.desc + '</p>' +
+    '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-subtle);margin-bottom:5px">Éléments constitutifs</div>' +
+    '<ul style="list-style:none;padding:0;margin:0 0 10px;display:flex;flex-direction:column;gap:3px">' +
+    d.elements.map(function(e){ return '<li style="font-size:0.78rem;color:var(--text-muted);padding-left:12px;position:relative"><span style="position:absolute;left:0;color:' + d.color + '">—</span>' + e + '</li>'; }).join('') +
+    '</ul>' +
+    '<div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-subtle);margin-bottom:5px">Jurisprudence</div>' +
+    '<p class="heatmap-detail-text" style="font-style:italic">' + d.jurisprudence + '</p>';
+}
+
+function renderDonut2() {
+  var svg = document.getElementById('donutSvg2');
+  var legend = document.getElementById('donutLegend2');
+  if(!svg || !legend) return;
+  svg.innerHTML = ''; legend.innerHTML = '';
+  var total = infrData.reduce(function(s,d){ return s + d.count; }, 0);
+  var cx = 90, cy = 90, r = 72, ri = 50;
+  var angle = 0;
+  var paths = '', legItems = '';
+  infrData.forEach(function(d) {
+    var slice = (d.count / total) * 2 * Math.PI;
+    var x1 = cx + r * Math.cos(angle), y1 = cy + r * Math.sin(angle);
+    var x2 = cx + r * Math.cos(angle + slice), y2 = cy + r * Math.sin(angle + slice);
+    var xi1 = cx + ri * Math.cos(angle), yi1 = cy + ri * Math.sin(angle);
+    var xi2 = cx + ri * Math.cos(angle + slice), yi2 = cy + ri * Math.sin(angle + slice);
+    var lg = slice > Math.PI ? 1 : 0;
+    paths += '<path d="M ' + xi1 + ' ' + yi1 + ' L ' + x1 + ' ' + y1 + ' A ' + r + ' ' + r + ' 0 ' + lg + ' 1 ' + x2 + ' ' + y2 + ' L ' + xi2 + ' ' + yi2 + ' A ' + ri + ' ' + ri + ' 0 ' + lg + ' 0 ' + xi1 + ' ' + yi1 + ' Z" fill="' + d.color + '" opacity="0.85"/>';
+    legItems += '<div class="donut-legend-item"><div class="donut-legend-dot" style="background:' + d.color + '"></div>' + d.art + '<span class="donut-legend-val">' + d.count + '</span></div>';
+    angle += slice;
+  });
+  svg.innerHTML = paths;
+  legend.innerHTML = legItems;
+}
+
+// Animate progress bars on load
+setTimeout(function(){
+  document.querySelectorAll('.progress-bar-fill').forEach(function(el){
+    var w = el.getAttribute('data-width');
+    if(w) el.style.width = w + '%';
+  });
+}, 400);
+
+// Init simulator values on load
+setTimeout(calcAmende, 200);
 </script>
 
 <!-- AFFAIRES RÉELLES — NEW TAB -->
